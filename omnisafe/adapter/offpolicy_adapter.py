@@ -99,9 +99,9 @@ class OffPolicyAdapter(OnlineAdapter):
                     'Metrics/TestEpRet': ep_ret,
                     'Metrics/TestEpCost': ep_cost,
                     'Metrics/TestEpLen': ep_len,
-                    'Atu/TotalCollidePersuer': info['counter']['persuer'],
-                    'Atu/TotalUseHJ': info['counter']['hj'],
-                    'Atu/TotalReachGoal': info['counter']['goal']
+                    'Atu/TotalCollidePersuer': info['final_info']['counter']['persuer'],
+                    'Atu/TotalUseHJ': info['final_info']['counter']['hj'],
+                    'Atu/TotalReachGoal': info['final_info']['counter']['goal']
                 },
             )
 
@@ -141,7 +141,7 @@ class OffPolicyAdapter(OnlineAdapter):
             for idx, done in enumerate(torch.logical_or(terminated, truncated)):
                 if done:
                     real_next_obs[idx] = info['final_observation'][idx]
-                    self._log_metrics(logger, idx, info)
+                    self._log_metrics(logger, idx, info['final_info'])
                     self._reset_log(idx)
 
             buffer.store(
