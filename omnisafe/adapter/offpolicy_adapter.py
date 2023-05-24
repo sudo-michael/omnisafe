@@ -99,6 +99,9 @@ class OffPolicyAdapter(OnlineAdapter):
                     'Metrics/TestEpRet': ep_ret,
                     'Metrics/TestEpCost': ep_cost,
                     'Metrics/TestEpLen': ep_len,
+                    'Atu/TotalCollidePersuer': info['counter']['persuer'],
+                    'Atu/TotalUseHJ': info['counter']['hj'],
+                    'Atu/TotalReachGoal': info['counter']['goal']
                 },
             )
 
@@ -138,7 +141,7 @@ class OffPolicyAdapter(OnlineAdapter):
             for idx, done in enumerate(torch.logical_or(terminated, truncated)):
                 if done:
                     real_next_obs[idx] = info['final_observation'][idx]
-                    self._log_metrics(logger, idx)
+                    self._log_metrics(logger, idx, info)
                     self._reset_log(idx)
 
             buffer.store(
@@ -173,7 +176,7 @@ class OffPolicyAdapter(OnlineAdapter):
         self._ep_cost += info.get('original_cost', cost).cpu()
         self._ep_len += 1
 
-    def _log_metrics(self, logger: Logger, idx: int) -> None:
+    def _log_metrics(self, logger: Logger, idx: int, info=None) -> None:
         """Log metrics, including ``EpRet``, ``EpCost``, ``EpLen``.
 
         Args:
@@ -185,6 +188,9 @@ class OffPolicyAdapter(OnlineAdapter):
                 'Metrics/EpRet': self._ep_ret[idx],
                 'Metrics/EpCost': self._ep_cost[idx],
                 'Metrics/EpLen': self._ep_len[idx],
+                'Atu/TotalCollidePersuer': info['counter']['persuer'],
+                'Atu/TotalUseHJ': info['counter']['hj'],
+                'Atu/TotalReachGoal': info['counter']['goal']
             },
         )
 

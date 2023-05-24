@@ -95,6 +95,11 @@ class BaseOffline(BaseAlgo):
         self._logger.register_key('Train/Epoch')
         self._logger.register_key('TotalSteps')
 
+        # NOTE: added for atu
+        self._logger.register_key('Atu/TotalCollidePersuer')
+        self._logger.register_key('Atu/TotalUseHJ')
+        self._logger.register_key('Atu/TotalReachGoal')
+
     def learn(self) -> tuple[float, float, float]:
         """Learn the policy."""
         self._logger.log('Start training ...')
