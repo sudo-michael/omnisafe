@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -41,14 +41,6 @@ class OnlineAdapter:
     OmniSafe is a framework for safe reinforcement learning. It is designed to be compatible with
     any existing RL algorithms. The online adapter is used to adapt the environment to the
     framework.
-
-    OmniSafe provides a set of adapters to adapt the environment to the framework.
-
-    - OnPolicyAdapter: Adapt the environment to the on-policy framework.
-    - OffPolicyAdapter: Adapt the environment to the off-policy framework.
-    - OfflineAdapter: Adapt the environment to the offline framework.
-    - SauteAdapter: Adapt the environment to the SAUTE framework.
-    - SimmerAdapter: Adapt the environment to the SIMMER framework.
 
     Args:
         env_id (str): The environment id.

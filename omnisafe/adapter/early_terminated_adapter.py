@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ class EarlyTerminatedAdapter(OnPolicyAdapter):
         super().__init__(env_id, num_envs, seed, cfgs)
 
         self._cost_limit: float = cfgs.algo_cfgs.cost_limit
-        self._cost_logger: torch.Tensor = torch.zeros(self._env.num_envs)
+        self._cost_logger: torch.Tensor = torch.zeros(self._env.num_envs).to(self._device)
 
     def step(
         self,
@@ -79,9 +79,9 @@ class EarlyTerminatedAdapter(OnPolicyAdapter):
         self._cost_logger += info.get('original_cost', cost)
 
         if self._cost_logger > self._cost_limit:
-            reward = torch.zeros(self._env.num_envs)
-            terminated = torch.ones(self._env.num_envs)
+            reward = torch.zeros(self._env.num_envs).to(self._device)
+            terminated = torch.ones(self._env.num_envs).to(self._device)
             next_obs, _ = self._env.reset()
-            self._cost_logger = torch.zeros(self._env.num_envs)
+            self._cost_logger = torch.zeros(self._env.num_envs).to(self._device)
 
         return next_obs, reward, cost, terminated, truncated, info

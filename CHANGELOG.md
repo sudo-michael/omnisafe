@@ -7,9 +7,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## v0.5.0
 
 ### Features
+
+- Feat(off-policy): support off-policy pid and update performance for navigation by [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#245](https://github.com/OmniSafeAI/omnisafe/pull/245).
+
+- Style(model-based): fix mypy and polish api docstring by [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#244](https://github.com/OmniSafeAI/omnisafe/pull/244).
+
+- Feat: improve test coverage and clear redundant code by [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#238](https://github.com/OmniSafeAI/omnisafe/pull/238).
+
+- Feat: update benchmarks and provide configs for reproducing results by [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#238](https://github.com/OmniSafeAI/omnisafe/pull/236).
 
 - Feat: add CODEOWNERS and refine ISSUE TEMPLATE by [@Jiaming Ji](https://github.com/zmsn-2077) in PR [#233](https://github.com/PKU-Alignment/omnisafe/pull/233).
 
@@ -17,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Feat: add Dockerfile and codecov.yml by [@XuehaiPan](https://github.com/XuehaiPan) in PR [#217](https://github.com/PKU-Alignment/omnisafe/pull/217).
 
-- Chore: update benchmark performance for first-order algorithms [@Borong Zhang](https://github.com/muchvo) in PR [#215](https://github.com/PKU-Alignment/omnisafe/pull/215).
+- Chore: update benchmark performance for first-order algorithms by [@Borong Zhang](https://github.com/muchvo) in PR [#215](https://github.com/PKU-Alignment/omnisafe/pull/215).
 
 - Chore: clean some trivial code by [@Borong Zhang](https://github.com/muchvo) in PR [#214](https://github.com/PKU-Alignment/omnisafe/pull/214).
 
@@ -27,13 +35,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Documentations
 
+- Docs: polish algorithms tutorial by [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#242](https://github.com/OmniSafeAI/omnisafe/pull/242).
+
+- Docs: change link to PKU-Alignment by [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#239](https://github.com/OmniSafeAI/omnisafe/pull/239).
+
 - Docs: polish readme by [@Jiaming Ji](https://github.com/zmsn-2077) in PR [#231](https://github.com/PKU-Alignment/omnisafe/pull/231).
 
 - Docs: polish algorithm tutorial and update API docs by [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#225](https://github.com/PKU-Alignment/omnisafe/pull/225).
 
 ### Fixes
 
-### Refactor
+- Fix: fix adapter device and exp grid by [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#243](https://github.com/OmniSafeAI/omnisafe/pull/243).
 
 ## v0.4.0
 
@@ -43,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Feat: add model-based algorithms by [@Weidong Huang](https://github.com/hdadong) in PR [#212](https://github.com/PKU-Alignment/omnisafe/pull/212).
 
-- Feat(saute, simmer): support saute rl and clean the code [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#209](https://github.com/PKU-Alignment/omnisafe/pull/209).
+- Feat(saute, simmer): support saute rl and clean the code by [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#209](https://github.com/PKU-Alignment/omnisafe/pull/209).
 
 - Feat(off-policy): support off-policy lag by [@Jiayi Zhou](https://github.com/Gaiejj) in PR [#204](https://github.com/PKU-Alignment/omnisafe/pull/204).
 

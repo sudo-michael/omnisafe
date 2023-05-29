@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -81,7 +81,7 @@ class VCritic(Critic):
         Specifically, V function approximator maps observations to V-values.
 
         Args:
-            obs (torch.Tensor): Observations.
+            obs (torch.Tensor): Observations from environments.
 
         Returns:
             The V critic value of observation.

@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -114,7 +114,8 @@ class OfflineDataset(Dataset):
 
         Args:
             dataset_name: The name of the dataset. could be one of the following:
-                - 'SafetyPointCircle1-v0_mixed_0.5'
+
+                - ``SafetyPointCircle1-v0_mixed_0.5``
                 - some local .npz file
             batch_size: The batch size of the dataset.
             gpu_threshold: The threshold of size(MB) of the dataset to be loaded on GPU.
@@ -271,7 +272,8 @@ class OfflineDatasetWithInit(OfflineDataset):
 
         Args:
             dataset_name: The name of the dataset. could be one of the following:
-                - 'SafetyPointCircle1-v0_mixed_0.5'
+
+                - ``SafetyPointCircle1-v0_mixed_0.5``
                 - some local .npz file
             batch_size: The batch size of the dataset.
             gpu_threshold: The threshold of size(MB) of the dataset to be loaded on GPU.

@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -79,8 +79,8 @@ class Config(dict):
         max_len (int): Maximum length.
         num_threads (int): Number of threads.
 
-    Args:
-        **kwargs (Any): Keyword arguments to set config.
+    Keyword Args:
+        kwargs (Any): keyword arguments to set the attributes.
     """
 
     seed: int

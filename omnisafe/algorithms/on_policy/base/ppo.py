@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ class PPO(PolicyGradient):
 
         .. math::
 
-            L^{CLIP} = \mathbb{E}_{s_t \sim \rho_{\theta}} \left[
+            L^{CLIP} = \underset{s_t \sim \rho_{\theta}}{\mathbb{E}} \left[
                 \min ( r_t A^{R}_{\pi_{\theta}} (s_t, a_t) , \text{clip} (r_t, 1 - \epsilon, 1 + \epsilon)
                 A^{R}_{\pi_{\theta}} (s_t, a_t)
             \right]
@@ -58,7 +58,7 @@ class PPO(PolicyGradient):
             obs (torch.Tensor): The ``observation`` sampled from buffer.
             act (torch.Tensor): The ``action`` sampled from buffer.
             logp (torch.Tensor): The ``log probability`` of action sampled from buffer.
-            adv (torch.Tensor): The ``advantage`` sampled from buffer.
+            adv (torch.Tensor): The ``advantage`` processed. ``reward_advantage`` here.
 
         Returns:
             The loss of pi/actor.

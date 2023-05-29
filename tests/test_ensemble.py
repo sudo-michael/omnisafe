@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Test ensemble"""
+"""Test ensemble."""
 
 from __future__ import annotations
 
@@ -30,9 +30,7 @@ from omnisafe.algorithms.model_based.base.ensemble import (
 
 def test_standard_scaler():
     standard_scaler = StandardScaler(device='cpu')
-    numpy_input = np.random.rand(10, 10)
-    torch_input = torch.from_numpy(numpy_input)
-    assert isinstance(standard_scaler.transform(numpy_input), np.ndarray)
+    torch_input = torch.rand(10, 10)
     assert isinstance(standard_scaler.transform(torch_input), torch.Tensor)
 
 

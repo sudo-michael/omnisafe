@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ class OnPolicyBuffer(BaseBuffer):  # pylint: disable=too-many-instance-attribute
     """A buffer for storing trajectories experienced by an agent interacting with the environment.
 
     Besides, The buffer also provides the functionality of calculating the advantages of
-    state-action pairs, ranging from ``GAE``, ``GAE-RTG`` ,``V-trace`` to ``Plain`` method.
+    state-action pairs, ranging from ``GAE``, ``GAE-RTG`` , ``V-trace`` to ``Plain`` method.
 
     .. warning::
         The buffer only supports Box spaces.

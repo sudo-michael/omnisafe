@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -62,7 +62,8 @@ class DDPGLag(DDPG):
         """
         super()._update()
         Jc = self._logger.get_stats('Metrics/EpCost')[0]
-        self._lagrange.update_lagrange_multiplier(Jc)
+        if self._epoch > self._cfgs.algo_cfgs.warmup_epochs:
+            self._lagrange.update_lagrange_multiplier(Jc)
         self._logger.store(
             {
                 'Metrics/LagrangeMultiplier': self._lagrange.lagrangian_multiplier.data.item(),

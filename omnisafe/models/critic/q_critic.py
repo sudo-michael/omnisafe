@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Implementation of QCritic."""
+"""Implementation of Q Critic."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ from omnisafe.utils.model import build_mlp_network
 
 
 class QCritic(Critic):
-    """Implementation of QCritic.
+    """Implementation of Q Critic.
 
     A Q-function approximator that uses a multi-layer perceptron (MLP) to map observation-action
     pairs to Q-values. This class is an inherit class of :class:`Critic`. You can design your own
@@ -97,7 +97,7 @@ class QCritic(Critic):
                 critic = nn.Sequential(obs_encoder, net)
             else:
                 net = build_mlp_network(
-                    [self._obs_dim + self._act_dim, *hidden_sizes] + [1],
+                    [self._obs_dim + self._act_dim, *hidden_sizes, 1],
                     activation=activation,
                     weight_initialization_mode=weight_initialization_mode,
                 )
@@ -118,7 +118,7 @@ class QCritic(Critic):
 
         Args:
             obs (torch.Tensor): Observation from environments.
-            act (torch.Tensor): Action.
+            act (torch.Tensor): Action from actor .
 
         Returns:
             A list of Q critic values of action and observation pair.

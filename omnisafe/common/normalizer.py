@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ class Normalizer(nn.Module):
     References:
         - Title: Updating Formulae and a Pairwise Algorithm for Computing Sample Variances
         - Author: Tony F. Chan, Gene H. Golub, Randall J. LeVeque
-        - URL: http://i.stanford.edu/pub/cstr/reports/cs/tr/79/773/CS-TR-79-773.pdf
+        - URL: `Normalizer <http://i.stanford.edu/pub/cstr/reports/cs/tr/79/773/CS-TR-79-773.pdf>`_
     """
 
     _mean: torch.Tensor  # running mean
@@ -79,7 +79,7 @@ class Normalizer(nn.Module):
         """Normalize the data.
 
         Args:
-            data (torch.Tensor): raw data to be normalized.
+            data (torch.Tensor): The raw data to be normalized.
 
         Returns:
             The normalized data.

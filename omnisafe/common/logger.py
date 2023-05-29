@@ -249,7 +249,7 @@ class Logger:  # pylint: disable=too-many-instance-attributes
         self,
         data: dict[str, Any] | None = None,
         /,
-        **kwargs: Any,
+        **kwargs: Any | float | np.ndarray | torch.Tensor,
     ) -> None:
         """Store the data to the logger.
 
@@ -259,7 +259,9 @@ class Logger:  # pylint: disable=too-many-instance-attributes
         Args:
             data (dict[str, int | float | np.ndarray | torch.Tensor] or None, optional): The data to
                 be stored. Defaults to None.
-            **kwargs (int, float, np.ndarray, or torch.Tensor): The data to be stored.
+
+        Keyword Args:
+            kwargs (int, float, np.ndarray, or torch.Tensor): The data to be stored.
         """
         if data is not None:
             kwargs.update(data)
@@ -279,11 +281,10 @@ class Logger:  # pylint: disable=too-many-instance-attributes
 
         The dumped data will be separated by the following steps:
 
-        .. hint::
-            - If the key is registered with window_length, the data will be averaged in the window.
-            - Write the data to the csv file.
-            - Write the data to the tensorboard.
-            - Update the progress logger.
+        - If the key is registered with window_length, the data will be averaged in the window.
+        - Write the data to the csv file.
+        - Write the data to the tensorboard.
+        - Update the progress logger.
         """
         self._update_current_row()
         table = Table('Metrics', 'Value')

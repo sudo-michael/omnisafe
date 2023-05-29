@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +35,14 @@ class SafetyGymnasiumEnv(CMDP):
         num_envs (int, optional): Number of environments. Defaults to 1.
         device (torch.device, optional): Device to store the data. Defaults to
             ``torch.device('cpu')``.
-        **kwargs (Any): Other arguments.
+
+    Keyword Args:
+        render_mode (str, optional): The render mode ranges from 'human' to 'rgb_array' and 'rgb_array_list'.
+            Defaults to 'rgb_array'.
+        camera_name (str, optional): The camera name.
+        camera_id (int, optional): The camera id.
+        width (int, optional): The width of the rendered image. Defaults to 256.
+        height (int, optional): The height of the rendered image. Defaults to 256.
 
     Attributes:
         need_auto_reset_wrapper (bool): Whether to use auto reset wrapper.
@@ -211,10 +218,11 @@ class SafetyGymnasiumEnv(CMDP):
         )
 
     def render(self) -> Any:
-        """Render the environment.
+        """Compute the render frames as specified by :attr:`render_mode` during the initialization of the environment.
 
         Returns:
-            Rendered image.
+            The render frames: we recommend to use `np.ndarray`
+                which could construct video by moviepy.
         """
         return self._env.render()
 
