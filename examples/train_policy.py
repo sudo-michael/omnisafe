@@ -54,14 +54,14 @@ if __name__ == '__main__':
     parser.add_argument(
         '--device',
         type=str,
-        default='cpu',
+        default='cuda:0',
         metavar='DEVICES',
         help='device to use for training',
     )
     parser.add_argument(
         '--vector-env-nums',
         type=int,
-        default=1,
+        default=2,
         metavar='VECTOR-ENV',
         help='number of vector envs to use for training',
     )

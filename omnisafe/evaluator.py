@@ -309,14 +309,22 @@ class Evaluator:  # pylint: disable=too-many-instance-attributes
             'env_id': self._cfgs['env_id'],
             'num_envs': 1,
             'render_mode': self._render_mode,
-            'camera_id': camera_id,
-            'camera_name': camera_name,
-            'width': width,
-            'height': height,
+            # 'camera_id': camera_id,
+            # 'camera_name': camera_name,
+            # 'width': width,
+            # 'height': height,
         }
 
         self.__load_model_and_env(save_dir, model_name, env_kwargs)
 
+    def sample_action(self, obs: torch.Tensor) -> torch.Tensor:
+        act = self._actor.predict(
+            obs,
+            deterministic=True,
+        )
+
+        return act
+        
     def evaluate(
         self,
         num_episodes: int = 10,

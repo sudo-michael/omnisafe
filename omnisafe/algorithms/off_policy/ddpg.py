@@ -306,6 +306,7 @@ class DDPG(BaseAlgo):
         ep_ret = self._logger.get_stats('Metrics/EpRet')[0]
         ep_cost = self._logger.get_stats('Metrics/EpCost')[0]
         ep_len = self._logger.get_stats('Metrics/EpLen')[0]
+        self._logger.torch_save()
         self._logger.close()
 
         return ep_ret, ep_cost, ep_len
