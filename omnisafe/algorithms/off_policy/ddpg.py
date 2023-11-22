@@ -103,7 +103,7 @@ class DDPG(BaseAlgo):
             >>> def _init_model(self) -> None:
             ...     self._actor_critic = CustomActorQCritic()
         """
-        self._cfgs.model_cfgs.critic['num_critics'] = 1
+        self._cfgs.model_cfgs.prob_critic['num_critics'] = 1
         self._actor_critic: ConstraintActorQCritic = ConstraintActorQCritic(
             obs_space=self._env.observation_space,
             act_space=self._env.action_space,

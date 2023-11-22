@@ -19,14 +19,14 @@ from __future__ import annotations
 import torch
 from torch import optim
 
-from omnisafe.models.actor_critic.actor_critic import ActorCritic
+from omnisafe.models.actor_critic.actor_critic import ConstraintActorCritic
 from omnisafe.models.base import Critic
 from omnisafe.models.critic.critic_builder import CriticBuilder
 from omnisafe.typing import OmnisafeSpace
 from omnisafe.utils.config import ModelConfig
 
 
-class ConstraintActorCritic(ActorCritic):
+class ConstraintActorMultipleCritic(ConstraintActorCritic):
     """ConstraintActorCritic is a wrapper around ActorCritic that adds a cost critic to the model.
 
     In OmniSafe, we combine the actor and critic into one this class.
@@ -40,6 +40,8 @@ class ConstraintActorCritic(ActorCritic):
     +-----------------+-----------------------------------------------+
     | Cost V Critic   | Input is observation. Output is cost value.   |
     +-----------------+-----------------------------------------------+
+    | Cost P Critic   | Input is observation. Output is prob value.   |
+    +-----------------+-----------------------------------------------+
 
     Args:
         obs_space (OmnisafeSpace): The observation space.
@@ -51,6 +53,7 @@ class ConstraintActorCritic(ActorCritic):
         actor (Actor): The actor network.
         reward_critic (Critic): The critic network.
         cost_critic (Critic): The critic network.
+        prob_critic (Critic): The critic network.
         std_schedule (Schedule): The schedule for the standard deviation of the Gaussian distribution.
     """
 
@@ -63,7 +66,7 @@ class ConstraintActorCritic(ActorCritic):
     ) -> None:
         """Initialize an instance of :class:`ConstraintActorCritic`."""
         super().__init__(obs_space, act_space, model_cfgs, epochs)
-        self.cost_critic: Critic = CriticBuilder(
+        self.prob_critic: Critic = CriticBuilder(
             obs_space=obs_space,
             act_space=act_space,
             hidden_sizes=model_cfgs.prob_critic.hidden_sizes,
@@ -72,12 +75,12 @@ class ConstraintActorCritic(ActorCritic):
             num_critics=1,
             use_obs_encoder=False,
         ).build_critic('v')
-        self.add_module('cost_critic', self.cost_critic)
+        self.add_module('prob_critic', self.prob_critic)
 
         if model_cfgs.prob_critic.lr is not None:
-            self.cost_critic_optimizer: optim.Optimizer
-            self.cost_critic_optimizer = optim.Adam(
-                self.cost_critic.parameters(),
+            self.prob_critic_optimizer: optim.Optimizer
+            self.prob_critic_optimizer = optim.Adam(
+                self.prob_critic.parameters(),
                 lr=model_cfgs.prob_critic.lr,
             )
 
@@ -102,11 +105,12 @@ class ConstraintActorCritic(ActorCritic):
         with torch.no_grad():
             value_r = self.reward_critic(obs)
             value_c = self.cost_critic(obs)
+            value_p = self.prob_critic(obs)
 
             action = self.actor.predict(obs, deterministic=deterministic)
             log_prob = self.actor.log_prob(action)
 
-        return action, value_r[0], value_c[0], log_prob
+        return action, value_r[0], value_c[0], value_p[0], log_prob
 
     def forward(
         self,
@@ -124,6 +128,7 @@ class ConstraintActorCritic(ActorCritic):
                 Gaussian noise.
             value_r: The reward value of the observation.
             value_c: The cost value of the observation.
+            value_p: The cost value of the observation.
             log_prob: The log probability of the action.
         """
         return self.step(obs, deterministic=deterministic)

@@ -18,14 +18,14 @@ from copy import deepcopy
 
 from torch import optim
 
-from omnisafe.models.actor_critic.actor_q_critic import ActorQCritic
+from omnisafe.models.actor_critic.constraint_actor_q_critic import ConstraintActorQCritic
 from omnisafe.models.base import Critic
 from omnisafe.models.critic.critic_builder import CriticBuilder
 from omnisafe.typing import OmnisafeSpace
 from omnisafe.utils.config import ModelConfig
 
 
-class ConstraintActorQCritic(ActorQCritic):
+class ConstraintActorMultipleQCritic(ConstraintActorQCritic):
     """ConstraintActorQCritic is a wrapper around ActorCritic that adds a cost critic to the model.
 
     In OmniSafe, we combine the actor and critic into one this class.
@@ -38,6 +38,8 @@ class ConstraintActorQCritic(ActorQCritic):
     | Reward Q Critic | Input is obs-action pair, Output is reward value. |
     +-----------------+---------------------------------------------------+
     | Cost Q Critic   | Input is obs-action pair. Output is cost value.   |
+    +-----------------+---------------------------------------------------+
+    | Cost P Critic   | Input is obs-action pair. Output is prob value.   |
     +-----------------+---------------------------------------------------+
 
     Args:
@@ -68,7 +70,7 @@ class ConstraintActorQCritic(ActorQCritic):
         """Initialize an instance of :class:`ConstraintActorQCritic`."""
         super().__init__(obs_space, act_space, model_cfgs, epochs)
 
-        self.cost_critic: Critic = CriticBuilder(
+        self.prob_critic: Critic = CriticBuilder(
             obs_space=obs_space,
             act_space=act_space,
             hidden_sizes=model_cfgs.prob_critic.hidden_sizes,
@@ -77,14 +79,14 @@ class ConstraintActorQCritic(ActorQCritic):
             num_critics=1,
             use_obs_encoder=False,
         ).build_critic('q')
-        self.target_cost_critic: Critic = deepcopy(self.cost_critic)
+        self.target_prob_critic: Critic = deepcopy(self.prob_critic)
         for param in self.target_cost_critic.parameters():
             param.requires_grad = False
-        self.add_module('cost_critic', self.cost_critic)
+        self.add_module('prob_critic', self.prob_critic)
         if model_cfgs.prob_critic.lr is not None:
-            self.cost_critic_optimizer: optim.Optimizer
-            self.cost_critic_optimizer = optim.Adam(
-                self.cost_critic.parameters(),
+            self.prob_critic_optimizer: optim.Optimizer
+            self.prob_critic_optimizer = optim.Adam(
+                self.prob_critic.parameters(),
                 lr=model_cfgs.prob_critic.lr,
             )
 
@@ -96,7 +98,7 @@ class ConstraintActorQCritic(ActorQCritic):
         """
         super().polyak_update(tau)
         for target_param, param in zip(
-            self.target_cost_critic.parameters(),
-            self.cost_critic.parameters(),
+            self.target_prob_critic.parameters(),
+            self.prob_critic.parameters(),
         ):
             target_param.data.copy_(tau * param.data + (1 - tau) * target_param.data)

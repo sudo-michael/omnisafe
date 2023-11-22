@@ -26,4 +26,4 @@ from omnisafe.algorithms.off_policy.td3_pid import TD3PID
 from omnisafe.algorithms.off_policy.shield_sac_lag import ShieldSACLag
 
 
-__all__ = ['DDPG', 'TD3', 'SAC', 'DDPGLag', 'TD3Lag', 'SACLag', 'DDPGPID', 'TD3PID', 'SACPID', 'ShieldSACLag']
+__all__ = ['DDPG', 'TD3', 'SAC', 'DDPGLag', 'TD3Lag', 'SACLag', 'DDPGPID', 'TD3PID', 'SACPID', 'ShieldSACLag', 'RESPO']

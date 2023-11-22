@@ -217,7 +217,7 @@ class ModelConfig(Config):
     weight_initialization_mode: InitFunction
     actor_type: ActorType
     actor: ModelConfig
-    critic: ModelConfig
+    prob_critic: ModelConfig
     hidden_sizes: list[int]
     activation: Activation
     std: list[float]

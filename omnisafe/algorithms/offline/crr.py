@@ -93,8 +93,8 @@ class CRR(BaseOffline):
             CriticBuilder(
                 obs_space=self._env.observation_space,
                 act_space=self._env.action_space,
-                hidden_sizes=self._cfgs.model_cfgs.critic.hidden_sizes,
-                activation=self._cfgs.model_cfgs.critic.activation,
+                hidden_sizes=self._cfgs.model_cfgs.prob_critic.hidden_sizes,
+                activation=self._cfgs.model_cfgs.prob_critic.activation,
                 weight_initialization_mode=self._cfgs.model_cfgs.weight_initialization_mode,
                 num_critics=2,
             )
@@ -103,12 +103,12 @@ class CRR(BaseOffline):
         )
         self._target_reward_critic = deepcopy(self._reward_critic)
         assert isinstance(
-            self._cfgs.model_cfgs.critic.lr,
+            self._cfgs.model_cfgs.prob_critic.lr,
             float,
         ), 'The learning rate must be a float number.'
         self._reward_critic_optimizer = optim.Adam(
             self._reward_critic.parameters(),
-            lr=self._cfgs.model_cfgs.critic.lr,
+            lr=self._cfgs.model_cfgs.prob_critic.lr,
         )
 
     def _train(
