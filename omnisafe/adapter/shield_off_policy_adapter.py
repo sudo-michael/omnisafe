@@ -68,8 +68,8 @@ class ShieldOnlineAdapter:
         self._cfgs: Config = cfgs
         self._device: torch.device = get_device(cfgs.train_cfgs.device)
         self._env_id: str = env_id
-        self._env: CMDP = make(env_id, num_envs=num_envs, device=self._device, kwargs={'use_shield': 'True', 'shield_threshold': 0.1}) # tell cmdp env to use shield wrapper
-        self._eval_env: CMDP = make(env_id, num_envs=1, device=self._device, kwargs={'use_shield': 'True', 'shield_threshold': 0.1})
+        self._env: CMDP = make(env_id, num_envs=num_envs, device=self._device, use_shield=True, shield_threshold=0.1) # tell cmdp env to use shield wrapper
+        self._eval_env: CMDP = make(env_id, num_envs=1, device=self._device, use_shield=True, shield_threshold=0.1)
 
         self._wrapper(
             obs_normalize=cfgs.algo_cfgs.obs_normalize,
