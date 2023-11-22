@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,15 +20,9 @@ import torch
 from torch import nn, optim
 from torch.optim.lr_scheduler import ConstantLR, LinearLR
 
-from omnisafe.models.actor import (
-    VAE,
-    GaussianLearningActor,
-    GaussianSACActor,
-    MLPActor,
-    PerturbationActor,
-)
+from omnisafe.models.actor import GaussianLearningActor
 from omnisafe.models.actor.actor_builder import ActorBuilder
-from omnisafe.models.base import Critic
+from omnisafe.models.base import Actor, Critic
 from omnisafe.models.critic.critic_builder import CriticBuilder
 from omnisafe.typing import OmnisafeSpace
 from omnisafe.utils.config import ModelConfig
@@ -73,7 +67,7 @@ class ActorCritic(nn.Module):
         """Initialize an instance of :class:`ActorCritic`."""
         super().__init__()
 
-        self.actor: GaussianLearningActor | GaussianSACActor | MLPActor | VAE | PerturbationActor = ActorBuilder(
+        self.actor: Actor = ActorBuilder(
             obs_space=obs_space,
             act_space=act_space,
             hidden_sizes=model_cfgs.actor.hidden_sizes,
@@ -128,7 +122,7 @@ class ActorCritic(nn.Module):
         """Choose the action based on the observation. used in rollout without gradient.
 
         Args:
-            obs (torch.tensor): The observation.
+            obs (torch.tensor): The observation from environments.
             deterministic (bool, optional): Whether to use deterministic action. Defaults to False.
 
         Returns:
@@ -151,7 +145,7 @@ class ActorCritic(nn.Module):
         """Choose the action based on the observation. used in training with gradient.
 
         Args:
-            obs (torch.tensor): The observation.
+            obs (torch.tensor): The observation from environments.
             deterministic (bool, optional): Whether to use deterministic action. Defaults to False.
 
         Returns:

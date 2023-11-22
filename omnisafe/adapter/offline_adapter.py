@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -95,14 +95,22 @@ class OfflineAdapter:
         """
         return self._env.step(actions)
 
-    def reset(self) -> tuple[torch.Tensor, dict[str, Any]]:
+    def reset(
+        self,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[torch.Tensor, dict[str, Any]]:
         """Reset the environment and returns an initial observation.
+
+        Args:
+            seed (int, optional): The random seed. Defaults to None.
+            options (dict[str, Any], optional): The options for the environment. Defaults to None.
 
         Returns:
             observation: The initial observation of the space.
             info: Some information logged by the environment.
         """
-        return self._env.reset()
+        return self._env.reset(seed=seed, options=options)
 
     def evaluate(
         self,

@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 import torch
 
 from omnisafe.algorithms import registry
-from omnisafe.algorithms.on_policy.base.ppo import PPO
+from omnisafe.algorithms.on_policy.base.trpo import TRPO
 from omnisafe.utils.config import Config
 
 
 @registry.register
-class OnCRPO(PPO):
+class OnCRPO(TRPO):
     """The on-policy CRPO algorithm.
 
     References:
@@ -64,11 +64,17 @@ class OnCRPO(PPO):
             adv_c (torch.Tensor): The ``cost_advantage`` sampled from buffer.
 
         Returns:
-            The ``advantage`` chosen from ``reward_advantage`` and ``cost_advantage``.
+            The advantage function chosen from reward and cost.
         """
         Jc = self._logger.get_stats('Metrics/EpCost')[0]
         if Jc <= self._cfgs.algo_cfgs.cost_limit + self._cfgs.algo_cfgs.distance:
             self._rew_update += 1
             return adv_r
         self._cost_update += 1
+        self._logger.store(
+            {
+                'Misc/RewUpdate': self._rew_update,
+                'Misc/CostUpdate': self._cost_update,
+            },
+        )
         return -adv_c

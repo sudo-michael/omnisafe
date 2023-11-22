@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, ClassVar
 
 import numpy as np
 import safety_gymnasium
@@ -35,7 +35,14 @@ class SafetyGymnasiumEnv(CMDP):
         num_envs (int, optional): Number of environments. Defaults to 1.
         device (torch.device, optional): Device to store the data. Defaults to
             ``torch.device('cpu')``.
-        **kwargs (Any): Other arguments.
+
+    Keyword Args:
+        render_mode (str, optional): The render mode ranges from 'human' to 'rgb_array' and 'rgb_array_list'.
+            Defaults to 'rgb_array'.
+        camera_name (str, optional): The camera name.
+        camera_id (int, optional): The camera id.
+        width (int, optional): The width of the rendered image. Defaults to 256.
+        height (int, optional): The height of the rendered image. Defaults to 256.
 
     Attributes:
         need_auto_reset_wrapper (bool): Whether to use auto reset wrapper.
@@ -44,7 +51,8 @@ class SafetyGymnasiumEnv(CMDP):
 
     need_auto_reset_wrapper: bool = False
     need_time_limit_wrapper: bool = False
-    _support_envs: list[str] = [
+
+    _support_envs: ClassVar[list[str]] = [
         'SafetyPointGoal0-v0',
         'SafetyPointGoal1-v0',
         'SafetyPointGoal2-v0',
@@ -81,6 +89,30 @@ class SafetyGymnasiumEnv(CMDP):
         'SafetyAntCircle0-v0',
         'SafetyAntCircle1-v0',
         'SafetyAntCircle2-v0',
+        'SafetyDoggoGoal0-v0',
+        'SafetyDoggoGoal1-v0',
+        'SafetyDoggoGoal2-v0',
+        'SafetyDoggoButton0-v0',
+        'SafetyDoggoButton1-v0',
+        'SafetyDoggoButton2-v0',
+        'SafetyDoggoPush0-v0',
+        'SafetyDoggoPush1-v0',
+        'SafetyDoggoPush2-v0',
+        'SafetyDoggoCircle0-v0',
+        'SafetyDoggoCircle1-v0',
+        'SafetyDoggoCircle2-v0',
+        'SafetyRacecarGoal0-v0',
+        'SafetyRacecarGoal1-v0',
+        'SafetyRacecarGoal2-v0',
+        'SafetyRacecarButton0-v0',
+        'SafetyRacecarButton1-v0',
+        'SafetyRacecarButton2-v0',
+        'SafetyRacecarPush0-v0',
+        'SafetyRacecarPush1-v0',
+        'SafetyRacecarPush2-v0',
+        'SafetyRacecarCircle0-v0',
+        'SafetyRacecarCircle1-v0',
+        'SafetyRacecarCircle2-v0',
         'SafetyHalfCheetahVelocity-v1',
         'SafetyHopperVelocity-v1',
         'SafetySwimmerVelocity-v1',
@@ -102,6 +134,7 @@ class SafetyGymnasiumEnv(CMDP):
         super().__init__(env_id)
         self._num_envs = num_envs
         self._device = torch.device(device)
+
         if num_envs > 1:
             self._env = safety_gymnasium.vector.make(env_id=env_id, num_envs=num_envs, **kwargs)
             assert isinstance(self._env.single_action_space, Box), 'Only support Box action space.'
@@ -176,18 +209,23 @@ class SafetyGymnasiumEnv(CMDP):
 
         return obs, reward, cost, terminated, truncated, info
 
-    def reset(self, seed: int | None = None) -> tuple[torch.Tensor, dict[str, Any]]:
+    def reset(
+        self,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[torch.Tensor, dict[str, Any]]:
         """Reset the environment.
 
         Args:
-            seed (int or None, optional): Seed to reset the environment.
-                Defaults to None.
+            seed (int, optional): The random seed. Defaults to None.
+            options (dict[str, Any], optional): The options for the environment. Defaults to None.
+
 
         Returns:
             observation: Agent's observation of the current environment.
             info: Some information logged by the environment.
         """
-        obs, info = self._env.reset(seed=seed)
+        obs, info = self._env.reset(seed=seed, options=options)
         return torch.as_tensor(obs, dtype=torch.float32, device=self._device), info
 
     def set_seed(self, seed: int) -> None:
@@ -211,10 +249,11 @@ class SafetyGymnasiumEnv(CMDP):
         )
 
     def render(self) -> Any:
-        """Render the environment.
+        """Compute the render frames as specified by :attr:`render_mode` during the initialization of the environment.
 
         Returns:
-            Rendered image.
+            The render frames: we recommend to use `np.ndarray`
+                which could construct video by moviepy.
         """
         return self._env.render()
 

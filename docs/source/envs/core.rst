@@ -1,5 +1,5 @@
-Core
-====
+OmniSafe Core Environment
+=========================
 
 .. currentmodule:: omnisafe.envs.core
 
@@ -37,7 +37,7 @@ Wrapper
         :members:
         :private-members:
 
-Make an environment
+Make an Environment
 -------------------
 
 .. card::
@@ -50,7 +50,5 @@ Make an environment
     .. autoclass:: EnvRegister
         :members:
         :private-members:
-
-
 
     .. autofunction:: make

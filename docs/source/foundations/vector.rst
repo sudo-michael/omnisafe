@@ -1,47 +1,34 @@
 Vector and Martrix
 ==================
 
-Introduction
-------------
-`Reinforcement Learning <https://static.hlt.bme.hu/semantics/external/pages/deep_learning/en.wikipedia.org/wiki/Reinforcement_learning.html#:~:text=Reinforcement%20learning%20%28RL%29%20is%20an%20area%20of%20machine,as%20to%20maximize%20some%20notion%20of%20cumulative%20reward.>`__
-is one of the disciplines in machine learning that is more closely related to mathematics.
-**Safe Reinforcement Learning** is particularly close to mathematical theory,
-especially **Optimization Theory**.
-
-This section introduces the basic mathematical theory of Safe Reinforcement Learning.
-We will briefly introduce the following topics: Linear Algebra and Optimization Theory.
-
-If you are new to these mathematical theories in subsequent chapters, please refer back to this article.
-If this still does not solve your confusion, please refer to the more detailed introduction to mathematical theory.
-
-Knowledge of Vector and Matrix
-------------------------------
-
 Vector Projection
-~~~~~~~~~~~~~~~~~
+-----------------
 
-The projection of a vector :math:`\boldsymbol{y} \in \mathbb{R}^m` onto the span
-of :math:`\left\{\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n\right\}` (here we assume
-:math:`\boldsymbol{x}_i \in \mathbb{R}^m` )is the vector
-:math:`\boldsymbol{v} \in \operatorname{span}\left(\left\{\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n\right\}\right)`,
-such that :math:`\boldsymbol{v}` is as close as possible to :math:`\boldsymbol{y}`, as
-measured by the Euclidean norm :math:`\|\boldsymbol{v}-\boldsymbol{y}\|_2`. We denote
-the projection as
-:math:`\operatorname{Proj}\left(\boldsymbol{y} ;\left\{\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n\right\}\right)`
+The projection of a vector :math:`\boldsymbol{y} \in \mathbb{R}^m` onto the
+span of :math:`\left\{\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n\right\}` (here
+we assume :math:`\boldsymbol{x}_i \in \mathbb{R}^m` and denote
+:math:`\operatorname{span}(\{\boldsymbol{x}_1,
+\ldots, \boldsymbol{x}_n\})` as  :math:`\boldsymbol{X}` ) is the vector
+:math:`\boldsymbol{v} \in \boldsymbol{X}`,
+such that :math:`\boldsymbol{v}` is as close as possible to :math:`\boldsymbol
+{y}`, as measured by the Euclidean norm
+:math:`\|\boldsymbol{v}-\boldsymbol{y}\|_2`. We denote the projection as
+:math:`\operatorname{Proj}\left(\boldsymbol {y} ;
+\left\{\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n\right\}\right)`
 and can define it formally as
 
-.. math:: \operatorname{Proj}\left(\boldsymbol{y} ;\left\{\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n\right\}\right)=\mathop{\arg\min}\limits_{\boldsymbol{v} \in \operatorname{span}\left(\left\{\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n\right\}\right)}\|\boldsymbol{y}-\boldsymbol{v}\|_2 .
+.. math:: \operatorname{Proj}(\boldsymbol{y} ;\{\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n\})=\mathop{\arg\min}\limits_{\boldsymbol{v} \in \boldsymbol{X}}\|\boldsymbol{y}-\boldsymbol{v}\|_2
 
 Given a full rank matrix :math:`\mathbf{A} \in \mathbb{R}^{m \times n}`
 with :math:`m \geq n`, we can define the projection of a vector
 :math:`\boldsymbol{y} \in \mathbb{R}^m` onto the range of :math:`\mathbf{A}` as
 follows:
 
-.. math:: \operatorname{Proj}(\boldsymbol{y} ; \mathbf{A})=\mathop{\arg\min}\limits_{\boldsymbol{v} \in \mathcal{R}(\mathbf{A})}\|\boldsymbol{v}-\boldsymbol{y}\|_2=\mathbf{A}\left(\mathbf{A}^{\top} \mathbf{A}\right)^{-1} \mathbf{A}^{\top} \boldsymbol{y} .
+.. math:: \operatorname{Proj}(\boldsymbol{y} ; \mathbf{A})=\mathop{\arg\min}\limits_{\boldsymbol{v} \in \mathcal{R}(\mathbf{A})}\|\boldsymbol{v}-\boldsymbol{y}\|_2=\mathbf{A}\left(\mathbf{A}^{\top} \mathbf{A}\right)^{-1} \mathbf{A}^{\top} \boldsymbol{y}
 
 
 Norms
-~~~~~
+-----
 
 .. tab-set::
 
@@ -79,13 +66,13 @@ Norms
                :math:`\|\boldsymbol{x}\|_p=\left(\sum_{i=1}^n\left|x_i\right|^p\right)^{1 / p}`,
                for :math:`p \geq 1`.
 
+            -  **Max-norm:** :math:`\|x\|_{\infty}=\max _i\left|x_i\right|`.
+
             -  **2-norm:** :math:`\|\boldsymbol{x}\|_2=\sqrt{\sum_{i=1}^n x_i^2}`, also
                called Euclidean norm. Note that
                :math:`\|\boldsymbol{x}\|_2^2=\boldsymbol{x}^{\top} \boldsymbol{x}`.
 
             -  **1-norm:** :math:`\|\boldsymbol{x}\|_1=\sum_{i=1}^n\left|x_i\right|`.
-
-            -  **Max-norm:** :math:`\|x\|_{\infty}=\max _i\left|x_i\right|`.
 
             -  **0-norm:**
                :math:`\|\boldsymbol{x}\|_0=\sum_{i=1}^n \mathbb{I}\left(\left|x_i\right|>0\right)`.
@@ -103,7 +90,7 @@ Norms
 
             Introduction of Matrix Norm
             ^^^
-            Suppose we think of a matrix
+            Suppose a matrix
             :math:`\mathbf{A} \in \mathbb{R}^{m \times n}` as defining a linear
             function :math:`f(\boldsymbol{x})=\mathbf{A} \boldsymbol{x}`. We define the induced norm
             of :math:`\mathbf{A}` as the maximum amount by which :math:`f` can

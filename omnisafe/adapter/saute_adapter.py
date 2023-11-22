@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ class SauteAdapter(OnPolicyAdapter):
             / (1 - self._cfgs.algo_cfgs.saute_gamma)
             / self._cfgs.algo_cfgs.max_ep_len
             * torch.ones(num_envs, 1)
-        )
+        ).to(self._device)
 
         assert isinstance(self._env.observation_space, Box), 'Observation space must be Box'
         self._observation_space: Box = Box(
@@ -109,18 +109,26 @@ class SauteAdapter(OnPolicyAdapter):
         if self._env.num_envs == 1:
             self._env = Unsqueeze(self._env, device=self._device)
 
-    def reset(self) -> tuple[torch.Tensor, dict[str, Any]]:
+    def reset(
+        self,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[torch.Tensor, dict[str, Any]]:
         """Reset the environment and returns an initial observation.
 
         .. note::
             Additionally, the safety observation will be reset.
 
+        Args:
+            seed (int, optional): The random seed. Defaults to None.
+            options (dict[str, Any], optional): The options for the environment. Defaults to None.
+
         Returns:
             observation: The initial observation of the space.
             info: Some information logged by the environment.
         """
-        obs, info = self._env.reset()
-        self._safety_obs = torch.ones(self._env.num_envs, 1)
+        obs, info = self._env.reset(seed=seed, options=options)
+        self._safety_obs = torch.ones(self._env.num_envs, 1).to(self._device)
         obs = self._augment_obs(obs)
         return obs, info
 
@@ -236,7 +244,7 @@ class SauteAdapter(OnPolicyAdapter):
         """
         super()._reset_log(idx)
         if idx is None:
-            self._ep_budget = torch.zeros(self._env.num_envs)
+            self._ep_budget = torch.zeros(self._env.num_envs).to(self._device)
         else:
             self._ep_budget[idx] = 0
 

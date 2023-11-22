@@ -29,7 +29,6 @@ from omnisafe.algorithms.base_algo import BaseAlgo
 from omnisafe.common.buffer import VectorOffPolicyBuffer
 from omnisafe.common.logger import Logger
 from omnisafe.models.actor_critic.constraint_actor_q_critic import ConstraintActorQCritic
-from omnisafe.utils import distributed
 
 
 @registry.register
@@ -43,6 +42,8 @@ class DDPG(BaseAlgo):
             Tom Erez, Yuval Tassa, David Silver, Daan Wierstra.
         - URL: `DDPG <https://arxiv.org/abs/1509.02971>`_
     """
+
+    _epoch: int
 
     def _init_env(self) -> None:
         """Initialize the environment.
@@ -68,9 +69,9 @@ class DDPG(BaseAlgo):
             self._seed,
             self._cfgs,
         )
-        assert (self._cfgs.algo_cfgs.steps_per_epoch) % (
-            distributed.world_size() * self._cfgs.train_cfgs.vector_env_nums
-        ) == 0, 'The number of steps per epoch is not divisible by the number of environments.'
+        assert (
+            self._cfgs.algo_cfgs.steps_per_epoch % self._cfgs.train_cfgs.vector_env_nums == 0
+        ), 'The number of steps per epoch is not divisible by the number of environments.'
 
         assert (
             int(self._cfgs.train_cfgs.total_steps) % self._cfgs.algo_cfgs.steps_per_epoch == 0
@@ -79,9 +80,10 @@ class DDPG(BaseAlgo):
             self._cfgs.train_cfgs.total_steps // self._cfgs.algo_cfgs.steps_per_epoch,
         )
         self._epoch: int = 0
-        self._steps_per_epoch: int = self._cfgs.algo_cfgs.steps_per_epoch // (
-            distributed.world_size() * self._cfgs.train_cfgs.vector_env_nums
+        self._steps_per_epoch: int = (
+            self._cfgs.algo_cfgs.steps_per_epoch // self._cfgs.train_cfgs.vector_env_nums
         )
+
         self._update_cycle: int = self._cfgs.algo_cfgs.update_cycle
         assert (
             self._steps_per_epoch % self._update_cycle == 0
@@ -165,7 +167,13 @@ class DDPG(BaseAlgo):
         +-------------------------+----------------------------------------------------------------------+
         | Misc/TotalEnvSteps      | Total steps of the experiment.                                       |
         +-------------------------+----------------------------------------------------------------------+
-        | Time                    | Total time.                                                          |
+        | Time/Total              | Total time.                                                          |
+        +-------------------------+----------------------------------------------------------------------+
+        | Time/Rollout            | Rollout time.                                                        |
+        +-------------------------+----------------------------------------------------------------------+
+        | Time/Update             | Update time.                                                         |
+        +-------------------------+----------------------------------------------------------------------+
+        | Time/Evaluate           | Evaluate time.                                                       |
         +-------------------------+----------------------------------------------------------------------+
         | FPS                     | Frames per second of the epoch.                                      |
         +-------------------------+----------------------------------------------------------------------+
@@ -192,9 +200,10 @@ class DDPG(BaseAlgo):
         self._logger.register_key('Metrics/EpCost', window_length=50)
         self._logger.register_key('Metrics/EpLen', window_length=50)
 
-        self._logger.register_key('Metrics/TestEpRet', window_length=50)
-        self._logger.register_key('Metrics/TestEpCost', window_length=50)
-        self._logger.register_key('Metrics/TestEpLen', window_length=50)
+        if self._cfgs.train_cfgs.eval_episodes > 0:
+            self._logger.register_key('Metrics/TestEpRet', window_length=50)
+            self._logger.register_key('Metrics/TestEpCost', window_length=50)
+            self._logger.register_key('Metrics/TestEpLen', window_length=50)
 
         self._logger.register_key('Train/Epoch')
         self._logger.register_key('Train/LR')
@@ -216,6 +225,7 @@ class DDPG(BaseAlgo):
         self._logger.register_key('Time/Total')
         self._logger.register_key('Time/Rollout')
         self._logger.register_key('Time/Update')
+        self._logger.register_key('Time/Evaluate')
         self._logger.register_key('Time/Epoch')
         self._logger.register_key('Time/FPS')
 
@@ -237,6 +247,7 @@ class DDPG(BaseAlgo):
         start_time = time.time()
         step = 0
         for epoch in range(self._epochs):
+            self._epoch = epoch
             rollout_time = 0.0
             update_time = 0.0
             epoch_time = time.time()
@@ -271,14 +282,17 @@ class DDPG(BaseAlgo):
                     self._log_when_not_update()
                 update_time += time.time() - update_start
 
+            eval_start = time.time()
             self._env.eval_policy(
-                episode=2,
+                episode=self._cfgs.train_cfgs.eval_episodes,
                 agent=self._actor_critic,
                 logger=self._logger,
             )
+            eval_time = time.time() - eval_start
 
             self._logger.store({'Time/Update': update_time})
             self._logger.store({'Time/Rollout': rollout_time})
+            self._logger.store({'Time/Evaluate': eval_time})
 
             if (
                 step > self._cfgs.algo_cfgs.start_learning_steps
@@ -408,7 +422,6 @@ class DDPG(BaseAlgo):
                 self._actor_critic.reward_critic.parameters(),
                 self._cfgs.algo_cfgs.max_grad_norm,
             )
-        distributed.avg_grads(self._actor_critic.reward_critic)
         self._actor_critic.reward_critic_optimizer.step()
 
     def _update_cost_critic(
@@ -451,7 +464,6 @@ class DDPG(BaseAlgo):
                 self._actor_critic.cost_critic.parameters(),
                 self._cfgs.algo_cfgs.max_grad_norm,
             )
-        distributed.avg_grads(self._actor_critic.cost_critic)
         self._actor_critic.cost_critic_optimizer.step()
 
         self._logger.store(

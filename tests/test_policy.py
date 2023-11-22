@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Test policy algorithms"""
+"""Test policy algorithms."""
 
 import os
 
@@ -29,15 +29,16 @@ naive_lagrange_policy = ['PPOLag', 'TRPOLag', 'RCPO', 'OnCRPO', 'PDO']
 first_order_policy = ['CUP', 'FOCOPS']
 second_order_policy = ['CPO', 'PCPO']
 penalty_policy = ['P3O', 'IPO']
-off_policy = ['DDPG', 'TD3', 'DDPGLag', 'TD3Lag']
-sac_policy = ['SAC', 'SACLag']
+off_base = ['DDPG', 'TD3']
+off_lag = ['DDPGLag', 'TD3Lag', 'DDPGPID', 'TD3PID']
+sac_base = ['SAC']
+sac_lag = ['SACLag', 'SACPID']
 saute_policy = ['TRPOSaute', 'PPOSaute']
 simmer_policy = ['TRPOSimmerPID', 'PPOSimmerPID']
 pid_lagrange_policy = ['TRPOPID', 'CPPOPID']
 early_terminated_policy = ['TRPOEarlyTerminated', 'PPOEarlyTerminated']
-offline_policy = ['BCQ', 'BCQLag', 'CRR', 'CCRR', 'COptiDICE', 'VAEBC']
-# saute_policy = ['PPOSaute', 'PPOLagSaute']
-# simmer_policy = ['PPOSimmerQ', 'PPOLagSimmerQ', 'PPOSimmerPid', 'PPOLagSimmerPid']
+offline_policy = ['BCQ', 'BCQLag', 'CRR', 'CCRR', 'VAEBC']
+
 model_cfgs = {
     'linear_lr_decay': True,
     'actor': {
@@ -225,6 +226,7 @@ def test_cem_based(algo):
     }
     agent = omnisafe.Agent(algo, env_id, custom_cfgs=custom_cfgs)
     agent.learn()
+    agent.render()
 
 
 @helpers.parametrize(algo=['LOOP', 'SafeLOOP'])
@@ -248,6 +250,8 @@ def test_loop(algo):
             'update_policy_iters': 1,
             'start_learning_steps': 3,
             'policy_batch_size': 10,
+            'use_critic_norm': True,
+            'max_grad_norm': True,
         },
         'planner_cfgs': {
             'plan_horizon': 2,
@@ -274,7 +278,7 @@ def test_loop(algo):
     agent.learn()
 
 
-@helpers.parametrize(algo=off_policy)
+@helpers.parametrize(algo=off_base)
 def test_off_policy(algo):
     """Test base algorithms."""
     env_id = 'Simple-v0'
@@ -292,6 +296,36 @@ def test_off_policy(algo):
             'use_critic_norm': True,
             'max_grad_norm': True,
             'obs_normalize': True,
+        },
+        'logger_cfgs': {
+            'use_wandb': False,
+            'save_model_freq': 1,
+        },
+        'model_cfgs': model_cfgs,
+    }
+    agent = omnisafe.Agent(algo, env_id, custom_cfgs=custom_cfgs)
+    agent.learn()
+
+
+@helpers.parametrize(algo=off_lag)
+def test_off_lag_policy(algo):
+    """Test base algorithms."""
+    env_id = 'Simple-v0'
+    custom_cfgs = {
+        'train_cfgs': {
+            'total_steps': 200,
+            'vector_env_nums': 1,
+            'torch_threads': 4,
+        },
+        'algo_cfgs': {
+            'steps_per_epoch': 100,
+            'update_cycle': 50,
+            'update_iters': 2,
+            'start_learning_steps': 0,
+            'use_critic_norm': True,
+            'max_grad_norm': True,
+            'obs_normalize': True,
+            'warmup_epochs': 0,
         },
         'logger_cfgs': {
             'use_wandb': False,
@@ -337,8 +371,8 @@ def test_sac_policy(auto_alpha):
 auto_alpha = [True, False]
 
 
-@helpers.parametrize(auto_alpha=auto_alpha)
-def test_sac_lag_policy(auto_alpha):
+@helpers.parametrize(auto_alpha=auto_alpha, algo=sac_lag)
+def test_sac_lag_policy(auto_alpha, algo):
     """Test sac algorithms."""
     env_id = 'Simple-v0'
     custom_cfgs = {
@@ -355,6 +389,7 @@ def test_sac_lag_policy(auto_alpha):
             'auto_alpha': auto_alpha,
             'use_critic_norm': True,
             'max_grad_norm': True,
+            'warmup_epochs': 0,
         },
         'logger_cfgs': {
             'use_wandb': False,
@@ -362,7 +397,7 @@ def test_sac_lag_policy(auto_alpha):
         },
         'model_cfgs': model_cfgs,
     }
-    agent = omnisafe.Agent('SACLag', env_id, custom_cfgs=custom_cfgs)
+    agent = omnisafe.Agent(algo, env_id, custom_cfgs=custom_cfgs)
     agent.learn()
 
 
@@ -445,6 +480,29 @@ def test_offline(algo):
         },
     }
     agent = omnisafe.Agent(algo, env_id, custom_cfgs=custom_cfgs)
+    agent.learn()
+
+
+@helpers.parametrize(
+    fn_type=['softchi', 'chisquare'],
+)
+def test_coptidice(fn_type):
+    """Test coptidice algorithms."""
+    env_id = 'Simple-v0'
+    dataset = os.path.join(os.path.dirname(__file__), 'saved_source', 'Simple-v0.npz')
+    custom_cfgs = {
+        'train_cfgs': {
+            'total_steps': 4,
+            'torch_threads': 4,
+            'dataset': dataset,
+        },
+        'algo_cfgs': {
+            'batch_size': 10,
+            'steps_per_epoch': 2,
+            'fn_type': fn_type,
+        },
+    }
+    agent = omnisafe.Agent('COptiDICE', env_id, custom_cfgs=custom_cfgs)
     agent.learn()
 
 

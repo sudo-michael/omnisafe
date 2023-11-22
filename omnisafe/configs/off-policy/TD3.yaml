@@ -28,6 +28,8 @@ defaults:
     parallel: 1
     # total number of steps to train
     total_steps: 1000000
+    # number of evaluate episodes
+    eval_episodes: 1
   # algorithm configurations
   algo_cfgs:
     # number of steps to update the policy
@@ -110,3 +112,51 @@ defaults:
       activation: relu
       # The learning rate of Critic network
       lr: 0.0003
+
+SafetyCarCircle1-v0:
+  # model configurations
+  model_cfgs:
+    # Configuration of Actor network
+    actor:
+      # The learning rate of Actor network
+      lr: 0.000005
+    # Configuration of Critic network
+    critic:
+      # The learning rate of Critic network
+      lr: 0.001
+
+SafetyCarGoal1-v0:
+  # model configurations
+  model_cfgs:
+    # Configuration of Actor network
+    actor:
+      # The learning rate of Actor network
+      lr: 0.000005
+    # Configuration of Critic network
+    critic:
+      # The learning rate of Critic network
+      lr: 0.001
+
+SafetyPointCircle1-v0:
+  # model configurations
+  model_cfgs:
+    # Configuration of Actor network
+    actor:
+      # The learning rate of Actor network
+      lr: 0.000005
+    # Configuration of Critic network
+    critic:
+      # The learning rate of Critic network
+      lr: 0.001
+
+SafetyPointGoal1-v0:
+  # model configurations
+  model_cfgs:
+    # Configuration of Actor network
+    actor:
+      # The learning rate of Actor network
+      lr: 0.000005
+    # Configuration of Critic network
+    critic:
+      # The learning rate of Critic network
+      lr: 0.001

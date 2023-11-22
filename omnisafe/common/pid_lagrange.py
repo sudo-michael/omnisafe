@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ class PIDLagrangian(abc.ABC):  # noqa: B024
 
     References:
         - Title: Responsive Safety in Reinforcement Learning by PID Lagrangian Methods
-        - Authors: Joshua Achiam, David Held, Aviv Tamar, Pieter Abbeel.
+        - Authors: Adam Stooke, Joshua Achiam, Pieter Abbeel.
         - URL: `PID Lagrange <https://arxiv.org/abs/2007.03964>`_
     """
 

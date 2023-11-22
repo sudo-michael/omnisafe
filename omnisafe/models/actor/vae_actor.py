@@ -53,12 +53,12 @@ class VAE(Actor):
         self._latent_dim = self._act_dim * 2
 
         self._encoder = build_mlp_network(
-            sizes=[self._obs_dim + self._act_dim, *hidden_sizes] + [self._latent_dim * 2],
+            sizes=[self._obs_dim + self._act_dim, *hidden_sizes, self._latent_dim * 2],
             activation=activation,
             weight_initialization_mode=weight_initialization_mode,
         )
         self._decoder = build_mlp_network(
-            sizes=[self._obs_dim + self._latent_dim, *hidden_sizes] + [self._act_dim],
+            sizes=[self._obs_dim + self._latent_dim, *hidden_sizes, self._act_dim],
             activation=activation,
             weight_initialization_mode=weight_initialization_mode,
         )
@@ -70,7 +70,7 @@ class VAE(Actor):
 
         Args:
             obs (torch.Tensor): Observation.
-            act (torch.Tensor): Action.
+            act (torch.Tensor): Action from :meth:`predict` or :meth:`forward` .
 
         Returns:
             Normal: Latent distribution.
@@ -102,7 +102,7 @@ class VAE(Actor):
 
         Args:
             obs (torch.Tensor): Observation.
-            act (torch.Tensor): Action.
+            act (torch.Tensor): Action from :meth:`predict` or :meth:`forward` .
         """
         dist = self.encode(obs, act)
         latent = dist.rsample()

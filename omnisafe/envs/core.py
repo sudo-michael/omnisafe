@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import inspect
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, ClassVar
 
 import torch
 
@@ -45,7 +45,6 @@ class CMDP(ABC):
         need_auto_reset_wrapper (bool): Whether the environment need auto reset wrapper.
     """
 
-    _support_envs: list[str]
     _action_space: OmnisafeSpace
     _observation_space: OmnisafeSpace
     _metadata: dict[str, Any]
@@ -54,6 +53,8 @@ class CMDP(ABC):
     _time_limit: int | None = None
     need_time_limit_wrapper: bool
     need_auto_reset_wrapper: bool
+
+    _support_envs: ClassVar[list[str]]
 
     @classmethod
     def support_envs(cls) -> list[str]:
@@ -123,11 +124,16 @@ class CMDP(ABC):
         """
 
     @abstractmethod
-    def reset(self, seed: int | None = None) -> tuple[torch.Tensor, dict[str, Any]]:
+    def reset(
+        self,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[torch.Tensor, dict[str, Any]]:
         """Reset the environment and returns an initial observation.
 
         Args:
-            seed (int or None): Seed for the environment. Defaults to None.
+            seed (int, optional): The random seed. Defaults to None.
+            options (dict[str, Any], optional): The options for the environment. Defaults to None.
 
         Returns:
             observation: The initial observation of the space.
@@ -155,8 +161,8 @@ class CMDP(ABC):
         """Compute the render frames as specified by :attr:`render_mode` during the initialization of the environment.
 
         Returns:
-            The render frames, we recommend to use `np.ndarray` which could construct video by
-            moviepy.
+            The render frames: we recommend to use `np.ndarray`
+                which could construct video by moviepy.
         """
 
     def save(self) -> dict[str, torch.nn.Module]:
@@ -236,17 +242,23 @@ class Wrapper(CMDP):
         """
         return self._env.step(action)
 
-    def reset(self, seed: int | None = None) -> tuple[torch.Tensor, dict[str, Any]]:
+    def reset(
+        self,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[torch.Tensor, dict[str, Any]]:
         """Reset the environment and returns an initial observation.
 
         Args:
-            seed (int or None): Seed for the environment. Defaults to None.
+            seed (int, optional): The random seed. Defaults to None.
+            options (dict[str, Any], optional): The options for the environment. Defaults to None.
+
 
         Returns:
             observation: The initial observation of the space.
             info: Some information logged by the environment.
         """
-        return self._env.reset(seed)
+        return self._env.reset(seed=seed, options=options)
 
     def set_seed(self, seed: int) -> None:
         """Set the seed for this env's random number generator(s).
@@ -268,8 +280,8 @@ class Wrapper(CMDP):
         """Compute the render frames as specified by :attr:`render_mode` during the initialization of the environment.
 
         Returns:
-            The render frames, we recommend to use `np.ndarray` which could construct video by
-            moviepy.
+            The render frames: we recommend to use `np.ndarray`
+                which could construct video by moviepy.
         """
         return self._env.render()
 
@@ -384,7 +396,14 @@ def make(env_id: str, class_name: str | None = None, **kwargs: Any) -> CMDP:
     Args:
         env_id (str): The environment id.
         class_name (str or None): The environment class name.
-        **kwargs: the keyword arguments for the environment initialization.
+
+    Keyword Args:
+        render_mode (str, optional): The render mode ranges from 'human' to 'rgb_array' and 'rgb_array_list'.
+            Defaults to 'rgb_array'.
+        camera_name (str, optional): The camera name.
+        camera_id (int, optional): The camera id.
+        width (int, optional): The width of the rendered image. Defaults to 256.
+        height (int, optional): The height of the rendered image. Defaults to 256.
 
     Returns:
         The environment class.

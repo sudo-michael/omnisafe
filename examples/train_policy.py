@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--total-steps',
         type=int,
-        default=1024000,
+        default=10000000,
         metavar='STEPS',
         help='total number of steps to train for algorithm',
     )

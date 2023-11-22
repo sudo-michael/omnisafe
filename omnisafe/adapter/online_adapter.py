@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,14 +42,6 @@ class OnlineAdapter:
     any existing RL algorithms. The online adapter is used to adapt the environment to the
     framework.
 
-    OmniSafe provides a set of adapters to adapt the environment to the framework.
-
-    - OnPolicyAdapter: Adapt the environment to the on-policy framework.
-    - OffPolicyAdapter: Adapt the environment to the off-policy framework.
-    - OfflineAdapter: Adapt the environment to the offline framework.
-    - SauteAdapter: Adapt the environment to the SAUTE framework.
-    - SimmerAdapter: Adapt the environment to the SIMMER framework.
-
     Args:
         env_id (str): The environment id.
         num_envs (int): The number of parallel environments.
@@ -80,7 +72,6 @@ class OnlineAdapter:
         )
 
         self._env.set_seed(seed)
-        self._eval_env.set_seed(seed)
 
     def _wrapper(
         self,
@@ -172,14 +163,22 @@ class OnlineAdapter:
         """
         return self._env.step(action)
 
-    def reset(self) -> tuple[torch.Tensor, dict[str, Any]]:
+    def reset(
+        self,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[torch.Tensor, dict[str, Any]]:
         """Reset the environment and returns an initial observation.
+
+        Args:
+            seed (int, optional): The random seed. Defaults to None.
+            options (dict[str, Any], optional): The options for the environment. Defaults to None.
 
         Returns:
             observation: The initial observation of the space.
             info: Some information logged by the environment.
         """
-        return self._env.reset()
+        return self._env.reset(seed=seed, options=options)
 
     def save(self) -> dict[str, torch.nn.Module]:
         """Save the important components of the environment.

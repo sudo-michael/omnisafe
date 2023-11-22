@@ -21,7 +21,7 @@ import csv
 import os
 import time
 from collections import deque
-from typing import Any, Deque, TextIO
+from typing import Any, TextIO
 
 import numpy as np
 import torch
@@ -117,11 +117,11 @@ class Logger:  # pylint: disable=too-many-instance-attributes
         self._epoch: int = 0
         self._first_row: bool = True
         self._what_to_save: dict[str, Any] | None = None
-        self._data: dict[str, Deque[int | float] | list[int | float]] = {}
+        self._data: dict[str, deque[float] | list[float]] = {}
         self._headers_windows: dict[str, int | None] = {}
         self._headers_minmax: dict[str, bool] = {}
         self._headers_delta: dict[str, bool] = {}
-        self._current_row: dict[str, int | float] = {}
+        self._current_row: dict[str, float] = {}
 
         if config is not None:
             self.save_config(config)
@@ -249,7 +249,7 @@ class Logger:  # pylint: disable=too-many-instance-attributes
         self,
         data: dict[str, Any] | None = None,
         /,
-        **kwargs: Any,
+        **kwargs: Any | float | np.ndarray | torch.Tensor,
     ) -> None:
         """Store the data to the logger.
 
@@ -257,9 +257,11 @@ class Logger:  # pylint: disable=too-many-instance-attributes
             The data stored in ``data`` will be updated by ``kwargs``.
 
         Args:
-            data (dict[str, int | float | np.ndarray | torch.Tensor] or None, optional): The data to
+            data (dict[str, float | np.ndarray | torch.Tensor] or None, optional): The data to
                 be stored. Defaults to None.
-            **kwargs (int, float, np.ndarray, or torch.Tensor): The data to be stored.
+
+        Keyword Args:
+            kwargs (int, float, np.ndarray, or torch.Tensor): The data to be stored.
         """
         if data is not None:
             kwargs.update(data)
@@ -279,11 +281,10 @@ class Logger:  # pylint: disable=too-many-instance-attributes
 
         The dumped data will be separated by the following steps:
 
-        .. hint::
-            - If the key is registered with window_length, the data will be averaged in the window.
-            - Write the data to the csv file.
-            - Write the data to the tensorboard.
-            - Update the progress logger.
+        - If the key is registered with window_length, the data will be averaged in the window.
+        - Write the data to the csv file.
+        - Write the data to the tensorboard.
+        - Update the progress logger.
         """
         self._update_current_row()
         table = Table('Metrics', 'Value')
@@ -310,7 +311,7 @@ class Logger:  # pylint: disable=too-many-instance-attributes
 
             if self._use_wandb:
                 wandb.log(self._current_row, step=self._epoch)
-        self._console.print(table)
+            self._console.print(table)
 
     def _update_current_row(self) -> None:
         """Update the current row.
@@ -339,7 +340,7 @@ class Logger:  # pylint: disable=too-many-instance-attributes
         self,
         key: str,
         min_and_max: bool = False,
-    ) -> tuple[int | float, ...]:
+    ) -> tuple[float, ...]:
         """Get the statistics of the key.
 
         Args:
@@ -357,13 +358,13 @@ class Logger:  # pylint: disable=too-many-instance-attributes
 
         if min_and_max:
             mean, std, min_val, max_val = dist_statistics_scalar(
-                torch.tensor(vals),
+                torch.tensor(vals).to(os.getenv('OMNISAFE_DEVICE', 'cpu')),
                 with_min_and_max=True,
             )
             return mean.item(), min_val.mean().item(), max_val.mean().item(), std.item()
 
         mean, std = dist_statistics_scalar(  # pylint: disable=unbalanced-tuple-unpacking
-            torch.tensor(vals),
+            torch.tensor(vals).to(os.getenv('OMNISAFE_DEVICE', 'cpu')),
         )
         return (mean.item(),)
 

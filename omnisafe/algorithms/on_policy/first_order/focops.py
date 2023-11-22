@@ -135,7 +135,7 @@ class FOCOPS(PolicyGradient):
             adv_c (torch.Tensor): The ``cost_advantage`` sampled from buffer.
 
         Returns:
-            The ``advantage`` combined with ``reward_advantage`` and ``cost_advantage``.
+            The advantage function combined with reward and cost.
         """
         return (adv_r - self._lagrange.lagrangian_multiplier * adv_c) / (
             1 + self._lagrange.lagrangian_multiplier
@@ -144,15 +144,7 @@ class FOCOPS(PolicyGradient):
     def _update(self) -> None:
         r"""Update actor, critic, and Lagrange multiplier parameters.
 
-        In FOCOPS, the Lagrange multiplier is updated as the naive lagrange multiplier update:
-
-        .. math::
-
-            \lambda_{k+1} = \lambda_k + \eta (J^{C}_{\pi_{\theta}} - C)
-
-        where :math:`\lambda_k` is the Lagrange multiplier at iteration :math:`k`, :math:`\eta` is
-        the Lagrange multiplier learning rate, :math:`J^{C}_{\pi_{\theta}}` is the cost of the current
-        policy, and :math:`C` is the cost limit.
+        In FOCOPS, the Lagrange multiplier is updated as the naive lagrange multiplier update.
 
         Then in each iteration of the policy update, FOCOPS calculates current policy's
         distribution, which used to calculate the policy loss.
@@ -220,12 +212,11 @@ class FOCOPS(PolicyGradient):
                 torch.distributions.kl.kl_divergence(old_distribution, new_distribution)
                 .sum(-1, keepdim=True)
                 .mean()
-                .item()
             )
             kl = distributed.dist_avg(kl)
 
-            self._logger.store({'Train/KL': kl})
-            if self._cfgs.algo_cfgs.kl_early_stop and kl > self._cfgs.algo_cfgs.target_kl:
+            self._logger.store({'Train/KL': kl.item()})
+            if self._cfgs.algo_cfgs.kl_early_stop and kl.item() > self._cfgs.algo_cfgs.target_kl:
                 final_steps = i + 1
                 self._logger.log(f'Early stopping at iter {i + 1} due to reaching max kl')
                 break

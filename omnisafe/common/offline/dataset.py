@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ from __future__ import annotations
 import hashlib
 import os
 from dataclasses import dataclass
+from typing import ClassVar
 
 import gdown
 import numpy as np
@@ -40,7 +41,7 @@ class OfflineMeta:
 class OfflineDataset(Dataset):
     """A dataset for offline algorithms."""
 
-    _name_to_metadata: dict[str, OfflineMeta] = {
+    _name_to_metadata: ClassVar[dict[str, OfflineMeta]] = {
         'SafetyPointCircle1-v0-mixed-beta0.5': OfflineMeta(
             url='https://drive.google.com/file/d/17q2-T1o01GNM3rBmLP52kRTojYS1ePTX/view?usp=sharing',
             sha256sum='354a762a4fba372c497a0c84e3405863c192406ff754b18eea51a036f47cd5ba',
@@ -90,6 +91,16 @@ class OfflineDataset(Dataset):
             sha256sum='e8f1ba69a29456b4e593bf2524f3fd436a1918edfe16a4ec98d18aaab70d719b',
             episode_length=500,
         ),
+        'SafetyPointGoal1-v0_data_test': OfflineMeta(
+            url='https://drive.google.com/file/d/1JPJ127bWM_Tdej0AEGoFAqFFG9mWtzsN/view?usp=share_link',
+            sha256sum='417b580cd4ef8f05a66d54c5d996b35a23a0e6c8ff8bae06807313a638df2dc6',
+            episode_length=1,
+        ),
+        'SafetyPointGoal1-v0_data_init_test': OfflineMeta(
+            url='https://drive.google.com/file/d/1WlfkoUvWuFUYVMlGwi_EdGO914oWndpV/view?usp=share_link',
+            sha256sum='fce6cc1fd0c294a8b66397f2f5276c9e7055821ded1f3a6e58e491eb342b1fbe',
+            episode_length=1,
+        ),
     }
     _default_download_dir = '~/.cache/omnisafe/datasets/'
 
@@ -104,7 +115,8 @@ class OfflineDataset(Dataset):
 
         Args:
             dataset_name: The name of the dataset. could be one of the following:
-                - 'SafetyPointCircle1-v0_mixed_0.5'
+
+                - ``SafetyPointCircle1-v0_mixed_0.5``
                 - some local .npz file
             batch_size: The batch size of the dataset.
             gpu_threshold: The threshold of size(MB) of the dataset to be loaded on GPU.
@@ -261,7 +273,8 @@ class OfflineDatasetWithInit(OfflineDataset):
 
         Args:
             dataset_name: The name of the dataset. could be one of the following:
-                - 'SafetyPointCircle1-v0_mixed_0.5'
+
+                - ``SafetyPointCircle1-v0_mixed_0.5``
                 - some local .npz file
             batch_size: The batch size of the dataset.
             gpu_threshold: The threshold of size(MB) of the dataset to be loaded on GPU.

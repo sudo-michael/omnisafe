@@ -21,7 +21,6 @@ from torch.nn.utils.clip_grad import clip_grad_norm_
 from omnisafe.algorithms import registry
 from omnisafe.algorithms.off_policy.ddpg import DDPG
 from omnisafe.models.actor_critic.constraint_actor_q_critic import ConstraintActorQCritic
-from omnisafe.utils import distributed
 
 
 @registry.register
@@ -38,17 +37,7 @@ class TD3(DDPG):
     def _init_model(self) -> None:
         """Initialize the model.
 
-        OmniSafe uses :class:`omnisafe.models.actor_critic.constraint_actor_q_critic.ConstraintActorQCritic`
-        as the default model.
-
-        User can customize the model by inheriting this method.
-
-        .. note::
-            The ``num_critics`` in ``critic`` configuration must be 2.
-
-        Examples:
-            >>> def _init_model(self) -> None:
-            ...     self._actor_critic = CustomActorQCritic()
+        The ``num_critics`` in ``critic`` configuration must be 2.
         """
         self._cfgs.model_cfgs.critic['num_critics'] = 2
         self._actor_critic = ConstraintActorQCritic(
@@ -118,7 +107,6 @@ class TD3(DDPG):
                 self._actor_critic.reward_critic.parameters(),
                 self._cfgs.algo_cfgs.max_grad_norm,
             )
-        distributed.avg_grads(self._actor_critic.reward_critic)
         self._actor_critic.reward_critic_optimizer.step()
         self._logger.store(
             {

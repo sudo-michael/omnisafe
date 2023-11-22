@@ -232,9 +232,9 @@ class PolicyGradient(BaseAlgo):
         - :meth:`log`: epoch/update information for visualization and terminal log print.
 
         Returns:
-            ep_ret: average episode return in final epoch.
-            ep_cost: average episode cost in final epoch.
-            ep_len: average episode length in final epoch.
+            ep_ret: Average episode return in final epoch.
+            ep_cost: Average episode cost in final epoch.
+            ep_len: Average episode length in final epoch.
         """
         start_time = time.time()
         self._logger.log('INFO: Start training')
@@ -346,7 +346,7 @@ class PolicyGradient(BaseAlgo):
         )
 
         update_counts = 0
-        final_kl = torch.ones_like(old_distribution.loc)
+        final_kl = 0.0
 
         for i in track(range(self._cfgs.algo_cfgs.update_iters), description='Updating...'):
             for (
@@ -369,14 +369,13 @@ class PolicyGradient(BaseAlgo):
                 torch.distributions.kl.kl_divergence(old_distribution, new_distribution)
                 .sum(-1, keepdim=True)
                 .mean()
-                .item()
             )
             kl = distributed.dist_avg(kl)
 
-            final_kl = kl
+            final_kl = kl.item()
             update_counts += 1
 
-            if self._cfgs.algo_cfgs.kl_early_stop and kl > self._cfgs.algo_cfgs.target_kl:
+            if self._cfgs.algo_cfgs.kl_early_stop and kl.item() > self._cfgs.algo_cfgs.target_kl:
                 self._logger.log(f'Early stopping at iter {i + 1} due to reaching max kl')
                 break
 
@@ -521,7 +520,7 @@ class PolicyGradient(BaseAlgo):
             adv_c (torch.Tensor): The ``cost_advantage`` sampled from buffer.
 
         Returns:
-            The ``reward_advantage`` used to update policy network.
+            The advantage function of reward to update policy network.
         """
         return adv_r
 
@@ -538,7 +537,7 @@ class PolicyGradient(BaseAlgo):
 
         .. math::
 
-            L = -\mathbb{E}_{s_t \sim \rho_{\theta}} [
+            L = -\underset{s_t \sim \rho_{\theta}}{\mathbb{E}} [
                 \sum_{t=0}^T ( \frac{\pi^{'}_{\theta}(a_t|s_t)}{\pi_{\theta}(a_t|s_t)} )
                  A^{R}_{\pi_{\theta}}(s_t, a_t)
             ]
@@ -550,7 +549,7 @@ class PolicyGradient(BaseAlgo):
             obs (torch.Tensor): The ``observation`` sampled from buffer.
             act (torch.Tensor): The ``action`` sampled from buffer.
             logp (torch.Tensor): The ``log probability`` of action sampled from buffer.
-            adv (torch.Tensor): The ``advantage`` sampled from buffer.
+            adv (torch.Tensor): The ``advantage`` processed. ``reward_advantage`` here.
 
         Returns:
             The loss of pi/actor.

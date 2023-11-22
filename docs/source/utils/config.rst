@@ -16,7 +16,9 @@ OmniSafe Config
 Config
 ------
 
-OmniSafe uses yaml file to store all the configurations. The configuration file is stored in ``omnisafe/configs``. The configuration file is divided into several parts.
+OmniSafe uses yaml file to store all the configurations. The configuration file
+is stored in ``omnisafe/configs``. The configuration file is divided into
+several parts.
 
 Take ``PPOLag`` as an example, the configuration file is as follows:
 
@@ -32,7 +34,7 @@ Take ``PPOLag`` as an example, the configuration file is as follows:
         -   Logger configurations
     *   -   ``model_cfgs``
         -   Model configurations
-    *   -   ``lagrange_cfgs[Optional]``
+    *   -   ``lagrange_cfgs``
         -   Lagrange configurations
 
 Specifically, the ``train_cfgs`` is as follows:
@@ -70,8 +72,6 @@ Other configurations are similar to ``train_cfgs``. You can refer to the ``omnis
     .. autoclass:: Config
         :members:
         :private-members:
-
-
 
 Model Config
 ------------

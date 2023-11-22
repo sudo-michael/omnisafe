@@ -44,7 +44,7 @@ class ExperimentGrid:
     """Tool for running many experiments given hyper-parameters ranges.
 
     Args:
-        exp_name (str, optional): Name of the experiment grid. Defaults to ''.
+        exp_name (str, optional): Name of the experiment grid. Defaults to ' '.
 
     Attributes:
         keys (list[str]): The keys of the configurations for the experiments.
@@ -90,11 +90,11 @@ class ExperimentGrid:
 
         In Command Line:
 
-        .. code-block:: text
+        .. code-block:: bash
 
             ===================== ExperimentGrid [test] runs over parameters: =====================
             env_name                                [env]
-            ['SafetyPointGoal1-v0', 'MountainCar-v0', 'Acrobot-v1']
+            ['SafetyPointGoal1-v0', 'SafetyAntVelocity-v1']
             algo                                    [algo]
             ['SAC', 'DDPG', 'TD3']
             seed                                    [seed]
@@ -177,7 +177,7 @@ class ExperimentGrid:
             This function is called in ``omnisafe/examples/benchmarks/run_experiment_grid.py``.
 
         Examples:
-            >>> add('env_id', ['SafetyPointGoal1-v0', 'MountainCar-v0', 'Acrobot-v1'])
+            >>> add('env_id', ['SafetyPointGoal1-v0', 'SafetyAntVelocity-v1'])
             >>> add('algo', ['SAC', 'DDPG', 'TD3'])
             >>> add('seed', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
@@ -458,6 +458,8 @@ class ExperimentGrid:
             hashed_exp_name = var['env_id'][:30] + '---' + hash_string(exp_name)
             exp_names.append(':'.join((hashed_exp_name[:5], exp_name)))
             exp_log_dir = os.path.join(self.log_dir, hashed_exp_name, '')
+            if not var.get('logger_cfgs'):
+                var['logger_cfgs'] = {'log_dir': './exp'}
             var['logger_cfgs'].update({'log_dir': exp_log_dir})
             self.save_same_exps_config(exp_log_dir, var)
             results.append(pool.submit(thunk, str(idx), var['algo'], var['env_id'], var))
@@ -545,7 +547,7 @@ class ExperimentGrid:
         """Analyze the experiment results.
 
         .. note::
-            `values` and `compare_num` cannot be set at the same time.
+            ``values`` and ``compare_num`` cannot be set at the same time.
 
         Args:
             parameter (str): Name of parameter to analyze.

@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -61,7 +61,8 @@ class TD3Lag(TD3):
         """
         super()._update()
         Jc = self._logger.get_stats('Metrics/EpCost')[0]
-        self._lagrange.update_lagrange_multiplier(Jc)
+        if self._epoch > self._cfgs.algo_cfgs.warmup_epochs:
+            self._lagrange.update_lagrange_multiplier(Jc)
         self._logger.store(
             {
                 'Metrics/LagrangeMultiplier': self._lagrange.lagrangian_multiplier.data.item(),
@@ -80,8 +81,8 @@ class TD3Lag(TD3):
 
             L = -Q^V (s, \pi (s)) + \lambda Q^C (s, \pi (s))
 
-        where :math:`Q^V` is the value of reward critic network output, :math:`Q^C` is the value of
-        cost critic network, and :math:`\pi` is the policy network.
+        where :math:`Q^V` is the min value of two reward critic networks outputs, :math:`Q^C` is the
+        value of cost critic network, and :math:`\pi` is the policy network.
 
         Args:
             obs (torch.Tensor): The ``observation`` sampled from buffer.

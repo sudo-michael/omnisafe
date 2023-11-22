@@ -162,7 +162,7 @@ class StatisticsTools:
                     save_name=save_name,
                     show_image=show_image,
                 )
-            except Exception:  # noqa # pylint: disable=broad-except
+            except Exception:  # noqa # pragma: no cover # pylint: disable=broad-except
                 print(
                     f'Cannot generate graph for {save_name[:5] + str(decompressed_img_name_cfgs)}',
                 )
@@ -219,7 +219,8 @@ class StatisticsTools:
         # value of parameter is determined above
         group_config.pop(parameter)
         # seed is not a parameter
-        group_config.pop('seed')
+        if 'seed' in group_config:
+            group_config.pop('seed')
         if 'train_cfgs' in group_config:
             group_config['train_cfgs'].pop('device', None)
         # combine all possible combinations of other parameters

@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -247,8 +247,8 @@ def load_yaml(path: str) -> dict[str, Any]:
     with open(path, encoding='utf-8') as file:
         try:
             kwargs = yaml.load(file, Loader=yaml.FullLoader)  # noqa: S506
-        except yaml.YAMLError as exc:
-            raise AssertionError(f'{path} error: {exc}') from exc
+        except FileNotFoundError as exc:
+            raise FileNotFoundError(f'{path} error: {exc}') from exc
 
     return kwargs
 
@@ -271,7 +271,7 @@ def recursive_check_config(
     """
     assert isinstance(config, dict), 'custom_cfgs must be a dict!'
     for key in config:
-        if key not in default_config.keys() and key not in exclude_keys:
+        if key not in default_config and key not in exclude_keys:
             raise KeyError(f'Invalid key: {key}')
         if isinstance(config[key], dict):
             recursive_check_config(config[key], default_config[key])

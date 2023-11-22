@@ -1,4 +1,4 @@
-# Copyright 2022-2023 OmniSafe Team. All Rights Reserved.
+# Copyright 2023 OmniSafe Team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ class P3O(PPO):
 
         .. math::
 
-            L = \mathbb{E}_{\pi} \left[
+            L = -\underset{s_t \sim \rho_{\theta}}{\mathbb{E}}  \left[
                 \frac{\pi^{'} (a|s)}{\pi (a|s)} A^{C}_{\pi_{\theta}} (s, a)
             \right]
 

@@ -1,8 +1,18 @@
-Adapter
-=======
+OmniSafe Adapter
+================
 
 .. currentmodule:: omnisafe.adapter
 
+OmniSafe provides a set of adapters to adapt the environment to the framework.
+
+.. autosummary::
+
+    OnlineAdapter
+    OnPolicyAdapter
+    OffPolicyAdapter
+    SauteAdapter
+    SimmerAdapter
+    ModelBasedAdapter
 
 Online Adapter
 --------------
@@ -17,6 +27,21 @@ Online Adapter
     .. autoclass:: OnlineAdapter
         :members:
         :private-members:
+
+Offline Adapter
+---------------
+
+.. card::
+    :class-header: sd-bg-success sd-text-white
+    :class-card: sd-outline-success  sd-rounded-1
+
+    Documentation
+    ^^^
+
+    .. autoclass:: OfflineAdapter
+        :members:
+        :private-members:
+
 
 On Policy Adapter
 -----------------
@@ -43,5 +68,47 @@ Off Policy Adapter
     ^^^
 
     .. autoclass:: OffPolicyAdapter
+        :members:
+        :private-members:
+
+Saute Adapter
+-------------
+
+.. card::
+    :class-header: sd-bg-success sd-text-white
+    :class-card: sd-outline-success  sd-rounded-1
+
+    Documentation
+    ^^^
+
+    .. autoclass:: SauteAdapter
+        :members:
+        :private-members:
+
+Simmer Adapter
+--------------
+
+.. card::
+    :class-header: sd-bg-success sd-text-white
+    :class-card: sd-outline-success  sd-rounded-1
+
+    Documentation
+    ^^^
+
+    .. autoclass:: SimmerAdapter
+        :members:
+        :private-members:
+
+Model-based Adapter
+-------------------
+
+.. card::
+    :class-header: sd-bg-success sd-text-white
+    :class-card: sd-outline-success  sd-rounded-1
+
+    Documentation
+    ^^^
+
+    .. autoclass:: ModelBasedAdapter
         :members:
         :private-members:

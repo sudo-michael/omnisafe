@@ -132,15 +132,7 @@ class CUP(PPO):
     def _update(self) -> None:
         r"""Update actor, critic, and Lagrange multiplier parameters.
 
-        In CUP, the Lagrange multiplier is updated as the naive lagrange multiplier update:
-
-        .. math::
-
-            \lambda_{k+1} = \lambda_k + \eta (J^{C}_{\pi_{\theta}} - C)
-
-        where :math:`\lambda_k` is the Lagrange multiplier at iteration :math:`k`, :math:`\eta` is
-        the Lagrange multiplier learning rate, :math:`J^{C}_{\pi_{\theta}}` is the cost of the
-        current policy, and :math:`C` is the cost limit.
+        In CUP, the Lagrange multiplier is updated as the naive lagrange multiplier update.
 
         Then in each iteration of the policy update, CUP calculates current policy's distribution,
         which used to calculate the policy loss.
@@ -192,11 +184,10 @@ class CUP(PPO):
                 torch.distributions.kl.kl_divergence(old_distribution, new_distribution)
                 .sum(-1, keepdim=True)
                 .mean()
-                .item()
             )
             kl = distributed.dist_avg(kl)
 
-            if self._cfgs.algo_cfgs.kl_early_stop and kl > self._cfgs.algo_cfgs.target_kl:
+            if self._cfgs.algo_cfgs.kl_early_stop and kl.item() > self._cfgs.algo_cfgs.target_kl:
                 final_steps = i + 1
                 self._logger.log(f'Early stopping at iter {i + 1} due to reaching max kl')
                 break
