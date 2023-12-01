@@ -58,6 +58,8 @@ defaults:
     critic_norm_coef: 0.001
     # reward discount factor
     gamma: 0.99
+    # prob discount factor
+    gamma_prob: 0.99
     # cost discount factor
     cost_gamma: 0.99
     # lambda for gae
@@ -112,6 +114,13 @@ defaults:
       # learning rate
       lr: 0.0003
     critic:
+      # hidden layer sizes
+      hidden_sizes: [64, 64]
+      # activation function
+      activation: tanh
+      # learning rate
+      lr: 0.0003
+    prob_critic:
       # hidden layer sizes
       hidden_sizes: [64, 64]
       # activation function

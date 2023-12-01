@@ -81,10 +81,10 @@ class ActorQCritic(nn.Module):
         self.reward_critic: Critic = CriticBuilder(
             obs_space=obs_space,
             act_space=act_space,
-            hidden_sizes=model_cfgs.prob_critic.hidden_sizes,
-            activation=model_cfgs.prob_critic.activation,
+            hidden_sizes=model_cfgs.critic.hidden_sizes,
+            activation=model_cfgs.critic.activation,
             weight_initialization_mode=model_cfgs.weight_initialization_mode,
-            num_critics=model_cfgs.prob_critic.num_critics,
+            num_critics=model_cfgs.critic.num_critics,
             use_obs_encoder=False,
         ).build_critic(critic_type='q')
         self.target_reward_critic: Critic = deepcopy(self.reward_critic)
@@ -101,11 +101,11 @@ class ActorQCritic(nn.Module):
         if model_cfgs.actor.lr is not None:
             self.actor_optimizer: optim.Optimizer
             self.actor_optimizer = optim.Adam(self.actor.parameters(), lr=model_cfgs.actor.lr)
-        if model_cfgs.prob_critic.lr is not None:
+        if model_cfgs.critic.lr is not None:
             self.reward_critic_optimizer: optim.Optimizer
             self.reward_critic_optimizer = optim.Adam(
                 self.reward_critic.parameters(),
-                lr=model_cfgs.prob_critic.lr,
+                lr=model_cfgs.critic.lr,
             )
 
         self.actor_scheduler: LinearLR | ConstantLR

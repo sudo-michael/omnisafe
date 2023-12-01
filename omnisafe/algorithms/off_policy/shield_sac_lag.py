@@ -48,4 +48,15 @@ class ShieldSACLag(SACLag):
         self._samples_per_epoch: int = self._steps_per_epoch // self._update_cycle
         self._update_count: int = 0
 
+    def _init_log(self) -> None:
+        """Log the RCPO specific information.
+
+        +----------------------------+--------------------------+
+        | Things to log              | Description              |
+        +============================+==========================+
+        | Metrics/LagrangeMultiplier | The Lagrange multiplier. |
+        +----------------------------+--------------------------+
+        """
+        super()._init_log()
+        self._logger.register_key('Metrics/TotalCost', min_and_max=True)
 

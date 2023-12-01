@@ -66,10 +66,11 @@ class ShieldOnlineAdapter:
         assert env_id in support_envs(), f'Env {env_id} is not supported.'
 
         self._cfgs: Config = cfgs
+
         self._device: torch.device = get_device(cfgs.train_cfgs.device)
         self._env_id: str = env_id
-        self._env: CMDP = make(env_id, num_envs=num_envs, device=self._device, use_shield=True, shield_threshold=0.1) # tell cmdp env to use shield wrapper
-        self._eval_env: CMDP = make(env_id, num_envs=1, device=self._device, use_shield=True, shield_threshold=0.1)
+        self._env: CMDP = make(env_id, num_envs=num_envs, device=self._device, **self._cfgs['env_cfgs']) # tell cmdp env to use shield wrapper
+        self._eval_env: CMDP = make(env_id, num_envs=1, device=self._device, **self._cfgs['env_cfgs'])
 
         self._wrapper(
             obs_normalize=cfgs.algo_cfgs.obs_normalize,
@@ -225,6 +226,7 @@ class ShieldOffPolicyAdapter(ShieldOnlineAdapter):
     _ep_ret: torch.Tensor
     _ep_cost: torch.Tensor
     _ep_len: torch.Tensor
+    _total_cost: int = 0
 
     def __init__(  # pylint: disable=too-many-arguments
         self,
@@ -270,6 +272,7 @@ class ShieldOffPolicyAdapter(ShieldOnlineAdapter):
                 ep_len += 1
                 done = bool(terminated[0].item()) or bool(truncated[0].item())
 
+            
             logger.store(
                 {
                     'Metrics/TestEpRet': ep_ret,
@@ -350,6 +353,9 @@ class ShieldOffPolicyAdapter(ShieldOnlineAdapter):
         self._ep_cost += info.get('original_cost', cost).cpu()
         self._ep_len += 1
 
+        self._total_cost += info.get('original_cost', cost).cpu()
+
+
     def _log_metrics(self, logger: Logger, idx: int) -> None:
         """Log metrics, including ``EpRet``, ``EpCost``, ``EpLen``.
 
@@ -362,6 +368,7 @@ class ShieldOffPolicyAdapter(ShieldOnlineAdapter):
                 'Metrics/EpRet': self._ep_ret[idx],
                 'Metrics/EpCost': self._ep_cost[idx],
                 'Metrics/EpLen': self._ep_len[idx],
+                'Metrics/TotalCost': self._total_cost,
             },
         )
 

@@ -19,7 +19,7 @@ from __future__ import annotations
 import torch
 from torch import optim
 
-from omnisafe.models.actor_critic.actor_critic import ConstraintActorCritic
+from omnisafe.models.actor_critic.constraint_actor_critic import ConstraintActorCritic
 from omnisafe.models.base import Critic
 from omnisafe.models.critic.critic_builder import CriticBuilder
 from omnisafe.typing import OmnisafeSpace
