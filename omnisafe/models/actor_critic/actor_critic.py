@@ -79,8 +79,8 @@ class ActorCritic(nn.Module):
         self.reward_critic: Critic = CriticBuilder(
             obs_space=obs_space,
             act_space=act_space,
-            hidden_sizes=model_cfgs.prob_critic.hidden_sizes,
-            activation=model_cfgs.prob_critic.activation,
+            hidden_sizes=model_cfgs.critic.hidden_sizes,
+            activation=model_cfgs.critic.activation,
             weight_initialization_mode=model_cfgs.weight_initialization_mode,
             num_critics=1,
             use_obs_encoder=False,
@@ -91,11 +91,6 @@ class ActorCritic(nn.Module):
         if model_cfgs.actor.lr is not None:
             self.actor_optimizer: optim.Optimizer
             self.actor_optimizer = optim.Adam(self.actor.parameters(), lr=model_cfgs.actor.lr)
-        if model_cfgs.prob_critic.lr is not None:
-            self.reward_critic_optimizer: optim.Optimizer = optim.Adam(
-                self.reward_critic.parameters(),
-                lr=model_cfgs.prob_critic.lr,
-            )
         if model_cfgs.actor.lr is not None:
             self.actor_scheduler: LinearLR | ConstantLR
             if model_cfgs.linear_lr_decay:

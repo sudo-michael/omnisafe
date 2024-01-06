@@ -229,6 +229,7 @@ class RESPO(BaseAlgo):
             # log information about cost critic
             self._logger.register_key('Loss/Loss_cost_critic', delta=True)
             self._logger.register_key('Value/cost')
+            self._logger.register_key('Value/prob')
 
         self._logger.register_key('Time/Total')
         self._logger.register_key('Time/Rollout')
@@ -359,11 +360,13 @@ class RESPO(BaseAlgo):
             data['adv_c'],
         )
 
+        value_p, discounted_prob = data['value_p'], data['discounted_prob']
+
         original_obs = obs
         old_distribution = self._actor_critic.actor(obs)
 
         dataloader = DataLoader(
-            dataset=TensorDataset(obs, act, logp, target_value_r, target_value_c, adv_r, adv_c),
+            dataset=TensorDataset(obs, act, logp, target_value_r, target_value_c, adv_r, adv_c, value_p, discounted_prob),
             batch_size=self._cfgs.algo_cfgs.batch_size,
             shuffle=True,
         )
@@ -380,11 +383,14 @@ class RESPO(BaseAlgo):
                 target_value_c,
                 adv_r,
                 adv_c,
+                value_p, 
+                discounted_prob # target_value_p
             ) in dataloader:
                 self._update_reward_critic(obs, target_value_r)
                 if self._cfgs.algo_cfgs.use_cost:
                     self._update_cost_critic(obs, target_value_c)
-                self._update_actor(obs, act, logp, adv_r, adv_c)
+                    self._update_prob_critic(obs, discounted_prob)
+                self._update_actor(obs, act, logp, adv_r, adv_c, value_p)
 
             new_distribution = self._actor_critic.actor(original_obs)
 
@@ -492,6 +498,46 @@ class RESPO(BaseAlgo):
 
         self._logger.store({'Loss/Loss_cost_critic': loss.mean().item()})
 
+    def _update_prob_critic(self, obs: torch.Tensor, target_value_p: torch.Tensor) -> None:
+        r"""Update value network under a double for loop.
+
+        The loss function is ``MSE loss``, which is defined in ``torch.nn.MSELoss``.
+        Specifically, the loss function is defined as:
+
+        .. math::
+
+            L = \frac{1}{N} \sum_{i=1}^N (\hat{V} - V)^2
+
+        where :math:`\hat{V}` is the predicted cost and :math:`V` is the target cost.
+
+        #. Compute the loss function.
+        #. Add the ``critic norm`` to the loss function if ``use_critic_norm`` is ``True``.
+        #. Clip the gradient if ``use_max_grad_norm`` is ``True``.
+        #. Update the network by loss function.
+
+        Args:
+            obs (torch.Tensor): The ``observation`` sampled from buffer.
+            target_value_c (torch.Tensor): The ``target_value_c`` sampled from buffer.
+        """
+        self._actor_critic.prob_critic_optimizer.zero_grad()
+        loss = nn.functional.mse_loss(self._actor_critic.prob_critic(obs)[0], target_value_p)
+
+        if self._cfgs.algo_cfgs.use_critic_norm:
+            for param in self._actor_critic.prob_critic.parameters():
+                loss += param.pow(2).sum() * self._cfgs.algo_cfgs.critic_norm_coef
+
+        loss.backward()
+
+        if self._cfgs.algo_cfgs.use_max_grad_norm:
+            clip_grad_norm_(
+                self._actor_critic.prob_critic.parameters(),
+                self._cfgs.algo_cfgs.max_grad_norm,
+            )
+        distributed.avg_grads(self._actor_critic.prob_critic)
+        self._actor_critic.prob_critic_optimizer.step()
+
+        self._logger.store({'Loss/Loss_prob_critic': loss.mean().item()})
+
     def _update_actor(  # pylint: disable=too-many-arguments
         self,
         obs: torch.Tensor,
@@ -499,6 +545,7 @@ class RESPO(BaseAlgo):
         logp: torch.Tensor,
         adv_r: torch.Tensor,
         adv_c: torch.Tensor,
+        value_p: torch.Tensor,
     ) -> None:
         """Update policy network under a double for loop.
 
@@ -519,7 +566,7 @@ class RESPO(BaseAlgo):
             adv_r (torch.Tensor): The ``reward_advantage`` sampled from buffer.
             adv_c (torch.Tensor): The ``cost_advantage`` sampled from buffer.
         """
-        adv = self._compute_adv_surrogate(adv_r, adv_c)
+        adv = self._compute_adv_surrogate(adv_r, adv_c, value_p)
         loss = self._loss_pi(obs, act, logp, adv)
         self._actor_critic.actor_optimizer.zero_grad()
         loss.backward()
@@ -535,6 +582,7 @@ class RESPO(BaseAlgo):
         self,
         adv_r: torch.Tensor,
         adv_c: torch.Tensor,
+        value_p: torch.Tensor,
     ) -> torch.Tensor:
         r"""Compute surrogate loss.
 
@@ -555,7 +603,10 @@ class RESPO(BaseAlgo):
             The advantage function combined with reward and cost.
         """
         penalty = self._lagrange.lagrangian_multiplier.item()
-        return (adv_r - penalty * adv_c) / (1 + penalty)
+
+        unsafe = value_p
+        safe = 1.0 - value_p
+        return (adv_r * safe - penalty * adv_c * safe - unsafe * adv_c) / (1 + penalty)
 
     def _loss_pi(
         self,

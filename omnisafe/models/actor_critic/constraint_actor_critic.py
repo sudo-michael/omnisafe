@@ -66,19 +66,19 @@ class ConstraintActorCritic(ActorCritic):
         self.cost_critic: Critic = CriticBuilder(
             obs_space=obs_space,
             act_space=act_space,
-            hidden_sizes=model_cfgs.prob_critic.hidden_sizes,
-            activation=model_cfgs.prob_critic.activation,
+            hidden_sizes=model_cfgs.critic.hidden_sizes,
+            activation=model_cfgs.critic.activation,
             weight_initialization_mode=model_cfgs.weight_initialization_mode,
             num_critics=1,
             use_obs_encoder=False,
         ).build_critic('v')
         self.add_module('cost_critic', self.cost_critic)
 
-        if model_cfgs.prob_critic.lr is not None:
+        if model_cfgs.critic.lr is not None:
             self.cost_critic_optimizer: optim.Optimizer
             self.cost_critic_optimizer = optim.Adam(
                 self.cost_critic.parameters(),
-                lr=model_cfgs.prob_critic.lr,
+                lr=model_cfgs.critic.lr,
             )
 
     def step(
