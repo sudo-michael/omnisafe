@@ -60,11 +60,15 @@ class SimpleEnv(CMDP):
         obs = torch.as_tensor(self._observation_space.sample())
         reward = 10000 * torch.as_tensor(random.random())
         cost = 10000 * torch.as_tensor(random.random())
-        termiated = torch.as_tensor(random.random() > 0.9)
+        terminated = torch.as_tensor(random.random() > 0.9)
         truncated = torch.as_tensor(self._count > 10)
-        return obs, reward, cost, termiated, truncated, {'final_observation': obs}
+        return obs, reward, cost, terminated, truncated, {'final_observation': obs}
 
-    def reset(self, seed: int | None = None) -> tuple[torch.Tensor, dict]:
+    def reset(
+        self,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[torch.Tensor, dict]:
         if seed is not None:
             self.set_seed(seed)
         obs = torch.as_tensor(self._observation_space.sample())

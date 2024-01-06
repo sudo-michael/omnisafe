@@ -89,6 +89,30 @@ class SafetyGymnasiumEnv(CMDP):
         'SafetyAntCircle0-v0',
         'SafetyAntCircle1-v0',
         'SafetyAntCircle2-v0',
+        'SafetyDoggoGoal0-v0',
+        'SafetyDoggoGoal1-v0',
+        'SafetyDoggoGoal2-v0',
+        'SafetyDoggoButton0-v0',
+        'SafetyDoggoButton1-v0',
+        'SafetyDoggoButton2-v0',
+        'SafetyDoggoPush0-v0',
+        'SafetyDoggoPush1-v0',
+        'SafetyDoggoPush2-v0',
+        'SafetyDoggoCircle0-v0',
+        'SafetyDoggoCircle1-v0',
+        'SafetyDoggoCircle2-v0',
+        'SafetyRacecarGoal0-v0',
+        'SafetyRacecarGoal1-v0',
+        'SafetyRacecarGoal2-v0',
+        'SafetyRacecarButton0-v0',
+        'SafetyRacecarButton1-v0',
+        'SafetyRacecarButton2-v0',
+        'SafetyRacecarPush0-v0',
+        'SafetyRacecarPush1-v0',
+        'SafetyRacecarPush2-v0',
+        'SafetyRacecarCircle0-v0',
+        'SafetyRacecarCircle1-v0',
+        'SafetyRacecarCircle2-v0',
         'SafetyHalfCheetahVelocity-v1',
         'SafetyHopperVelocity-v1',
         'SafetySwimmerVelocity-v1',
@@ -185,18 +209,23 @@ class SafetyGymnasiumEnv(CMDP):
 
         return obs, reward, cost, terminated, truncated, info
 
-    def reset(self, seed: int | None = None) -> tuple[torch.Tensor, dict[str, Any]]:
+    def reset(
+        self,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[torch.Tensor, dict[str, Any]]:
         """Reset the environment.
 
         Args:
-            seed (int or None, optional): Seed to reset the environment.
-                Defaults to None.
+            seed (int, optional): The random seed. Defaults to None.
+            options (dict[str, Any], optional): The options for the environment. Defaults to None.
+
 
         Returns:
             observation: Agent's observation of the current environment.
             info: Some information logged by the environment.
         """
-        obs, info = self._env.reset(seed=seed)
+        obs, info = self._env.reset(seed=seed, options=options)
         return torch.as_tensor(obs, dtype=torch.float32, device=self._device), info
 
     def set_seed(self, seed: int) -> None:

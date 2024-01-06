@@ -104,7 +104,18 @@ def fork(
     # check if MPI is already setup..
     if parallel > 1 and os.getenv('MASTER_ADDR') is None:
         # MPI is not yet set up: quit parent process and start N child processes
-        os.environ['USE_DISTRIBUTED'] = '1'
+        if device != 'cpu':
+            initial_device = int(device.split(':')[-1])
+            os.environ['USE_DISTRIBUTED'] = '1'
+            if os.getenv('CUDA_VISIBLE_DEVICES') is None:
+                os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(
+                    str(initial_device + i) for i in range(parallel)
+                )
+            num_gpu = int((len(os.environ['CUDA_VISIBLE_DEVICES']) + 1) / 2)
+            assert (
+                num_gpu >= parallel
+            ), f'Please make sure you have enough available GPUs to run Parallel {parallel}, \
+                current available Devices are {num_gpu}.'
         env = os.environ.copy()
         env.update(MKL_NUM_THREADS='1', OMP_NUM_THREADS='1', IN_MPI='1')
         args = [
@@ -245,7 +256,7 @@ def avg_params(module: torch.nn.Module) -> None:
             param_tensor[:] = avg_param_tensor[:]
 
 
-def dist_avg(value: np.ndarray | torch.Tensor | int | float) -> torch.Tensor:
+def dist_avg(value: np.ndarray | torch.Tensor | float) -> torch.Tensor:
     """Average a tensor over distributed processes.
 
     Examples:
@@ -265,7 +276,7 @@ def dist_avg(value: np.ndarray | torch.Tensor | int | float) -> torch.Tensor:
     return dist_sum(value) / world_size()
 
 
-def dist_max(value: np.ndarray | torch.Tensor | int | float) -> torch.Tensor:
+def dist_max(value: np.ndarray | torch.Tensor | float) -> torch.Tensor:
     """Determine global maximum of tensor over distributed processes.
 
     Examples:
@@ -285,7 +296,7 @@ def dist_max(value: np.ndarray | torch.Tensor | int | float) -> torch.Tensor:
     return dist_op(value, ReduceOp.MAX)
 
 
-def dist_min(value: np.ndarray | torch.Tensor | int | float) -> torch.Tensor:
+def dist_min(value: np.ndarray | torch.Tensor | float) -> torch.Tensor:
     """Determine global minimum of tensor over distributed processes.
 
     Examples:
@@ -305,7 +316,7 @@ def dist_min(value: np.ndarray | torch.Tensor | int | float) -> torch.Tensor:
     return dist_op(value, ReduceOp.MIN)
 
 
-def dist_sum(value: np.ndarray | torch.Tensor | int | float) -> torch.Tensor:
+def dist_sum(value: np.ndarray | torch.Tensor | float) -> torch.Tensor:
     """Sum a tensor over distributed processes.
 
     Examples:
@@ -325,7 +336,7 @@ def dist_sum(value: np.ndarray | torch.Tensor | int | float) -> torch.Tensor:
     return dist_op(value, ReduceOp.SUM)
 
 
-def dist_op(value: np.ndarray | torch.Tensor | int | float, operation: Any) -> torch.Tensor:
+def dist_op(value: np.ndarray | torch.Tensor | float, operation: Any) -> torch.Tensor:
     """Multi-processing operation.
 
     .. note::
@@ -369,7 +380,7 @@ def dist_statistics_scalar(
         A tuple of the [mean, std] or [mean, std, min, max] of the input tensor.
     """
     global_sum = dist_sum(torch.sum(value))
-    global_n = dist_sum(len(value))
+    global_n = dist_sum(torch.tensor(len(value)).to(os.getenv('OMNISAFE_DEVICE', 'cpu')))
     mean = global_sum / global_n
 
     global_sum_sq = dist_sum(torch.sum((value - mean) ** 2))
