@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import time
 from typing import Any
+import numpy as np
 
 import torch
 import torch.nn as nn
@@ -28,10 +29,11 @@ from torch.utils.data import DataLoader, TensorDataset
 from omnisafe.adapter import OnPolicyRespoAdapter
 from omnisafe.algorithms import registry
 from omnisafe.algorithms.base_algo import BaseAlgo
-from omnisafe.common.buffer import VectorOnPolicyBuffer
+from omnisafe.common.buffer import VectorOnPolicyBufferRespo
 from omnisafe.common.logger import Logger
 from omnisafe.models.actor_critic.constraint_actor_critic import ConstraintActorMultipleCritic
 from omnisafe.utils import distributed
+from omnisafe.common.lagrange import Lagrange
 
 
 @registry.register
@@ -115,11 +117,12 @@ class RESPO(BaseAlgo):
             ...     self._buffer = CustomBuffer()
             ...     self._model = CustomModel()
         """
-        self._buf: VectorOnPolicyBuffer = VectorOnPolicyBuffer(
+        self._buf: VectorOnPolicyBufferRespo = VectorOnPolicyBufferRespo(
             obs_space=self._env.observation_space,
             act_space=self._env.action_space,
             size=self._steps_per_epoch,
             gamma=self._cfgs.algo_cfgs.gamma,
+            prob_gamma=self._cfgs.algo_cfgs.prob_gamma,
             lam=self._cfgs.algo_cfgs.lam,
             lam_c=self._cfgs.algo_cfgs.lam_c,
             advantage_estimator=self._cfgs.algo_cfgs.adv_estimation_method,
@@ -129,6 +132,8 @@ class RESPO(BaseAlgo):
             num_envs=self._cfgs.train_cfgs.vector_env_nums,
             device=self._device,
         )
+
+        self._lagrange: Lagrange = Lagrange(**self._cfgs.lagrange_cfgs)
 
     def _init_log(self) -> None:
         """Log info about epoch.
@@ -216,11 +221,16 @@ class RESPO(BaseAlgo):
             self._logger.register_key('Loss/Loss_cost_critic', delta=True)
             self._logger.register_key('Value/cost')
 
+        self._logger.register_key('Loss/Loss_prob_critic', delta=True)
+        self._logger.register_key('Value/prob')
+
         self._logger.register_key('Time/Total')
         self._logger.register_key('Time/Rollout')
         self._logger.register_key('Time/Update')
         self._logger.register_key('Time/Epoch')
         self._logger.register_key('Time/FPS')
+
+        self._logger.register_key('Metrics/LagrangeMultiplier', min_and_max=True)
 
     def learn(self) -> tuple[float, float, float]:
         """This is main function for algorithm update.
@@ -324,8 +334,13 @@ class RESPO(BaseAlgo):
         #. Repeat steps 2, 3 until the number of mini-batch data is used up.
         #. Repeat steps 2, 3, 4 until the KL divergence violates the limit.
         """
+        Jc = self._logger.get_stats('Metrics/EpCost')[0]
+        assert not np.isnan(Jc), 'cost for updating lagrange multiplier is nan'
+        # first update Lagrange multiplier parameter
+        self._lagrange.update_lagrange_multiplier(Jc)
+
         data = self._buf.get()
-        obs, act, logp, target_value_r, target_value_c, adv_r, adv_c = (
+        obs, act, logp, target_value_r, target_value_c, adv_r, adv_c, target_value_p, value_p = (
             data['obs'],
             data['act'],
             data['logp'],
@@ -333,13 +348,25 @@ class RESPO(BaseAlgo):
             data['target_value_c'],
             data['adv_r'],
             data['adv_c'],
+            data['discounted_prob'],
+            data['value_p'],
         )
 
         original_obs = obs
         old_distribution = self._actor_critic.actor(obs)
 
         dataloader = DataLoader(
-            dataset=TensorDataset(obs, act, logp, target_value_r, target_value_c, adv_r, adv_c),
+            dataset=TensorDataset(
+                obs,
+                act,
+                logp,
+                target_value_r,
+                target_value_c,
+                adv_r,
+                adv_c,
+                target_value_p,
+                value_p,
+            ),
             batch_size=self._cfgs.algo_cfgs.batch_size,
             shuffle=True,
         )
@@ -356,11 +383,14 @@ class RESPO(BaseAlgo):
                 target_value_c,
                 adv_r,
                 adv_c,
+                target_value_p,
+                value_p,
             ) in dataloader:
                 self._update_reward_critic(obs, target_value_r)
                 if self._cfgs.algo_cfgs.use_cost:
                     self._update_cost_critic(obs, target_value_c)
-                self._update_actor(obs, act, logp, adv_r, adv_c)
+                    self._update_prob_critic(obs, target_value_p)
+                self._update_actor(obs, act, logp, adv_r, adv_c, value_p)
 
             new_distribution = self._actor_critic.actor(original_obs)
 
@@ -466,6 +496,46 @@ class RESPO(BaseAlgo):
 
         self._logger.store({'Loss/Loss_cost_critic': loss.mean().item()})
 
+    def _update_prob_critic(self, obs: torch.Tensor, target_value_p: torch.Tensor) -> None:
+        r"""Update value network under a double for loop.
+
+        The loss function is ``MSE loss``, which is defined in ``torch.nn.MSELoss``.
+        Specifically, the loss function is defined as:
+
+        .. math::
+
+            L = \frac{1}{N} \sum_{i=1}^N (\hat{V} - V)^2
+
+        where :math:`\hat{V}` is the predicted cost and :math:`V` is the target cost.
+
+        #. Compute the loss function.
+        #. Add the ``critic norm`` to the loss function if ``use_critic_norm`` is ``True``.
+        #. Clip the gradient if ``use_max_grad_norm`` is ``True``.
+        #. Update the network by loss function.
+
+        Args:
+            obs (torch.Tensor): The ``observation`` sampled from buffer.
+            target_value_c (torch.Tensor): The ``target_value_c`` sampled from buffer.
+        """
+        self._actor_critic.cost_critic_optimizer.zero_grad()
+        loss = nn.functional.mse_loss(self._actor_critic.cost_critic(obs)[0], target_value_p)
+
+        if self._cfgs.algo_cfgs.use_critic_norm:
+            for param in self._actor_critic.cost_critic.parameters():
+                loss += param.pow(2).sum() * self._cfgs.algo_cfgs.critic_norm_coef
+
+        loss.backward()
+
+        if self._cfgs.algo_cfgs.use_max_grad_norm:
+            clip_grad_norm_(
+                self._actor_critic.cost_critic.parameters(),
+                self._cfgs.algo_cfgs.max_grad_norm,
+            )
+        distributed.avg_grads(self._actor_critic.cost_critic)
+        self._actor_critic.cost_critic_optimizer.step()
+
+        self._logger.store({'Loss/Loss_prob_critic': loss.mean().item()})
+
     def _update_actor(  # pylint: disable=too-many-arguments
         self,
         obs: torch.Tensor,
@@ -473,6 +543,7 @@ class RESPO(BaseAlgo):
         logp: torch.Tensor,
         adv_r: torch.Tensor,
         adv_c: torch.Tensor,
+        value_p: torch.Tensor,
     ) -> None:
         """Update policy network under a double for loop.
 
@@ -493,8 +564,9 @@ class RESPO(BaseAlgo):
             adv_r (torch.Tensor): The ``reward_advantage`` sampled from buffer.
             adv_c (torch.Tensor): The ``cost_advantage`` sampled from buffer.
         """
-        adv = self._compute_adv_surrogate(adv_r, adv_c)
-        loss = self._loss_pi(obs, act, logp, adv)
+        p_unsafe = value_p
+        p_safe = 1.0 - p_unsafe
+        loss = self._loss_pi(obs, act, logp, adv_r, adv_c, p_safe, p_unsafe)
         self._actor_critic.actor_optimizer.zero_grad()
         loss.backward()
         if self._cfgs.algo_cfgs.use_max_grad_norm:
@@ -529,6 +601,9 @@ class RESPO(BaseAlgo):
         act: torch.Tensor,
         logp: torch.Tensor,
         adv: torch.Tensor,
+        adv_c: torch.Tensor,
+        p_safe: torch.Tensor,
+        p_unsafe: torch.Tensor,
     ) -> torch.Tensor:
         r"""Computing pi/actor loss.
 
@@ -557,7 +632,17 @@ class RESPO(BaseAlgo):
         logp_ = self._actor_critic.actor.log_prob(act)
         std = self._actor_critic.actor.std
         ratio = torch.exp(logp_ - logp)
-        loss = -(ratio * adv).mean()
+        ratio_cliped = torch.clamp(
+            ratio,
+            1 - self._cfgs.algo_cfgs.clip,
+            1 + self._cfgs.algo_cfgs.clip,
+        )
+        loss_pi = -torch.min(ratio * adv * p_safe, ratio_cliped * adv * p_safe).mean()
+        penalty = self._lagrange.lagrangian_multiplier.item()
+        loss_cpi = (ratio * adv_c * (penalty  * p_safe + p_unsafe)).mean()
+        loss = (loss_pi + loss_cpi) / (1 + penalty)
+        loss -= self._cfgs.algo_cfgs.entropy_coef * distribution.entropy().mean()
+        # useful extra info
         entropy = distribution.entropy().mean().item()
         self._logger.store(
             {
@@ -568,5 +653,3 @@ class RESPO(BaseAlgo):
             },
         )
         return loss
-
-

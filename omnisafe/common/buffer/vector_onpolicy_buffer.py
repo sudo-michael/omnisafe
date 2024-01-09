@@ -19,6 +19,7 @@ from __future__ import annotations
 import torch
 
 from omnisafe.common.buffer.onpolicy_buffer import OnPolicyBuffer
+from omnisafe.common.buffer.onpolicy_buffer import OnPolicyBufferRespo
 from omnisafe.typing import DEVICE_CPU, AdvatageEstimator, OmnisafeSpace
 from omnisafe.utils import distributed
 
@@ -136,3 +137,43 @@ class VectorOnPolicyBuffer(OnPolicyBuffer):
             data['adv_c'] = data['adv_c'] - cadv_mean
 
         return data
+
+class VectorOnPolicyBufferRespo(VectorOnPolicyBuffer):
+    def __init__(  # pylint: disable=super-init-not-called,too-many-arguments
+        self,
+        obs_space: OmnisafeSpace,
+        act_space: OmnisafeSpace,
+        size: int,
+        gamma: float,
+        prob_gamma: float,
+        lam: float,
+        lam_c: float,
+        advantage_estimator: AdvatageEstimator,
+        penalty_coefficient: float,
+        standardized_adv_r: bool,
+        standardized_adv_c: bool,
+        num_envs: int = 1,
+        device: torch.device = DEVICE_CPU,
+    ) -> None:
+        """Initialize an instance of :class:`VectorOnPolicyBuffer`."""
+        self._num_buffers: int = num_envs
+        self._standardized_adv_r: bool = standardized_adv_r
+        self._standardized_adv_c: bool = standardized_adv_c
+
+        if num_envs < 1:
+            raise ValueError('num_envs must be greater than 0.')
+        self.buffers: list[OnPolicyBufferRespo] = [
+            OnPolicyBufferRespo(
+                obs_space=obs_space,
+                act_space=act_space,
+                size=size,
+                gamma=gamma,
+                prob_gamma=prob_gamma,
+                lam=lam,
+                lam_c=lam_c,
+                advantage_estimator=advantage_estimator,
+                penalty_coefficient=penalty_coefficient,
+                device=device,
+            )
+            for _ in range(num_envs)
+        ]

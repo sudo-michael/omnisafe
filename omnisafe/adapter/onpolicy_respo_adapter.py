@@ -22,7 +22,7 @@ import torch
 from rich.progress import track
 
 from omnisafe.adapter.online_adapter import OnlineAdapter
-from omnisafe.common.buffer import VectorOnPolicyBuffer
+from omnisafe.common.buffer import VectorOnPolicyBufferRespo
 from omnisafe.common.logger import Logger
 from omnisafe.models.actor_critic.constraint_actor_critic import ConstraintActorMultipleCritic
 from omnisafe.utils.config import Config
@@ -59,7 +59,7 @@ class OnPolicyRespoAdapter(OnlineAdapter):
         self,
         steps_per_epoch: int,
         agent: ConstraintActorMultipleCritic,
-        buffer: VectorOnPolicyBuffer,
+        buffer: VectorOnPolicyBufferRespo,
         logger: Logger,
     ) -> None:
         """Rollout the environment and store the data in the buffer.
@@ -98,6 +98,7 @@ class OnPolicyRespoAdapter(OnlineAdapter):
                 cost=cost,
                 value_r=value_r,
                 value_c=value_c,
+                value_p=value_p,
                 logp=logp,
             )
 

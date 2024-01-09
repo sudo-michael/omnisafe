@@ -172,7 +172,7 @@ class ConstraintActorMultipleCritic(ConstraintActorCritic):
             weight_initialization_mode=model_cfgs.weight_initialization_mode,
             num_critics=1,
             use_obs_encoder=False,
-        ).build_critic('v')
+        ).build_critic('vp')
         self.add_module('prob_critic', self.prob_critic)
 
         if model_cfgs.prob_critic.lr is not None:

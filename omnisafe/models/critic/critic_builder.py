@@ -18,7 +18,7 @@ from __future__ import annotations
 
 from omnisafe.models.base import Critic
 from omnisafe.models.critic.q_critic import QCritic
-from omnisafe.models.critic.v_critic import VCritic
+from omnisafe.models.critic.v_critic import VCritic, VCriticProb
 from omnisafe.typing import Activation, CriticType, InitFunction, OmnisafeSpace
 
 
@@ -95,6 +95,15 @@ class CriticBuilder:
             )
         if critic_type == 'v':
             return VCritic(
+                obs_space=self._obs_space,
+                act_space=self._act_space,
+                hidden_sizes=self._hidden_sizes,
+                activation=self._activation,
+                weight_initialization_mode=self._weight_initialization_mode,
+                num_critics=self._num_critics,
+            )
+        if critic_type == 'vp':
+            return VCriticProb(
                 obs_space=self._obs_space,
                 act_space=self._act_space,
                 hidden_sizes=self._hidden_sizes,

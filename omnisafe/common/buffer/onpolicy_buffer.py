@@ -226,6 +226,8 @@ class OnPolicyBuffer(BaseBuffer):  # pylint: disable=too-many-instance-attribute
             'discounted_ret': self.data['discounted_ret'],
             'adv_c': self.data['adv_c'],
             'target_value_c': self.data['target_value_c'],
+            'discounted_prob': self.data['discounted_prob'],
+            'value_p': self.data['value_p']
         }
 
         adv_mean, adv_std, *_ = distributed.dist_statistics_scalar(data['adv_r'])
@@ -403,3 +405,120 @@ class OnPolicyBuffer(BaseBuffer):  # pylint: disable=too-many-instance-attribute
         policy_advantage = clip_rhos * (rewards[:-1] + gamma * v_s_plus_1 - values[:-1])
 
         return v_s, policy_advantage, clip_rhos
+
+
+class OnPolicyBufferRespo(OnPolicyBuffer):  # pylint: disable=too-many-instance-attributes
+    def __init__(  # pylint: disable=too-many-arguments
+        self,
+        obs_space: OmnisafeSpace,
+        act_space: OmnisafeSpace,
+        size: int,
+        gamma: float,
+        prob_gamma: float,
+        lam: float,
+        lam_c: float,
+        advantage_estimator: AdvatageEstimator,
+        penalty_coefficient: float = 0,
+        standardized_adv_r: bool = False,
+        standardized_adv_c: bool = False,
+        device: torch.device = DEVICE_CPU,
+    ) -> None:
+        """Initialize an instance of :class:`OnPolicyBuffer`."""
+        super().__init__(
+            obs_space,
+            act_space,
+            size,
+            gamma,
+            lam,
+            lam_c,
+            advantage_estimator,
+            penalty_coefficient,
+            standardized_adv_r,
+            standardized_adv_c,
+            device,
+        )
+        self.data['prob'] = torch.zeros((size,), dtype=torch.float32, device=device)
+        self.data['discounted_prob'] = torch.zeros((size,), dtype=torch.float32, device=device)
+        self.data['value_p'] = torch.zeros((size,), dtype=torch.float32, device=device)
+        self.prob_gamma = prob_gamma
+
+    def store(self, **data: torch.Tensor) -> None:
+        """Store data into the buffer.
+
+        .. warning::
+            The total size of the data must be less than the buffer size.
+
+        Args:
+            data (torch.Tensor): The data to store.
+        """
+        assert self.ptr < self.max_size, 'No more space in the buffer!'
+        for key, value in data.items():
+            self.data[key][self.ptr] = value
+        self.data['prob'][self.ptr] = float(data['cost'] > 0)
+        self.ptr += 1
+        
+    def finish_path(
+        self,
+        last_value_r: torch.Tensor | None = None,
+        last_value_c: torch.Tensor | None = None,
+    ) -> None:
+        """Finish the current path and calculate the advantages of state-action pairs.
+
+        On-policy algorithms need to calculate the advantages of state-action pairs
+        after the path is finished. This function calculates the advantages of
+        state-action pairs and stores them in the buffer, following the steps:
+
+        .. hint::
+            #. Calculate the discounted return.
+            #. Calculate the advantages of the reward.
+            #. Calculate the advantages of the cost.
+
+        Args:
+            last_value_r (torch.Tensor, optional): The value of the last state of the current path.
+                Defaults to torch.zeros(1).
+            last_value_c (torch.Tensor, optional): The value of the last state of the current path.
+                Defaults to torch.zeros(1).
+        """
+        if last_value_r is None:
+            last_value_r = torch.zeros(1, device=self._device)
+        if last_value_c is None:
+            last_value_c = torch.zeros(1, device=self._device)
+
+        path_slice = slice(self.path_start_idx, self.ptr)
+        last_value_r = last_value_r.to(self._device)
+        last_value_c = last_value_c.to(self._device)
+        rewards = torch.cat([self.data['reward'][path_slice], last_value_r])
+        values_r = torch.cat([self.data['value_r'][path_slice], last_value_r])
+        costs = torch.cat([self.data['cost'][path_slice], last_value_c])
+        values_c = torch.cat([self.data['value_c'][path_slice], last_value_c])
+
+        probs = torch.cat([self.data['cost'][path_slice], (last_value_c > 0).float()])
+        def discount_max(vector_x, prob_gamma):
+            length = vector_x.shape[0]
+            for idx in reversed(range(length - 2)):
+                vector_x[idx] = max(vector_x[idx], prob_gamma * vector_x[idx+1])
+            return vector_x
+        discounted_probs = discount_max(probs, self.prob_gamma)[:-1]
+        self.data['discounted_prob'][path_slice] = discounted_probs
+
+        discountred_ret = discount_cumsum(rewards, self._gamma)[:-1]
+        self.data['discounted_ret'][path_slice] = discountred_ret
+        rewards -= self._penalty_coefficient * costs
+
+        adv_r, target_value_r = self._calculate_adv_and_value_targets(
+            values_r,
+            rewards,
+            lam=self._lam,
+        )
+        adv_c, target_value_c = self._calculate_adv_and_value_targets(
+            values_c,
+            costs,
+            lam=self._lam_c,
+        )
+
+        self.data['adv_r'][path_slice] = adv_r
+        self.data['target_value_r'][path_slice] = target_value_r
+        self.data['adv_c'][path_slice] = adv_c
+        self.data['target_value_c'][path_slice] = target_value_c
+
+        self.path_start_idx = self.ptr
