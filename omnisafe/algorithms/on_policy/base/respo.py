@@ -222,7 +222,7 @@ class RESPO(BaseAlgo):
             self._logger.register_key('Value/cost')
 
         self._logger.register_key('Loss/Loss_prob_critic', delta=True)
-        self._logger.register_key('Value/prob')
+        self._logger.register_key('Value/PSafe')
 
         self._logger.register_key('Time/Total')
         self._logger.register_key('Time/Rollout')
@@ -338,6 +338,8 @@ class RESPO(BaseAlgo):
         assert not np.isnan(Jc), 'cost for updating lagrange multiplier is nan'
         # first update Lagrange multiplier parameter
         self._lagrange.update_lagrange_multiplier(Jc)
+        self._logger.store({'Metrics/LagrangeMultiplier': self._lagrange.lagrangian_multiplier})
+
 
         data = self._buf.get()
         obs, act, logp, target_value_r, target_value_c, adv_r, adv_c, target_value_p, value_p = (
@@ -413,6 +415,7 @@ class RESPO(BaseAlgo):
                 'Train/StopIter': update_counts,  # pylint: disable=undefined-loop-variable
                 'Value/Adv': adv_r.mean().item(),
                 'Train/KL': final_kl,
+                'Value/PSafe': (1.0 - data['value_p']).mean(),
             },
         )
 
@@ -637,10 +640,10 @@ class RESPO(BaseAlgo):
             1 - self._cfgs.algo_cfgs.clip,
             1 + self._cfgs.algo_cfgs.clip,
         )
-        loss_pi = -torch.min(ratio * adv * p_safe, ratio_cliped * adv * p_safe).mean()
+        loss_pi = torch.min(ratio * adv * p_safe, ratio_cliped * adv * p_safe).mean()
         penalty = self._lagrange.lagrangian_multiplier.item()
         loss_cpi = (ratio * adv_c * (penalty  * p_safe + p_unsafe)).mean()
-        loss = (loss_pi + loss_cpi) / (1 + penalty)
+        loss = -(loss_pi - loss_cpi) / (1 + penalty)
         loss -= self._cfgs.algo_cfgs.entropy_coef * distribution.entropy().mean()
         # useful extra info
         entropy = distribution.entropy().mean().item()

@@ -18,6 +18,7 @@ from omnisafe.adapter.early_terminated_adapter import EarlyTerminatedAdapter
 from omnisafe.adapter.modelbased_adapter import ModelBasedAdapter
 from omnisafe.adapter.offline_adapter import OfflineAdapter
 from omnisafe.adapter.offpolicy_adapter import OffPolicyAdapter
+from omnisafe.adapter.offpolicy_respo_adapter import OffPolicyRespoAdapter
 from omnisafe.adapter.online_adapter import OnlineAdapter
 from omnisafe.adapter.onpolicy_adapter import OnPolicyAdapter
 from omnisafe.adapter.onpolicy_respo_adapter import OnPolicyRespoAdapter

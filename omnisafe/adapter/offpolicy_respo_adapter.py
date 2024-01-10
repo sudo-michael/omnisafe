@@ -27,7 +27,7 @@ from omnisafe.models.actor_critic.constraint_actor_q_critic import ConstraintAct
 from omnisafe.utils.config import Config
 
 
-class OffPolicyAdapter(OnlineAdapter):
+class OffPolicyRespoAdapter(OnlineAdapter):
     """OffPolicy Adapter for OmniSafe.
 
     :class:`OffPolicyAdapter` is used to adapt the environment to the off-policy training.
@@ -99,9 +99,6 @@ class OffPolicyAdapter(OnlineAdapter):
                     'Metrics/TestEpRet': ep_ret,
                     'Metrics/TestEpCost': ep_cost,
                     'Metrics/TestEpLen': ep_len,
-                    # 'Atu/TotalCollidePersuer': info['final_info']['counter']['persuer'],
-                    # 'Atu/TotalUseHJ': info['final_info']['counter']['hj'],
-                    # 'Atu/TotalReachGoal': info['final_info']['counter']['goal']
                 },
             )
 
@@ -189,9 +186,6 @@ class OffPolicyAdapter(OnlineAdapter):
                 'Metrics/EpRet': self._ep_ret[idx],
                 'Metrics/EpCost': self._ep_cost[idx],
                 'Metrics/EpLen': self._ep_len[idx],
-                # 'Atu/TotalCollidePersuer': info['counter']['persuer'],
-                # 'Atu/TotalUseHJ': info['counter']['hj'],
-                # 'Atu/TotalReachGoal': info['counter']['goal']
             },
         )
 

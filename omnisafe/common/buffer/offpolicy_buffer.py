@@ -115,3 +115,71 @@ class OffPolicyBuffer(BaseBuffer):
         """
         idxs = torch.randint(0, self._size, (self._batch_size,))
         return {key: value[idxs] for key, value in self.data.items()}
+
+class OffPolicyBufferRespo(OffPolicyBuffer):
+    def __init__(  # pylint: disable=too-many-arguments
+        self,
+        obs_space: OmnisafeSpace,
+        act_space: OmnisafeSpace,
+        size: int,
+        batch_size: int,
+        device: torch.device = DEVICE_CPU,
+    ) -> None:
+        """Initialize an instance of :class:`OffPolicyBuffer`."""
+        super().__init__(obs_space, act_space, size, device)
+        if isinstance(obs_space, Box):
+            self.data['next_obs'] = torch.zeros(
+                (size, *obs_space.shape),
+                dtype=torch.float32,
+                device=device,
+            )
+        else:
+            raise NotImplementedError
+
+        self._ptr: int = 0
+        self._size: int = 0
+        self._max_size: int = size
+        self._batch_size: int = batch_size
+
+        assert (
+            self._max_size > self._batch_size
+        ), 'The size of the buffer must be larger than the batch size.'
+
+    @property
+    def max_size(self) -> int:
+        """Return the max size of the buffer."""
+        return self._max_size
+
+    @property
+    def size(self) -> int:
+        """Return the current size of the buffer."""
+        return self._size
+
+    @property
+    def batch_size(self) -> int:
+        """Return the batch size of the buffer."""
+        return self._batch_size
+
+    def store(self, **data: torch.Tensor) -> None:
+        """Store data into the buffer.
+
+        .. hint::
+            The ReplayBuffer is a circular buffer. When the buffer is full, the oldest data will be
+            overwritten.
+
+        Args:
+            data (torch.Tensor): The data to be stored.
+        """
+        for key, value in data.items():
+            self.data[key][self._ptr] = value
+        self._ptr = (self._ptr + 1) % self._max_size
+        self._size = min(self._size + 1, self._max_size)
+
+    def sample_batch(self) -> dict[str, torch.Tensor]:
+        """Sample a batch of data from the buffer.
+
+        Returns:
+            The sampled batch of data.
+        """
+        idxs = torch.randint(0, self._size, (self._batch_size,))
+        return {key: value[idxs] for key, value in self.data.items()}
