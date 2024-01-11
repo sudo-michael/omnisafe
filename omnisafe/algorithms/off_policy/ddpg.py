@@ -229,10 +229,6 @@ class DDPG(BaseAlgo):
         self._logger.register_key('Time/Epoch')
         self._logger.register_key('Time/FPS')
 
-        # NOTE: added for atu, min_and_max since logger prints running average, which is useless for a total
-        self._logger.register_key('Atu/TotalCollidePersuer', window_length=1)
-        self._logger.register_key('Atu/TotalUseHJ', window_length=1)
-        self._logger.register_key('Atu/TotalReachGoal', window_length=1) 
     def learn(self) -> tuple[float, float, float]:
         """This is main function for algorithm update.
 
