@@ -48,8 +48,7 @@ class ActorQCritic(nn.Module):
         model_cfgs (ModelConfig): The model configurations.
         epochs (int): The number of epochs.
 
-    Attributes:
-        actor (Actor): The actor network.
+    Attributes: actor (Actor): The actor network.
         target_actor (Actor): The target actor network.
         reward_critic (Critic): The critic network.
         target_reward_critic (Critic): The target critic network.

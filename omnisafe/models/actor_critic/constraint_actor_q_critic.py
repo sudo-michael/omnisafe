@@ -150,8 +150,11 @@ class ConstraintActorQCriticRespo(ActorQCritic):
             hidden_sizes=model_cfgs.critic.hidden_sizes,
             activation=model_cfgs.critic.activation,
             weight_initialization_mode=model_cfgs.weight_initialization_mode,
-            num_critics=1,
+            num_critics=model_cfgs.critic.num_critics,
             use_obs_encoder=False,
+            use_layer_norm=model_cfgs.critic.use_layer_norm,
+            use_dropout=model_cfgs.critic.use_dropout,
+            dropout_rate=model_cfgs.critic.dropout_rate,
         ).build_critic('q')
         self.target_cost_critic: Critic = deepcopy(self.cost_critic)
         for param in self.target_cost_critic.parameters():
@@ -170,8 +173,11 @@ class ConstraintActorQCriticRespo(ActorQCritic):
             hidden_sizes=model_cfgs.prob_critic.hidden_sizes,
             activation=model_cfgs.prob_critic.activation,
             weight_initialization_mode=model_cfgs.weight_initialization_mode,
-            num_critics=1,
+            num_critics=model_cfgs.prob_critic.num_critics,
             use_obs_encoder=False,
+            use_layer_norm=model_cfgs.prob_critic.use_layer_norm,
+            use_dropout=model_cfgs.prob_critic.use_dropout,
+            dropout_rate=model_cfgs.prob_critic.dropout_rate,
         ).build_critic('qp')
 
         self.target_prob_critic: Critic = deepcopy(self.prob_critic)

@@ -69,6 +69,9 @@ class QCritic(Critic):
         weight_initialization_mode: InitFunction = 'kaiming_uniform',
         num_critics: int = 1,
         use_obs_encoder: bool = False,
+        use_layer_norm: bool = False,
+        use_dropout: bool = False,
+        dropout_rate: bool = 0.0,
     ) -> None:
         """Initialize an instance of :class:`QCritic`."""
         super().__init__(
@@ -100,6 +103,9 @@ class QCritic(Critic):
                     [self._obs_dim + self._act_dim, *hidden_sizes, 1],
                     activation=activation,
                     weight_initialization_mode=weight_initialization_mode,
+                    use_layer_norm=use_layer_norm,
+                    use_dropout=use_dropout,
+                    dropout_rate=dropout_rate,
                 )
                 critic = nn.Sequential(net)
             self.net_lst.append(critic)
@@ -179,6 +185,9 @@ class QCriticProb(QCritic):
         weight_initialization_mode: InitFunction = 'kaiming_uniform',
         num_critics: int = 1,
         use_obs_encoder: bool = False,
+        use_layer_norm: bool = False,
+        use_dropout: bool = False,
+        dropout_rate: bool = 0.0,
     ) -> None:
         """Initialize an instance of :class:`QCritic`."""
         super().__init__(
@@ -212,6 +221,9 @@ class QCriticProb(QCritic):
                     activation=activation,
                     weight_initialization_mode=weight_initialization_mode,
                     output_activation='sigmoid',
+                    use_layer_norm=use_layer_norm,
+                    use_dropout=use_dropout,
+                    dropout_rate=dropout_rate,
                 )
                 critic = nn.Sequential(net)
             self.net_lst.append(critic)

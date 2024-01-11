@@ -37,13 +37,13 @@ defaults:
     # number of steps per sample
     update_cycle: 1
     # number of iterations to update the policy
-    update_iters: 1
+    update_iters: 10
     # The size of replay buffer
     size: 1000000
     # The size of batch
     batch_size: 256
     # normalize reward
-    reward_normalize: False
+    reward_normalize: True
     # normalize cost
     cost_normalize: True
     # normalize observation
@@ -124,6 +124,10 @@ defaults:
       activation: relu
       # The learning rate of Critic network
       lr: 0.0003
+      # droq
+      use_layer_norm: True
+      use_dropout: True
+      dropout_rate: 0.1
     prob_critic:
       # The number of critic networks
       num_critics: 2
@@ -133,6 +137,11 @@ defaults:
       activation: relu
       # The learning rate of Critic network
       lr: 0.0003
+      # droq
+      use_layer_norm: True
+      use_dropout: True
+      dropout_rate: 0.05
+
   # lagrangian configurations
   lagrange_cfgs:
     # Tolerance of constraint violation

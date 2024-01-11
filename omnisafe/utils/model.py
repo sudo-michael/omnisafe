@@ -75,6 +75,9 @@ def build_mlp_network(
     activation: Activation,
     output_activation: Activation = 'identity',
     weight_initialization_mode: InitFunction = 'kaiming_uniform',
+    use_layer_norm: bool = False,
+    use_dropout: bool = False,
+    dropout_rate: float = 0.0
 ) -> nn.Module:
     """Build the MLP network.
 
@@ -107,5 +110,10 @@ def build_mlp_network(
         act_fn = activation_fn if j < len(sizes) - 2 else output_activation_fn
         affine_layer = nn.Linear(sizes[j], sizes[j + 1])
         initialize_layer(weight_initialization_mode, affine_layer)
-        layers += [affine_layer, act_fn()]
+        layers += [affine_layer]
+        if use_dropout and dropout_rate > 0.0:
+            layers += [nn.Dropout(p=dropout_rate)]
+        if use_layer_norm:
+            layers += [nn.LayerNorm(affine_layer.out_features)]
+        layers += [act_fn()]
     return nn.Sequential(*layers)

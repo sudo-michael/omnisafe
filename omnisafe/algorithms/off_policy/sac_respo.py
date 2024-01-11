@@ -75,7 +75,7 @@ class SACRESPO(SACLag):
         #. Update the network by loss.
         #. Repeat steps 2, 3 until the ``update_iters`` times.
         """
-        for _ in range(self._cfgs.algo_cfgs.update_iters):
+        for ii in range(self._cfgs.algo_cfgs.update_iters):
             data = self._buf.sample_batch()
             self._update_count += 1
             obs, act, reward, cost, done, next_obs = (
@@ -91,6 +91,7 @@ class SACRESPO(SACLag):
             if self._cfgs.algo_cfgs.use_cost:
                 self._update_cost_critic(obs, act, cost, done, next_obs)
                 self._update_prob_critic(obs, act, cost, done, next_obs)
+                self._actor_critic.polyak_update(self._cfgs.algo_cfgs.polyak)
 
             if self._update_count % self._cfgs.algo_cfgs.policy_delay == 0:
                 self._update_actor(obs)
@@ -101,6 +102,56 @@ class SACRESPO(SACLag):
         self._logger.store(
             {
                 'Metrics/LagrangeMultiplier': self._lagrange.lagrangian_multiplier.data.item(),
+            },
+        )
+
+    def _update_cost_critic(
+        self,
+        obs: torch.Tensor,
+        action: torch.Tensor,
+        cost: torch.Tensor,
+        done: torch.Tensor,
+        next_obs: torch.Tensor,
+    ) -> None:
+        """Update cost critic.
+
+        - Get the TD loss of cost critic.
+        - Update critic network by loss.
+        - Log useful information.
+
+        Args:
+            obs (torch.Tensor): The ``observation`` sampled from buffer.
+            action (torch.Tensor): The ``action`` sampled from buffer.
+            cost (torch.Tensor): The ``cost`` sampled from buffer.
+            done (torch.Tensor): The ``terminated`` sampled from buffer.
+            next_obs (torch.Tensor): The ``next observation`` sampled from buffer.
+        """
+        with torch.no_grad():
+            next_action = self._actor_critic.actor.predict(next_obs, deterministic=True)
+            next_q1_value_c, next_q2_value_c = self._actor_critic.target_cost_critic(next_obs, next_action)
+            target_q_value_c = cost + self._cfgs.algo_cfgs.gamma * (1 - done) * torch.min(next_q1_value_c, next_q2_value_c)
+        q1_value_c, q2_value_c = self._actor_critic.cost_critic(obs, action)
+        loss = nn.functional.mse_loss(q1_value_c, target_q_value_c) + nn.functional.mse_loss(q2_value_c, target_q_value_c)
+
+
+        if self._cfgs.algo_cfgs.use_critic_norm:
+            for param in self._actor_critic.cost_critic.parameters():
+                loss += param.pow(2).sum() * self._cfgs.algo_cfgs.critic_norm_coeff
+
+        self._actor_critic.cost_critic_optimizer.zero_grad()
+        loss.backward()
+
+        if self._cfgs.algo_cfgs.max_grad_norm:
+            clip_grad_norm_(
+                self._actor_critic.cost_critic.parameters(),
+                self._cfgs.algo_cfgs.max_grad_norm,
+            )
+        self._actor_critic.cost_critic_optimizer.step()
+
+        self._logger.store(
+            {
+                'Loss/Loss_cost_critic': loss.mean().item(),
+                'Value/cost_critic': q1_value_c.mean().item(),
             },
         )
 
@@ -127,11 +178,13 @@ class SACRESPO(SACLag):
         """
         with torch.no_grad():
             next_action = self._actor_critic.actor.predict(next_obs, deterministic=True)
-            next_q_value_prob = self._actor_critic.target_prob_critic(next_obs, next_action)[0]
+            next_q1_value_prob, next_q2_value_prob  = self._actor_critic.target_prob_critic(next_obs, next_action)
+            next_q_value_prob = torch.min(next_q1_value_prob, next_q2_value_prob)
             # contraction mapping : https://arxiv.org/pdf/2309.13528.pdf pg. 
-            target_q_value_prob = torch.maximum((cost > 0).float(),  self._cfgs.algo_cfgs.prob_gamma * (1 - done) * next_q_value_prob)
-        q_value_p = self._actor_critic.prob_critic(obs, action)[0]
-        loss = nn.functional.mse_loss(q_value_p, target_q_value_prob)
+            target_q_value_prob = torch.max((cost > 0).float(),  self._cfgs.algo_cfgs.prob_gamma * (1 - done) * next_q_value_prob)
+        q1_value_p, q2_value_p = self._actor_critic.prob_critic(obs, action)
+        loss = nn.functional.mse_loss(q1_value_p, target_q_value_prob) + nn.functional.mse_loss(q2_value_p, target_q_value_prob)
+
 
         if self._cfgs.algo_cfgs.use_prob_critic_norm:
             for param in self._actor_critic.prob_critic.parameters():
@@ -150,7 +203,7 @@ class SACRESPO(SACLag):
         self._logger.store(
             {
                 'Loss/Loss_prob_critic': loss.mean().item(),
-                'Value/prob_critic': q_value_p.mean().item(),
+                'Value/prob_critic': q1_value_p.mean().item(),
             },
         )
     
@@ -178,13 +231,13 @@ class SACRESPO(SACLag):
         """
         # not sure if this is the correct thing to do
         action = self._actor_critic.actor.predict(obs, deterministic=False)
-        p_safe = self._actor_critic.prob_critic(obs, action)[0].detach()
+        p_safe = torch.min(*self._actor_critic.prob_critic(obs, action)).detach()
         p_unsafe = 1.0 - p_safe
 
         log_prob = self._actor_critic.actor.log_prob(action)
         loss_q_r_1, loss_q_r_2 = self._actor_critic.reward_critic(obs, action)
         loss_r = self._alpha * log_prob - torch.min(loss_q_r_1, loss_q_r_2) * p_safe
-        loss_q_c = self._actor_critic.cost_critic(obs, action)[0]
+        loss_q_c = torch.min(*self._actor_critic.cost_critic(obs, action))
         loss_c = self._lagrange.lagrangian_multiplier.item() * loss_q_c * p_safe + loss_q_c * p_unsafe
 
  
