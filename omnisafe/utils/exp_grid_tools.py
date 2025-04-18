@@ -62,7 +62,7 @@ def valid_str(vals: list[Any] | str) -> str:
 
 
 def train(
-    exp_id: str,
+    exp_id: int,
     algo: str,
     env_id: str,
     custom_cfgs: dict[str, Any],
@@ -105,4 +105,4 @@ def train(
             sys.stderr = f_error
             agent = omnisafe.Agent(algo, env_id, custom_cfgs=custom_cfgs)
             reward, cost, ep_len = agent.learn()
-    return reward, cost, ep_len
+    return reward, cost, ep_len, exp_id

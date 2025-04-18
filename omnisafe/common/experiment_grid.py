@@ -20,7 +20,7 @@ import json
 import multiprocessing as mp
 import os
 import string
-from concurrent.futures import ProcessPoolExecutor as Pool
+from concurrent.futures import ProcessPoolExecutor as Pool, as_completed
 from copy import deepcopy
 from typing import Any, Callable
 
@@ -440,34 +440,67 @@ class ExperimentGrid:
         joined_var_names = '\n'.join(var_names)
         announcement = f'\n{joined_var_names}\n\n{line}'
         print(announcement)
+        
+        if is_test:
+            return
 
-        pool = Pool(max_workers=num_pool, mp_context=mp.get_context('spawn'))
-        # run the variants.
-        results = []
+        # pool = Pool(max_workers=num_pool, mp_context=mp.get_context('spawn'))
+        # # run the variants.
+        # results = []
+        # exp_names = []
+
+        # for idx, var in enumerate(variants):
+        #     self.check_variant_vaild(var)
+        #     print('current_config', var)
+        #     clean_var = deepcopy(var)
+        #     clean_var.pop('seed', None)
+        #     if gpu_id is not None:
+        #         device_id = gpu_id[idx % len(gpu_id)]
+        #         device = f'cuda:{device_id}'
+        #         self.update_dict(var, {'train_cfgs': {'device': device}})
+        #     exp_name = recursive_dict2json(clean_var)
+        #     hashed_exp_name = var['env_id'][:30] + '---' + hash_string(exp_name)
+        #     exp_names.append(':'.join((hashed_exp_name[:5], exp_name)))
+        #     exp_log_dir = os.path.join(self.log_dir, hashed_exp_name, '')
+        #     if not var.get('logger_cfgs'):
+        #         var['logger_cfgs'] = {'log_dir': './exp'}
+        #     var['logger_cfgs'].update({'log_dir': exp_log_dir})
+        #     self.save_same_exps_config(exp_log_dir, var)
+        #     results.append(pool.submit(thunk, str(idx), var['algo'], var['env_id'], var))
+        # pool.shutdown()
+
+        # if not is_test:
+        #     self.save_results(exp_names, variants, results)
         exp_names = []
+        results = []
+        with Pool(max_workers=num_pool, mp_context=mp.get_context('spawn')) as executor:
+            for idx, var in enumerate(variants):
+                self.check_variant_vaild(var)
+                print('current_config', var)
+                clean_var = deepcopy(var)
+                clean_var.pop('seed', None)
+                if gpu_id is not None:
+                    device_id = gpu_id[idx % len(gpu_id)]
+                    device = f'cuda:{device_id}'
+                    self.update_dict(var, {'train_cfgs': {'device': device}})
+                exp_name = recursive_dict2json(clean_var)
+                hashed_exp_name = var['env_id'][:30] + '---' + hash_string(exp_name)
+                exp_names.append(':'.join((hashed_exp_name[:5], exp_name)))
+                exp_log_dir = os.path.join(self.log_dir, hashed_exp_name, '')
+                if not var.get('logger_cfgs'):
+                    var['logger_cfgs'] = {'log_dir': './exp'}
+                var['logger_cfgs'].update({'log_dir': exp_log_dir})
+                self.save_same_exps_config(exp_log_dir, var)
+                results.append(executor.submit(thunk, idx, var['algo'], var['env_id'], var))
 
-        for idx, var in enumerate(variants):
-            self.check_variant_vaild(var)
-            print('current_config', var)
-            clean_var = deepcopy(var)
-            clean_var.pop('seed', None)
-            if gpu_id is not None:
-                device_id = gpu_id[idx % len(gpu_id)]
-                device = f'cuda:{device_id}'
-                self.update_dict(var, {'train_cfgs': {'device': device}})
-            exp_name = recursive_dict2json(clean_var)
-            hashed_exp_name = var['env_id'][:30] + '---' + hash_string(exp_name)
-            exp_names.append(':'.join((hashed_exp_name[:5], exp_name)))
-            exp_log_dir = os.path.join(self.log_dir, hashed_exp_name, '')
-            if not var.get('logger_cfgs'):
-                var['logger_cfgs'] = {'log_dir': './exp'}
-            var['logger_cfgs'].update({'log_dir': exp_log_dir})
-            self.save_same_exps_config(exp_log_dir, var)
-            results.append(pool.submit(thunk, str(idx), var['algo'], var['env_id'], var))
-        pool.shutdown()
+            for future in as_completed(results):
+                try:
+                    reward, cost, ep_len, ep_idx = future.result()
+                    print(f"{exp_names[ep_idx]} completed. {reward=} {cost=} {ep_len=}")
+                except Exception as e:
+                    print(f"{exp_names[ep_idx]} exception")
+                    print(e)
 
-        if not is_test:
-            self.save_results(exp_names, variants, results)
         self._init_statistical_tools()
 
     def save_results(
