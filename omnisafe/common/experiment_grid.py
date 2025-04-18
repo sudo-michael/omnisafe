@@ -440,6 +440,9 @@ class ExperimentGrid:
         joined_var_names = '\n'.join(var_names)
         announcement = f'\n{joined_var_names}\n\n{line}'
         print(announcement)
+        
+        if is_test:
+            return
 
         # pool = Pool(max_workers=num_pool, mp_context=mp.get_context('spawn'))
         # # run the variants.
@@ -488,12 +491,12 @@ class ExperimentGrid:
                     var['logger_cfgs'] = {'log_dir': './exp'}
                 var['logger_cfgs'].update({'log_dir': exp_log_dir})
                 self.save_same_exps_config(exp_log_dir, var)
-                results.append(executor.submit(thunk, str(idx), var['algo'], var['env_id'], var))
+                results.append(executor.submit(thunk, idx, var['algo'], var['env_id'], var))
 
             for future in as_completed(results):
                 try:
                     reward, cost, ep_len, ep_idx = future.result()
-                    print(f"{exp_names[ep_idx]} completed")
+                    print(f"{exp_names[ep_idx]} completed. {reward=} {cost=} {ep_len=}")
                 except Exception as e:
                     print(f"{exp_names[ep_idx]} exception")
                     print(e)

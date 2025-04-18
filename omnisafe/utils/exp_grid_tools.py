@@ -62,7 +62,7 @@ def valid_str(vals: list[Any] | str) -> str:
 
 
 def train(
-    exp_id: str,
+    exp_id: int,
     algo: str,
     env_id: str,
     custom_cfgs: dict[str, Any],
