@@ -1,0 +1,40 @@
+{
+    "env_id": [
+        "SafetyAntVelocity-v1",
+        "SafetyHopperVelocity-v1",
+        "SafetyHalfCheetahVelocity-v1"
+    ],
+    "algo": [
+        "PPOLag",
+        "P3O",
+        "IPO"
+    ],
+    "train_cfgs:device": [
+        "cuda"
+    ],
+    "train_cfgs:vector_env_nums": [
+        4
+    ],
+    "train_cfgs:torch_threads": [
+        8
+    ],
+    "train_cfgs:total_steps": [
+        1000000
+    ],
+    "algo_cfgs:steps_per_epoch": [
+        20000
+    ],
+    "logger_cfgs:use_wandb": [
+        true
+    ],
+    "logger_cfgs:use_tensorboard": [
+        false
+    ],
+    "seed": [
+        0,
+        1,
+        2,
+        3,
+        4
+    ]
+}

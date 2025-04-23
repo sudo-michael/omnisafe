@@ -1,11 +1,11 @@
 #!/bin/bash
 #SBATCH -J omnisafe_test     # Name that will show up in squeue
 #SBATCH --gres=gpu:2         # Request 4 GPU "generic resource"
-#SBATCH --time=0-30:00       # Max job time is 3 hours
+#SBATCH --time=2-00:00       # Max job time is 3 hours
 #SBATCH --mem=64G            # Max memory (CPU) 16GB
-#SBATCH --cpus-per-task=8    # Request 4 CPU threads
+#SBATCH --cpus-per-task=32   # Request 4 CPU threads
 #SBATCH --output=%N-%j.out   # Terminal output to file named (hostname)-(jobid).out
-#SBATCH --partition=mars-lab-long   # See “SLURM partitions” section
+#SBATCH --partition=mars-lab-short   # See “SLURM partitions” section
 #SBATCH --nodelist=cs-venus-06  # if needed, set the node you want (similar to -w xyz)
 
 # The SBATCH directives above set options similarly to command line arguments to srun
@@ -14,6 +14,4 @@
 # You can do tail -f <output_filename> to track the job.
 # You can kill the job using scancel squ<job_id> where you can find the <job_id> from squeue
 
-# Your experiment setup logic here
-source ./venv/bin/activate
-srun python experiment_scripts/test.py 
+uv run experiment_scripts/test.py
