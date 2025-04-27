@@ -1,0 +1,1973 @@
+Loading P3O.yaml from /project/mars-lab/mla233/omnisafe/omnisafe/utils/../configs/on-policy/P3O.yaml
+Logging data to 
+./exp-x/omnisafe_test_benchmark_1_env/SafetyHopperVelocity-v1---0a02bdac6dc64a84
+10eccb091c1f4e01868dba1f9fa1ee0c63f412ff460cf88b/P3O-{SafetyHopperVelocity-v1}/s
+eed-002-2025-04-24-00-55-08/progress.csv
+Save with config in config.json
+project omnisafe name P3O-{SafetyHopperVelocity-v1}-seed-002-2025-04-24-00-55-08
+INFO: Start training
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 0... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:36
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:49
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 12.710036277770996     │
+│ Metrics/EpCost                │ 0.029999999329447746   │
+│ Metrics/EpLen                 │ 16.940000534057617     │
+│ Train/Epoch                   │ 0.0                    │
+│ Train/Entropy                 │ 1.4021947383880615     │
+│ Train/KL                      │ 0.019802112132310867   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.001647710800171      │
+│ Train/PolicyRatio/Min         │ 1.001647710800171      │
+│ Train/PolicyRatio/Max         │ 1.001647710800171      │
+│ Train/PolicyRatio/Std         │ 0.021667519584298134   │
+│ Train/LR                      │ 0.00029399999766610563 │
+│ Train/PolicyStd               │ 0.9834159016609192     │
+│ TotalEnvSteps                 │ 20000.0                │
+│ Loss/Loss_pi                  │ -0.02402362786233425   │
+│ Loss/Loss_pi/Delta            │ -0.02402362786233425   │
+│ Value/Adv                     │ 0.11028819531202316    │
+│ Loss/Loss_reward_critic       │ 8.041422843933105      │
+│ Loss/Loss_reward_critic/Delta │ 8.041422843933105      │
+│ Value/reward                  │ -0.11942107230424881   │
+│ Loss/Loss_cost_critic         │ 0.338952898979187      │
+│ Loss/Loss_cost_critic/Delta   │ 0.338952898979187      │
+│ Value/cost                    │ 0.14544446766376495    │
+│ Time/Total                    │ 206.5332794189453      │
+│ Time/Rollout                  │ 156.81100463867188     │
+│ Time/Update                   │ 49.72137451171875      │
+│ Time/Epoch                    │ 206.53244018554688     │
+│ Time/FPS                      │ 96.83708953857422      │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 1... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:35
+Early stopping at iter 1 due to reaching max kl
+Updating...                                            0% -:--:--
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 19.429399490356445    │
+│ Metrics/EpCost                │ 0.8500000238418579    │
+│ Metrics/EpLen                 │ 20.850000381469727    │
+│ Train/Epoch                   │ 1.0                   │
+│ Train/Entropy                 │ 1.3953263759613037    │
+│ Train/KL                      │ 0.0211963914334774    │
+│ Train/StopIter                │ 1.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9988257884979248    │
+│ Train/PolicyRatio/Min         │ 0.9988257884979248    │
+│ Train/PolicyRatio/Max         │ 0.9988257884979248    │
+│ Train/PolicyRatio/Std         │ 0.023226628080010414  │
+│ Train/LR                      │ 0.0002880000101868063 │
+│ Train/PolicyStd               │ 0.9766876697540283    │
+│ TotalEnvSteps                 │ 40000.0               │
+│ Loss/Loss_pi                  │ -0.03111749142408371  │
+│ Loss/Loss_pi/Delta            │ -0.007093863561749458 │
+│ Value/Adv                     │ 0.2601495683193207    │
+│ Loss/Loss_reward_critic       │ 35.8611946105957      │
+│ Loss/Loss_reward_critic/Delta │ 27.819771766662598    │
+│ Value/reward                  │ 5.32692289352417      │
+│ Loss/Loss_cost_critic         │ 2.377048969268799     │
+│ Loss/Loss_cost_critic/Delta   │ 2.038096070289612     │
+│ Value/cost                    │ 0.20436468720436096   │
+│ Time/Total                    │ 366.8814392089844     │
+│ Time/Rollout                  │ 155.04055786132812    │
+│ Time/Update                   │ 5.261765480041504     │
+│ Time/Epoch                    │ 160.30238342285156    │
+│ Time/FPS                      │ 124.76420593261719    │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 2... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:32
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:49
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 44.987831115722656     │
+│ Metrics/EpCost                │ 7.199999809265137      │
+│ Metrics/EpLen                 │ 34.5099983215332       │
+│ Train/Epoch                   │ 2.0                    │
+│ Train/Entropy                 │ 1.3792791366577148     │
+│ Train/KL                      │ 0.015209722332656384   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9993898868560791     │
+│ Train/PolicyRatio/Min         │ 0.9993898868560791     │
+│ Train/PolicyRatio/Max         │ 0.9993898868560791     │
+│ Train/PolicyRatio/Std         │ 0.022056257352232933   │
+│ Train/LR                      │ 0.00028199999360367656 │
+│ Train/PolicyStd               │ 0.9611328840255737     │
+│ TotalEnvSteps                 │ 60000.0                │
+│ Loss/Loss_pi                  │ -0.027706310153007507  │
+│ Loss/Loss_pi/Delta            │ 0.0034111812710762024  │
+│ Value/Adv                     │ 0.070778988301754      │
+│ Loss/Loss_reward_critic       │ 109.71891784667969     │
+│ Loss/Loss_reward_critic/Delta │ 73.85772323608398      │
+│ Value/reward                  │ 12.284026145935059     │
+│ Loss/Loss_cost_critic         │ 14.37356185913086      │
+│ Loss/Loss_cost_critic/Delta   │ 11.99651288986206      │
+│ Value/cost                    │ 1.5800869464874268     │
+│ Time/Total                    │ 569.4307250976562      │
+│ Time/Rollout                  │ 152.89129638671875     │
+│ Time/Update                   │ 49.611331939697266     │
+│ Time/Epoch                    │ 202.50270080566406     │
+│ Time/FPS                      │ 98.76411437988281      │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 3... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:34
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:50
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 63.50172805786133      │
+│ Metrics/EpCost                │ 15.979999542236328     │
+│ Metrics/EpLen                 │ 40.18000030517578      │
+│ Train/Epoch                   │ 3.0                    │
+│ Train/Entropy                 │ 1.3709158897399902     │
+│ Train/KL                      │ 0.0177933219820261     │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.0003803968429565     │
+│ Train/PolicyRatio/Min         │ 1.0003803968429565     │
+│ Train/PolicyRatio/Max         │ 1.0003803968429565     │
+│ Train/PolicyRatio/Std         │ 0.020165499299764633   │
+│ Train/LR                      │ 0.00027600000612437725 │
+│ Train/PolicyStd               │ 0.9531434774398804     │
+│ TotalEnvSteps                 │ 80000.0                │
+│ Loss/Loss_pi                  │ -0.02361571602523327   │
+│ Loss/Loss_pi/Delta            │ 0.004090594127774239   │
+│ Value/Adv                     │ -0.012863734737038612  │
+│ Loss/Loss_reward_critic       │ 182.7135009765625      │
+│ Loss/Loss_reward_critic/Delta │ 72.99458312988281      │
+│ Value/reward                  │ 24.863515853881836     │
+│ Loss/Loss_cost_critic         │ 27.39072036743164      │
+│ Loss/Loss_cost_critic/Delta   │ 13.017158508300781     │
+│ Value/cost                    │ 5.5175275802612305     │
+│ Time/Total                    │ 774.8070068359375      │
+│ Time/Rollout                  │ 154.49172973632812     │
+│ Time/Update                   │ 50.84031295776367      │
+│ Time/Epoch                    │ 205.33212280273438     │
+│ Time/FPS                      │ 97.4031753540039       │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 4... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:55
+Early stopping at iter 1 due to reaching max kl
+Updating...                                            0% -:--:--
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 114.19812774658203    │
+│ Metrics/EpCost                │ 36.650001525878906    │
+│ Metrics/EpLen                 │ 60.2599983215332      │
+│ Train/Epoch                   │ 4.0                   │
+│ Train/Entropy                 │ 1.3438451290130615    │
+│ Train/KL                      │ 1.1240233182907104    │
+│ Train/StopIter                │ 1.0                   │
+│ Train/PolicyRatio/Mean        │ 1.001672625541687     │
+│ Train/PolicyRatio/Min         │ 1.001672625541687     │
+│ Train/PolicyRatio/Max         │ 1.001672625541687     │
+│ Train/PolicyRatio/Std         │ 0.33520209789276123   │
+│ Train/LR                      │ 0.0002699999895412475 │
+│ Train/PolicyStd               │ 0.9278579950332642    │
+│ TotalEnvSteps                 │ 100000.0              │
+│ Loss/Loss_pi                  │ 0.43310415744781494   │
+│ Loss/Loss_pi/Delta            │ 0.4567198734730482    │
+│ Value/Adv                     │ 0.04372189939022064   │
+│ Loss/Loss_reward_critic       │ 292.1921081542969     │
+│ Loss/Loss_reward_critic/Delta │ 109.47860717773438    │
+│ Value/reward                  │ 39.39836883544922     │
+│ Loss/Loss_cost_critic         │ 41.0634765625         │
+│ Loss/Loss_cost_critic/Delta   │ 13.67275619506836     │
+│ Value/cost                    │ 11.263590812683105    │
+│ Time/Total                    │ 955.6264038085938     │
+│ Time/Rollout                  │ 175.21923828125       │
+│ Time/Update                   │ 5.54824686050415      │
+│ Time/Epoch                    │ 180.76754760742188    │
+│ Time/FPS                      │ 110.63932800292969    │
+│ Loss/Loss_pi_cost             │ 206.03082275390625    │
+│ Loss/Loss_pi_cost/Delta       │ 206.03082275390625    │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 5... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:59
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:54
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 5.038338661193848     │
+│ Metrics/EpCost                │ 0.0                   │
+│ Metrics/EpLen                 │ 17.43000030517578     │
+│ Train/Epoch                   │ 5.0                   │
+│ Train/Entropy                 │ 1.323459506034851     │
+│ Train/KL                      │ 0.010705302469432354  │
+│ Train/StopIter                │ 10.0                  │
+│ Train/PolicyRatio/Mean        │ 1.0006046295166016    │
+│ Train/PolicyRatio/Min         │ 1.0006046295166016    │
+│ Train/PolicyRatio/Max         │ 1.0006046295166016    │
+│ Train/PolicyRatio/Std         │ 0.017723536118865013  │
+│ Train/LR                      │ 0.0002640000020619482 │
+│ Train/PolicyStd               │ 0.9092052578926086    │
+│ TotalEnvSteps                 │ 120000.0              │
+│ Loss/Loss_pi                  │ -0.010634095408022404 │
+│ Loss/Loss_pi/Delta            │ -0.44373825285583735  │
+│ Value/Adv                     │ -0.10146581381559372  │
+│ Loss/Loss_reward_critic       │ 16.379901885986328    │
+│ Loss/Loss_reward_critic/Delta │ -275.81220626831055   │
+│ Value/reward                  │ 27.09606170654297     │
+│ Loss/Loss_cost_critic         │ 0.5752367973327637    │
+│ Loss/Loss_cost_critic/Delta   │ -40.488239765167236   │
+│ Value/cost                    │ 4.614650726318359     │
+│ Time/Total                    │ 1189.854736328125     │
+│ Time/Rollout                  │ 179.62908935546875    │
+│ Time/Update                   │ 54.550167083740234    │
+│ Time/Epoch                    │ 234.1793212890625     │
+│ Time/FPS                      │ 85.4046401977539      │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ -206.03082275390625   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 6... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:49
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:49
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 5.753848075866699     │
+│ Metrics/EpCost                │ 0.0                   │
+│ Metrics/EpLen                 │ 19.1299991607666      │
+│ Train/Epoch                   │ 6.0                   │
+│ Train/Entropy                 │ 1.3413769006729126    │
+│ Train/KL                      │ 0.01745280809700489   │
+│ Train/StopIter                │ 10.0                  │
+│ Train/PolicyRatio/Mean        │ 0.9990567564964294    │
+│ Train/PolicyRatio/Min         │ 0.9990566968917847    │
+│ Train/PolicyRatio/Max         │ 0.9990566968917847    │
+│ Train/PolicyRatio/Std         │ 0.024039151147007942  │
+│ Train/LR                      │ 0.0002579999854788184 │
+│ Train/PolicyStd               │ 0.926268458366394     │
+│ TotalEnvSteps                 │ 140000.0              │
+│ Loss/Loss_pi                  │ -0.021703200414776802 │
+│ Loss/Loss_pi/Delta            │ -0.011069105006754398 │
+│ Value/Adv                     │ -0.22244921326637268  │
+│ Loss/Loss_reward_critic       │ 6.888779163360596     │
+│ Loss/Loss_reward_critic/Delta │ -9.491122722625732    │
+│ Value/reward                  │ 9.973433494567871     │
+│ Loss/Loss_cost_critic         │ 0.1668059378862381    │
+│ Loss/Loss_cost_critic/Delta   │ -0.4084308594465256   │
+│ Value/cost                    │ 1.674664855003357     │
+│ Time/Total                    │ 1408.5826416015625    │
+│ Time/Rollout                  │ 169.4622039794922     │
+│ Time/Update                   │ 49.2135124206543      │
+│ Time/Epoch                    │ 218.67578125          │
+│ Time/FPS                      │ 91.45960235595703     │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 7... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:27
+Early stopping at iter 1 due to reaching max kl
+Updating...                                            0% -:--:--
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 9.024107933044434     │
+│ Metrics/EpCost                │ 0.0                   │
+│ Metrics/EpLen                 │ 21.5                  │
+│ Train/Epoch                   │ 7.0                   │
+│ Train/Entropy                 │ 1.3458958864212036    │
+│ Train/KL                      │ 0.024627696722745895  │
+│ Train/StopIter                │ 1.0                   │
+│ Train/PolicyRatio/Mean        │ 1.000424861907959     │
+│ Train/PolicyRatio/Min         │ 1.000424861907959     │
+│ Train/PolicyRatio/Max         │ 1.000424861907959     │
+│ Train/PolicyRatio/Std         │ 0.027311136946082115  │
+│ Train/LR                      │ 0.0002519999979995191 │
+│ Train/PolicyStd               │ 0.9309077858924866    │
+│ TotalEnvSteps                 │ 160000.0              │
+│ Loss/Loss_pi                  │ -0.03799302130937576  │
+│ Loss/Loss_pi/Delta            │ -0.01628982089459896  │
+│ Value/Adv                     │ -0.05482567846775055  │
+│ Loss/Loss_reward_critic       │ 12.768217086791992    │
+│ Loss/Loss_reward_critic/Delta │ 5.8794379234313965    │
+│ Value/reward                  │ 5.393022537231445     │
+│ Loss/Loss_cost_critic         │ 0.18325215578079224   │
+│ Loss/Loss_cost_critic/Delta   │ 0.016446217894554138  │
+│ Value/cost                    │ 0.6344305872917175    │
+│ Time/Total                    │ 1560.7523193359375    │
+│ Time/Rollout                  │ 147.28172302246094    │
+│ Time/Update                   │ 4.840574264526367     │
+│ Time/Epoch                    │ 152.1223602294922     │
+│ Time/FPS                      │ 131.47311401367188    │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 8... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:06
+Early stopping at iter 1 due to reaching max kl
+Updating...                                            0% -:--:--
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 19.5089054107666      │
+│ Metrics/EpCost                │ 0.3799999952316284    │
+│ Metrics/EpLen                 │ 28.93000030517578     │
+│ Train/Epoch                   │ 8.0                   │
+│ Train/Entropy                 │ 1.3436062335968018    │
+│ Train/KL                      │ 0.024184508249163628  │
+│ Train/StopIter                │ 1.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9971721768379211    │
+│ Train/PolicyRatio/Min         │ 0.9971721768379211    │
+│ Train/PolicyRatio/Max         │ 0.9971721768379211    │
+│ Train/PolicyRatio/Std         │ 0.02485116384923458   │
+│ Train/LR                      │ 0.0002460000105202198 │
+│ Train/PolicyStd               │ 0.9288435578346252    │
+│ TotalEnvSteps                 │ 180000.0              │
+│ Loss/Loss_pi                  │ -0.03589877486228943  │
+│ Loss/Loss_pi/Delta            │ 0.0020942464470863342 │
+│ Value/Adv                     │ 0.10871808230876923   │
+│ Loss/Loss_reward_critic       │ 32.35514831542969     │
+│ Loss/Loss_reward_critic/Delta │ 19.586931228637695    │
+│ Value/reward                  │ 6.828385829925537     │
+│ Loss/Loss_cost_critic         │ 1.0753438472747803    │
+│ Loss/Loss_cost_critic/Delta   │ 0.892091691493988     │
+│ Value/cost                    │ 0.4906259775161743    │
+│ Time/Total                    │ 1691.6861572265625    │
+│ Time/Rollout                  │ 126.427734375         │
+│ Time/Update                   │ 4.469630241394043     │
+│ Time/Epoch                    │ 130.89743041992188    │
+│ Time/FPS                      │ 152.79139709472656    │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 9... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Early stopping at iter 2 due to reaching max kl
+Updating... ━━━━                                      10% -:--:--
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 36.144447326660156     │
+│ Metrics/EpCost                │ 2.6700000762939453     │
+│ Metrics/EpLen                 │ 37.81999969482422      │
+│ Train/Epoch                   │ 9.0                    │
+│ Train/Entropy                 │ 1.326646327972412      │
+│ Train/KL                      │ 0.023662297055125237   │
+│ Train/StopIter                │ 2.0                    │
+│ Train/PolicyRatio/Mean        │ 1.000091791152954      │
+│ Train/PolicyRatio/Min         │ 1.0000916719436646     │
+│ Train/PolicyRatio/Max         │ 1.0000916719436646     │
+│ Train/PolicyRatio/Std         │ 0.0227675698697567     │
+│ Train/LR                      │ 0.00023999999393709004 │
+│ Train/PolicyStd               │ 0.9128100275993347     │
+│ TotalEnvSteps                 │ 200000.0               │
+│ Loss/Loss_pi                  │ -0.03133050352334976   │
+│ Loss/Loss_pi/Delta            │ 0.004568271338939667   │
+│ Value/Adv                     │ -0.08573142439126968   │
+│ Loss/Loss_reward_critic       │ 60.41900634765625      │
+│ Loss/Loss_reward_critic/Delta │ 28.063858032226562     │
+│ Value/reward                  │ 12.357501029968262     │
+│ Loss/Loss_cost_critic         │ 3.3215160369873047     │
+│ Loss/Loss_cost_critic/Delta   │ 2.2461721897125244     │
+│ Value/cost                    │ 1.0856034755706787     │
+│ Time/Total                    │ 1825.9891357421875     │
+│ Time/Rollout                  │ 124.73262786865234     │
+│ Time/Update                   │ 9.534780502319336      │
+│ Time/Epoch                    │ 134.26747131347656     │
+│ Time/FPS                      │ 148.95640563964844     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 10... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:05
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:42
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 66.10789489746094      │
+│ Metrics/EpCost                │ 7.650000095367432      │
+│ Metrics/EpLen                 │ 52.349998474121094     │
+│ Train/Epoch                   │ 10.0                   │
+│ Train/Entropy                 │ 1.2970316410064697     │
+│ Train/KL                      │ 0.014148321002721786   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.0007697343826294     │
+│ Train/PolicyRatio/Min         │ 1.0007697343826294     │
+│ Train/PolicyRatio/Max         │ 1.0007697343826294     │
+│ Train/PolicyRatio/Std         │ 0.019455598667263985   │
+│ Train/LR                      │ 0.00023400000645779073 │
+│ Train/PolicyStd               │ 0.8856286406517029     │
+│ TotalEnvSteps                 │ 220000.0               │
+│ Loss/Loss_pi                  │ -0.02145376428961754   │
+│ Loss/Loss_pi/Delta            │ 0.009876739233732224   │
+│ Value/Adv                     │ 0.0019044317305088043  │
+│ Loss/Loss_reward_critic       │ 64.87271118164062      │
+│ Loss/Loss_reward_critic/Delta │ 4.453704833984375      │
+│ Value/reward                  │ 23.450895309448242     │
+│ Loss/Loss_cost_critic         │ 6.538442134857178      │
+│ Loss/Loss_cost_critic/Delta   │ 3.216926097869873      │
+│ Value/cost                    │ 3.078357696533203      │
+│ Time/Total                    │ 1994.29248046875       │
+│ Time/Rollout                  │ 125.48310852050781     │
+│ Time/Update                   │ 42.78430938720703      │
+│ Time/Epoch                    │ 168.26748657226562     │
+│ Time/FPS                      │ 118.8583755493164      │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 11... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:05
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:44
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 76.48217010498047     │
+│ Metrics/EpCost                │ 13.239999771118164    │
+│ Metrics/EpLen                 │ 52.970001220703125    │
+│ Train/Epoch                   │ 11.0                  │
+│ Train/Entropy                 │ 1.2840406894683838    │
+│ Train/KL                      │ 0.010024984367191792  │
+│ Train/StopIter                │ 10.0                  │
+│ Train/PolicyRatio/Mean        │ 0.9989036917686462    │
+│ Train/PolicyRatio/Min         │ 0.9989036917686462    │
+│ Train/PolicyRatio/Max         │ 0.9989036917686462    │
+│ Train/PolicyRatio/Std         │ 0.017824994400143623  │
+│ Train/LR                      │ 0.0002280000044265762 │
+│ Train/PolicyStd               │ 0.8742290735244751    │
+│ TotalEnvSteps                 │ 240000.0              │
+│ Loss/Loss_pi                  │ -0.015102986246347427 │
+│ Loss/Loss_pi/Delta            │ 0.006350778043270111  │
+│ Value/Adv                     │ 0.13826942443847656   │
+│ Loss/Loss_reward_critic       │ 40.10636520385742     │
+│ Loss/Loss_reward_critic/Delta │ -24.766345977783203   │
+│ Value/reward                  │ 32.43565368652344     │
+│ Loss/Loss_cost_critic         │ 7.804462432861328     │
+│ Loss/Loss_cost_critic/Delta   │ 1.2660202980041504    │
+│ Value/cost                    │ 5.276960849761963     │
+│ Time/Total                    │ 2164.26025390625      │
+│ Time/Rollout                  │ 125.18681335449219    │
+│ Time/Update                   │ 44.74360656738281     │
+│ Time/Epoch                    │ 169.93048095703125    │
+│ Time/FPS                      │ 117.6951904296875     │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 12... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:02
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:45
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 95.00316619873047      │
+│ Metrics/EpCost                │ 10.739999771118164     │
+│ Metrics/EpLen                 │ 68.77999877929688      │
+│ Train/Epoch                   │ 12.0                   │
+│ Train/Entropy                 │ 1.2712093591690063     │
+│ Train/KL                      │ 0.014556527137756348   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.001329779624939      │
+│ Train/PolicyRatio/Min         │ 1.001329779624939      │
+│ Train/PolicyRatio/Max         │ 1.001329779624939      │
+│ Train/PolicyRatio/Std         │ 0.01927843503654003    │
+│ Train/LR                      │ 0.00022200000239536166 │
+│ Train/PolicyStd               │ 0.863088071346283      │
+│ TotalEnvSteps                 │ 260000.0               │
+│ Loss/Loss_pi                  │ -0.02114371582865715   │
+│ Loss/Loss_pi/Delta            │ -0.006040729582309723  │
+│ Value/Adv                     │ -0.2076527625322342    │
+│ Loss/Loss_reward_critic       │ 42.1986083984375       │
+│ Loss/Loss_reward_critic/Delta │ 2.092243194580078      │
+│ Value/reward                  │ 37.81724548339844      │
+│ Loss/Loss_cost_critic         │ 6.002965450286865      │
+│ Loss/Loss_cost_critic/Delta   │ -1.801496982574463     │
+│ Value/cost                    │ 6.10861349105835       │
+│ Time/Total                    │ 2332.03759765625       │
+│ Time/Rollout                  │ 122.52466583251953     │
+│ Time/Update                   │ 45.213539123535156     │
+│ Time/Epoch                    │ 167.73828125           │
+│ Time/FPS                      │ 119.2333755493164      │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 13... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:05
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:45
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 151.38841247558594     │
+│ Metrics/EpCost                │ 6.610000133514404      │
+│ Metrics/EpLen                 │ 123.16000366210938     │
+│ Train/Epoch                   │ 13.0                   │
+│ Train/Entropy                 │ 1.2503341436386108     │
+│ Train/KL                      │ 0.013394280336797237   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9991435408592224     │
+│ Train/PolicyRatio/Min         │ 0.9991435408592224     │
+│ Train/PolicyRatio/Max         │ 0.9991435408592224     │
+│ Train/PolicyRatio/Std         │ 0.020044099539518356   │
+│ Train/LR                      │ 0.00021600000036414713 │
+│ Train/PolicyStd               │ 0.8451259136199951     │
+│ TotalEnvSteps                 │ 280000.0               │
+│ Loss/Loss_pi                  │ -0.023708783090114594  │
+│ Loss/Loss_pi/Delta            │ -0.0025650672614574432 │
+│ Value/Adv                     │ 0.08760033547878265    │
+│ Loss/Loss_reward_critic       │ 52.876468658447266     │
+│ Loss/Loss_reward_critic/Delta │ 10.677860260009766     │
+│ Value/reward                  │ 42.01765823364258      │
+│ Loss/Loss_cost_critic         │ 2.943620204925537      │
+│ Loss/Loss_cost_critic/Delta   │ -3.059345245361328     │
+│ Value/cost                    │ 4.760212421417236      │
+│ Time/Total                    │ 2503.566162109375      │
+│ Time/Rollout                  │ 125.93032836914062     │
+│ Time/Update                   │ 45.55963897705078      │
+│ Time/Epoch                    │ 171.49002075195312     │
+│ Time/FPS                      │ 116.62486267089844     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 14... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:02
+Early stopping at iter 8 due to reaching max kl
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━              70% 0:00:15
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 288.7826232910156     │
+│ Metrics/EpCost                │ 5.800000190734863     │
+│ Metrics/EpLen                 │ 260.07000732421875    │
+│ Train/Epoch                   │ 14.0                  │
+│ Train/Entropy                 │ 1.2309306859970093    │
+│ Train/KL                      │ 0.02178790792822838   │
+│ Train/StopIter                │ 8.0                   │
+│ Train/PolicyRatio/Mean        │ 1.0013759136199951    │
+│ Train/PolicyRatio/Min         │ 1.0013759136199951    │
+│ Train/PolicyRatio/Max         │ 1.0013759136199951    │
+│ Train/PolicyRatio/Std         │ 0.01984371431171894   │
+│ Train/LR                      │ 0.0002099999983329326 │
+│ Train/PolicyStd               │ 0.8289024829864502    │
+│ TotalEnvSteps                 │ 300000.0              │
+│ Loss/Loss_pi                  │ -0.018338643014431    │
+│ Loss/Loss_pi/Delta            │ 0.005370140075683594  │
+│ Value/Adv                     │ -0.28701916337013245  │
+│ Loss/Loss_reward_critic       │ 32.95872116088867     │
+│ Loss/Loss_reward_critic/Delta │ -19.917747497558594   │
+│ Value/reward                  │ 50.20615768432617     │
+│ Loss/Loss_cost_critic         │ 0.7770830392837524    │
+│ Loss/Loss_cost_critic/Delta   │ -2.1665371656417847   │
+│ Value/cost                    │ 3.148207664489746     │
+│ Time/Total                    │ 2665.158203125        │
+│ Time/Rollout                  │ 122.78298950195312    │
+│ Time/Update                   │ 38.771759033203125    │
+│ Time/Epoch                    │ 161.5548095703125     │
+│ Time/FPS                      │ 123.79700469970703    │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 15... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:45
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 459.7015686035156      │
+│ Metrics/EpCost                │ 5.070000171661377      │
+│ Metrics/EpLen                 │ 432.4100036621094      │
+│ Train/Epoch                   │ 15.0                   │
+│ Train/Entropy                 │ 1.2090959548950195     │
+│ Train/KL                      │ 0.006260747089982033   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.0005477666854858     │
+│ Train/PolicyRatio/Min         │ 1.0005476474761963     │
+│ Train/PolicyRatio/Max         │ 1.0005476474761963     │
+│ Train/PolicyRatio/Std         │ 0.012968606315553188   │
+│ Train/LR                      │ 0.00020399999630171806 │
+│ Train/PolicyStd               │ 0.8112049102783203     │
+│ TotalEnvSteps                 │ 320000.0               │
+│ Loss/Loss_pi                  │ -0.004212545230984688  │
+│ Loss/Loss_pi/Delta            │ 0.014126097783446312   │
+│ Value/Adv                     │ -0.008187470026314259  │
+│ Loss/Loss_reward_critic       │ 2.376607656478882      │
+│ Loss/Loss_reward_critic/Delta │ -30.58211350440979     │
+│ Value/reward                  │ 60.82402420043945      │
+│ Loss/Loss_cost_critic         │ 0.2742564082145691     │
+│ Loss/Loss_cost_critic/Delta   │ -0.5028266310691833    │
+│ Value/cost                    │ 2.65866756439209       │
+│ Time/Total                    │ 2835.175048828125      │
+│ Time/Rollout                  │ 124.66383361816406     │
+│ Time/Update                   │ 45.314517974853516     │
+│ Time/Epoch                    │ 169.9784393310547      │
+│ Time/FPS                      │ 117.6619873046875      │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 16... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:47
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 626.3024291992188      │
+│ Metrics/EpCost                │ 3.630000114440918      │
+│ Metrics/EpLen                 │ 600.77001953125        │
+│ Train/Epoch                   │ 16.0                   │
+│ Train/Entropy                 │ 1.1969929933547974     │
+│ Train/KL                      │ 0.010245139710605145   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9995346665382385     │
+│ Train/PolicyRatio/Min         │ 0.9995346069335938     │
+│ Train/PolicyRatio/Max         │ 0.9995346069335938     │
+│ Train/PolicyRatio/Std         │ 0.020029708743095398   │
+│ Train/LR                      │ 0.00019799999427050352 │
+│ Train/PolicyStd               │ 0.8014314770698547     │
+│ TotalEnvSteps                 │ 340000.0               │
+│ Loss/Loss_pi                  │ -0.008009694516658783  │
+│ Loss/Loss_pi/Delta            │ -0.003797149285674095  │
+│ Value/Adv                     │ -0.010629350319504738  │
+│ Loss/Loss_reward_critic       │ 2.0183117389678955     │
+│ Loss/Loss_reward_critic/Delta │ -0.35829591751098633   │
+│ Value/reward                  │ 67.77458953857422      │
+│ Loss/Loss_cost_critic         │ 0.1271110326051712     │
+│ Loss/Loss_cost_critic/Delta   │ -0.1471453756093979    │
+│ Value/cost                    │ 2.2193620204925537     │
+│ Time/Total                    │ 3007.483154296875      │
+│ Time/Rollout                  │ 124.7145004272461      │
+│ Time/Update                   │ 47.5458984375          │
+│ Time/Epoch                    │ 172.2604522705078      │
+│ Time/FPS                      │ 116.10325622558594     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 17... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Early stopping at iter 3 due to reaching max kl
+Updating... ━━━━━━━━                                  20% 0:00:41
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 751.5578002929688      │
+│ Metrics/EpCost                │ 2.680000066757202      │
+│ Metrics/EpLen                 │ 727.4299926757812      │
+│ Train/Epoch                   │ 17.0                   │
+│ Train/Entropy                 │ 1.1900173425674438     │
+│ Train/KL                      │ 0.026306264102458954   │
+│ Train/StopIter                │ 3.0                    │
+│ Train/PolicyRatio/Mean        │ 1.002719759941101      │
+│ Train/PolicyRatio/Min         │ 1.002719759941101      │
+│ Train/PolicyRatio/Max         │ 1.002719759941101      │
+│ Train/PolicyRatio/Std         │ 0.020485971122980118   │
+│ Train/LR                      │ 0.00019200000679120421 │
+│ Train/PolicyStd               │ 0.7959227561950684     │
+│ TotalEnvSteps                 │ 360000.0               │
+│ Loss/Loss_pi                  │ -0.01374876219779253   │
+│ Loss/Loss_pi/Delta            │ -0.005739067681133747  │
+│ Value/Adv                     │ -0.09185965359210968   │
+│ Loss/Loss_reward_critic       │ 1.0284167528152466     │
+│ Loss/Loss_reward_critic/Delta │ -0.9898949861526489    │
+│ Value/reward                  │ 71.92768859863281      │
+│ Loss/Loss_cost_critic         │ 0.08361176401376724    │
+│ Loss/Loss_cost_critic/Delta   │ -0.04349926859140396   │
+│ Value/cost                    │ 1.7886531352996826     │
+│ Time/Total                    │ 3145.800537109375      │
+│ Time/Rollout                  │ 123.2601089477539      │
+│ Time/Update                   │ 15.019938468933105     │
+│ Time/Epoch                    │ 138.2801055908203      │
+│ Time/FPS                      │ 144.63397216796875     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 18... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:05
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:45
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 871.0111694335938      │
+│ Metrics/EpCost                │ 1.9800000190734863     │
+│ Metrics/EpLen                 │ 846.0399780273438      │
+│ Train/Epoch                   │ 18.0                   │
+│ Train/Entropy                 │ 1.1769168376922607     │
+│ Train/KL                      │ 0.007816880941390991   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9989955425262451     │
+│ Train/PolicyRatio/Min         │ 0.9989954829216003     │
+│ Train/PolicyRatio/Max         │ 0.9989954829216003     │
+│ Train/PolicyRatio/Std         │ 0.016390100121498108   │
+│ Train/LR                      │ 0.00018600000475998968 │
+│ Train/PolicyStd               │ 0.7858043313026428     │
+│ TotalEnvSteps                 │ 380000.0               │
+│ Loss/Loss_pi                  │ -0.004011062905192375  │
+│ Loss/Loss_pi/Delta            │ 0.009737699292600155   │
+│ Value/Adv                     │ -0.22339344024658203   │
+│ Loss/Loss_reward_critic       │ 11.391094207763672     │
+│ Loss/Loss_reward_critic/Delta │ 10.362677454948425     │
+│ Value/reward                  │ 74.83464813232422      │
+│ Loss/Loss_cost_critic         │ 0.07857344299554825    │
+│ Loss/Loss_cost_critic/Delta   │ -0.005038321018218994  │
+│ Value/cost                    │ 1.4662973880767822     │
+│ Time/Total                    │ 3317.120849609375      │
+│ Time/Rollout                  │ 125.74517059326172     │
+│ Time/Update                   │ 45.539161682128906     │
+│ Time/Epoch                    │ 171.28439331054688     │
+│ Time/FPS                      │ 116.76487731933594     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 19... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:46
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 938.2326049804688      │
+│ Metrics/EpCost                │ 1.7799999713897705     │
+│ Metrics/EpLen                 │ 911.8699951171875      │
+│ Train/Epoch                   │ 19.0                   │
+│ Train/Entropy                 │ 1.1655057668685913     │
+│ Train/KL                      │ 0.010208776220679283   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.0003858804702759     │
+│ Train/PolicyRatio/Min         │ 1.0003858804702759     │
+│ Train/PolicyRatio/Max         │ 1.0003858804702759     │
+│ Train/PolicyRatio/Std         │ 0.015666624531149864   │
+│ Train/LR                      │ 0.00018000000272877514 │
+│ Train/PolicyStd               │ 0.7772043347358704     │
+│ TotalEnvSteps                 │ 400000.0               │
+│ Loss/Loss_pi                  │ -0.003448544768616557  │
+│ Loss/Loss_pi/Delta            │ 0.0005625181365758181  │
+│ Value/Adv                     │ -0.10980328917503357   │
+│ Loss/Loss_reward_critic       │ 22.040992736816406     │
+│ Loss/Loss_reward_critic/Delta │ 10.649898529052734     │
+│ Value/reward                  │ 78.80055236816406      │
+│ Loss/Loss_cost_critic         │ 0.11970824003219604    │
+│ Loss/Loss_cost_critic/Delta   │ 0.0411347970366478     │
+│ Value/cost                    │ 1.215420126914978      │
+│ Time/Total                    │ 3488.65087890625       │
+│ Time/Rollout                  │ 124.80084991455078     │
+│ Time/Update                   │ 46.69167709350586      │
+│ Time/Epoch                    │ 171.49258422851562     │
+│ Time/FPS                      │ 116.62312316894531     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 20... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:02
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:46
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 899.7318725585938     │
+│ Metrics/EpCost                │ 1.5499999523162842    │
+│ Metrics/EpLen                 │ 870.6199951171875     │
+│ Train/Epoch                   │ 20.0                  │
+│ Train/Entropy                 │ 1.151597261428833     │
+│ Train/KL                      │ 0.006524314638227224  │
+│ Train/StopIter                │ 10.0                  │
+│ Train/PolicyRatio/Mean        │ 1.0009207725524902    │
+│ Train/PolicyRatio/Min         │ 1.0009206533432007    │
+│ Train/PolicyRatio/Max         │ 1.0009206533432007    │
+│ Train/PolicyRatio/Std         │ 0.017229823395609856  │
+│ Train/LR                      │ 0.0001740000006975606 │
+│ Train/PolicyStd               │ 0.7667206525802612    │
+│ TotalEnvSteps                 │ 420000.0              │
+│ Loss/Loss_pi                  │ -0.005755819845944643 │
+│ Loss/Loss_pi/Delta            │ -0.002307275077328086 │
+│ Value/Adv                     │ 0.14794275164604187   │
+│ Loss/Loss_reward_critic       │ 29.223628997802734    │
+│ Loss/Loss_reward_critic/Delta │ 7.182636260986328     │
+│ Value/reward                  │ 82.64285278320312     │
+│ Loss/Loss_cost_critic         │ 0.050761982798576355  │
+│ Loss/Loss_cost_critic/Delta   │ -0.06894625723361969  │
+│ Value/cost                    │ 1.09015953540802      │
+│ Time/Total                    │ 3657.812255859375     │
+│ Time/Rollout                  │ 122.85325622558594    │
+│ Time/Update                   │ 46.26955795288086     │
+│ Time/Epoch                    │ 169.1228790283203     │
+│ Time/FPS                      │ 118.25721740722656    │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 21... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:06
+Early stopping at iter 5 due to reaching max kl
+Updating... ━━━━━━━━━━━━━━━━                          40% 0:00:26
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 849.03955078125        │
+│ Metrics/EpCost                │ 2.200000047683716      │
+│ Metrics/EpLen                 │ 817.6799926757812      │
+│ Train/Epoch                   │ 21.0                   │
+│ Train/Entropy                 │ 1.1406476497650146     │
+│ Train/KL                      │ 0.02024696208536625    │
+│ Train/StopIter                │ 5.0                    │
+│ Train/PolicyRatio/Mean        │ 0.9994274973869324     │
+│ Train/PolicyRatio/Min         │ 0.9994274377822876     │
+│ Train/PolicyRatio/Max         │ 0.9994274377822876     │
+│ Train/PolicyRatio/Std         │ 0.01774177886545658    │
+│ Train/LR                      │ 0.00016799999866634607 │
+│ Train/PolicyStd               │ 0.7586430311203003     │
+│ TotalEnvSteps                 │ 440000.0               │
+│ Loss/Loss_pi                  │ -0.004747088998556137  │
+│ Loss/Loss_pi/Delta            │ 0.001008730847388506   │
+│ Value/Adv                     │ -0.37444424629211426   │
+│ Loss/Loss_reward_critic       │ 25.519207000732422     │
+│ Loss/Loss_reward_critic/Delta │ -3.7044219970703125    │
+│ Value/reward                  │ 85.69746398925781      │
+│ Loss/Loss_cost_critic         │ 0.11636898666620255    │
+│ Loss/Loss_cost_critic/Delta   │ 0.06560700386762619    │
+│ Value/cost                    │ 0.9080265760421753     │
+│ Time/Total                    │ 3805.864990234375      │
+│ Time/Rollout                  │ 126.1714096069336      │
+│ Time/Update                   │ 21.842050552368164     │
+│ Time/Epoch                    │ 148.01351928710938     │
+│ Time/FPS                      │ 135.12278747558594     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 22... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:01
+Early stopping at iter 4 due to reaching max kl
+Updating... ━━━━━━━━━━━━                              30% 0:00:33
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 855.477294921875       │
+│ Metrics/EpCost                │ 2.5199999809265137     │
+│ Metrics/EpLen                 │ 824.22998046875        │
+│ Train/Epoch                   │ 22.0                   │
+│ Train/Entropy                 │ 1.1336584091186523     │
+│ Train/KL                      │ 0.02218594215810299    │
+│ Train/StopIter                │ 4.0                    │
+│ Train/PolicyRatio/Mean        │ 0.9999690055847168     │
+│ Train/PolicyRatio/Min         │ 0.9999690055847168     │
+│ Train/PolicyRatio/Max         │ 0.9999690055847168     │
+│ Train/PolicyRatio/Std         │ 0.018644044175744057   │
+│ Train/LR                      │ 0.00016199999663513154 │
+│ Train/PolicyStd               │ 0.7531919479370117     │
+│ TotalEnvSteps                 │ 460000.0               │
+│ Loss/Loss_pi                  │ -0.003683815710246563  │
+│ Loss/Loss_pi/Delta            │ 0.0010632732883095741  │
+│ Value/Adv                     │ -0.04534904658794403   │
+│ Loss/Loss_reward_critic       │ 20.76556968688965      │
+│ Loss/Loss_reward_critic/Delta │ -4.753637313842773     │
+│ Value/reward                  │ 89.20487213134766      │
+│ Loss/Loss_cost_critic         │ 0.08481910079717636    │
+│ Loss/Loss_cost_critic/Delta   │ -0.031549885869026184  │
+│ Value/cost                    │ 0.7435322999954224     │
+│ Time/Total                    │ 3946.789794921875      │
+│ Time/Rollout                  │ 121.64035034179688     │
+│ Time/Update                   │ 19.24833106994629      │
+│ Time/Epoch                    │ 140.8887481689453      │
+│ Time/FPS                      │ 141.9559783935547      │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 23... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:45
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 889.820068359375       │
+│ Metrics/EpCost                │ 2.299999952316284      │
+│ Metrics/EpLen                 │ 859.239990234375       │
+│ Train/Epoch                   │ 23.0                   │
+│ Train/Entropy                 │ 1.1311209201812744     │
+│ Train/KL                      │ 0.011305253021419048   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.000306248664856      │
+│ Train/PolicyRatio/Min         │ 1.000306248664856      │
+│ Train/PolicyRatio/Max         │ 1.000306248664856      │
+│ Train/PolicyRatio/Std         │ 0.017293676733970642   │
+│ Train/LR                      │ 0.000155999994603917   │
+│ Train/PolicyStd               │ 0.751150369644165      │
+│ TotalEnvSteps                 │ 480000.0               │
+│ Loss/Loss_pi                  │ -0.0021735781338065863 │
+│ Loss/Loss_pi/Delta            │ 0.0015102375764399767  │
+│ Value/Adv                     │ 0.0256698839366436     │
+│ Loss/Loss_reward_critic       │ 3.832803249359131      │
+│ Loss/Loss_reward_critic/Delta │ -16.932766437530518    │
+│ Value/reward                  │ 91.97783660888672      │
+│ Loss/Loss_cost_critic         │ 0.06397497653961182    │
+│ Loss/Loss_cost_critic/Delta   │ -0.020844124257564545  │
+│ Value/cost                    │ 0.6294306516647339     │
+│ Time/Total                    │ 4116.3896484375        │
+│ Time/Rollout                  │ 123.82064819335938     │
+│ Time/Update                   │ 45.7408561706543       │
+│ Time/Epoch                    │ 169.5615692138672      │
+│ Time/FPS                      │ 117.95125579833984     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 24... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Early stopping at iter 6 due to reaching max kl
+Updating... ━━━━━━━━━━━━━━━━━━━━                      50% 0:00:23
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 895.8961181640625      │
+│ Metrics/EpCost                │ 2.9100000858306885     │
+│ Metrics/EpLen                 │ 865.52001953125        │
+│ Train/Epoch                   │ 24.0                   │
+│ Train/Entropy                 │ 1.130704641342163      │
+│ Train/KL                      │ 0.032160889357328415   │
+│ Train/StopIter                │ 6.0                    │
+│ Train/PolicyRatio/Mean        │ 1.0006417036056519     │
+│ Train/PolicyRatio/Min         │ 1.0006417036056519     │
+│ Train/PolicyRatio/Max         │ 1.0006417036056519     │
+│ Train/PolicyRatio/Std         │ 0.020244674757122993   │
+│ Train/LR                      │ 0.0001500000071246177  │
+│ Train/PolicyStd               │ 0.7505466341972351     │
+│ TotalEnvSteps                 │ 500000.0               │
+│ Loss/Loss_pi                  │ -0.003175507066771388  │
+│ Loss/Loss_pi/Delta            │ -0.0010019289329648018 │
+│ Value/Adv                     │ 0.11565419286489487    │
+│ Loss/Loss_reward_critic       │ 14.18896198272705      │
+│ Loss/Loss_reward_critic/Delta │ 10.35615873336792      │
+│ Value/reward                  │ 92.83174896240234      │
+│ Loss/Loss_cost_critic         │ 0.07333845645189285    │
+│ Loss/Loss_cost_critic/Delta   │ 0.009363479912281036   │
+│ Value/cost                    │ 0.5298879146575928     │
+│ Time/Total                    │ 4268.98388671875       │
+│ Time/Rollout                  │ 124.95307159423828     │
+│ Time/Update                   │ 27.593082427978516     │
+│ Time/Epoch                    │ 152.5462188720703      │
+│ Time/FPS                      │ 131.10780334472656     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 25... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:02
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:45
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 966.606201171875       │
+│ Metrics/EpCost                │ 3.2799999713897705     │
+│ Metrics/EpLen                 │ 936.9099731445312      │
+│ Train/Epoch                   │ 25.0                   │
+│ Train/Entropy                 │ 1.1334006786346436     │
+│ Train/KL                      │ 0.008945492096245289   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9979715347290039     │
+│ Train/PolicyRatio/Min         │ 0.9979715347290039     │
+│ Train/PolicyRatio/Max         │ 0.9979715347290039     │
+│ Train/PolicyRatio/Std         │ 0.019068237394094467   │
+│ Train/LR                      │ 0.00014400000509340316 │
+│ Train/PolicyStd               │ 0.7523339986801147     │
+│ TotalEnvSteps                 │ 520000.0               │
+│ Loss/Loss_pi                  │ -0.012689176946878433  │
+│ Loss/Loss_pi/Delta            │ -0.009513669880107045  │
+│ Value/Adv                     │ -0.12963132560253143   │
+│ Loss/Loss_reward_critic       │ 0.4450632929801941     │
+│ Loss/Loss_reward_critic/Delta │ -13.743898689746857    │
+│ Value/reward                  │ 95.60797882080078      │
+│ Loss/Loss_cost_critic         │ 0.07595568895339966    │
+│ Loss/Loss_cost_critic/Delta   │ 0.0026172325015068054  │
+│ Value/cost                    │ 0.45218539237976074    │
+│ Time/Total                    │ 4436.8828125           │
+│ Time/Rollout                  │ 122.63589477539062     │
+│ Time/Update                   │ 45.22748565673828      │
+│ Time/Epoch                    │ 167.86343383789062     │
+│ Time/FPS                      │ 119.14447021484375     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 26... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:46
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 959.6090698242188      │
+│ Metrics/EpCost                │ 3.6700000762939453     │
+│ Metrics/EpLen                 │ 928.4000244140625      │
+│ Train/Epoch                   │ 26.0                   │
+│ Train/Entropy                 │ 1.1363961696624756     │
+│ Train/KL                      │ 0.007742088288068771   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9997665286064148     │
+│ Train/PolicyRatio/Min         │ 0.9997665286064148     │
+│ Train/PolicyRatio/Max         │ 0.9997665286064148     │
+│ Train/PolicyRatio/Std         │ 0.017990628257393837   │
+│ Train/LR                      │ 0.00013800000306218863 │
+│ Train/PolicyStd               │ 0.7547220587730408     │
+│ TotalEnvSteps                 │ 540000.0               │
+│ Loss/Loss_pi                  │ -0.005329253152012825  │
+│ Loss/Loss_pi/Delta            │ 0.007359923794865608   │
+│ Value/Adv                     │ 0.09848422557115555    │
+│ Loss/Loss_reward_critic       │ 14.823647499084473     │
+│ Loss/Loss_reward_critic/Delta │ 14.378584206104279     │
+│ Value/reward                  │ 96.34500885009766      │
+│ Loss/Loss_cost_critic         │ 0.11673478037118912    │
+│ Loss/Loss_cost_critic/Delta   │ 0.04077909141778946    │
+│ Value/cost                    │ 0.48530909419059753    │
+│ Time/Total                    │ 4607.8876953125        │
+│ Time/Rollout                  │ 124.01030731201172     │
+│ Time/Update                   │ 46.95637893676758      │
+│ Time/Epoch                    │ 170.9667510986328      │
+│ Time/FPS                      │ 116.9818115234375      │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 27... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Early stopping at iter 10 due to reaching max kl
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      90% 0:00:05
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 966.597900390625      │
+│ Metrics/EpCost                │ 3.869999885559082     │
+│ Metrics/EpLen                 │ 933.75                │
+│ Train/Epoch                   │ 27.0                  │
+│ Train/Entropy                 │ 1.130383849143982     │
+│ Train/KL                      │ 0.02054118551313877   │
+│ Train/StopIter                │ 10.0                  │
+│ Train/PolicyRatio/Mean        │ 1.0002927780151367    │
+│ Train/PolicyRatio/Min         │ 1.0002927780151367    │
+│ Train/PolicyRatio/Max         │ 1.0002927780151367    │
+│ Train/PolicyRatio/Std         │ 0.017015714198350906  │
+│ Train/LR                      │ 0.0001320000010309741 │
+│ Train/PolicyStd               │ 0.7505522966384888    │
+│ TotalEnvSteps                 │ 560000.0              │
+│ Loss/Loss_pi                  │ -0.002084986539557576 │
+│ Loss/Loss_pi/Delta            │ 0.003244266612455249  │
+│ Value/Adv                     │ 0.040950316935777664  │
+│ Loss/Loss_reward_critic       │ 8.114498138427734     │
+│ Loss/Loss_reward_critic/Delta │ -6.709149360656738    │
+│ Value/reward                  │ 97.08018493652344     │
+│ Loss/Loss_cost_critic         │ 0.07257634401321411   │
+│ Loss/Loss_cost_critic/Delta   │ -0.044158436357975006 │
+│ Value/cost                    │ 0.4399537146091461    │
+│ Time/Total                    │ 4777.54345703125      │
+│ Time/Rollout                  │ 123.00499725341797    │
+│ Time/Update                   │ 46.613006591796875    │
+│ Time/Epoch                    │ 169.61807250976562    │
+│ Time/FPS                      │ 117.91197204589844    │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 28... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:46
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 897.950439453125       │
+│ Metrics/EpCost                │ 4.170000076293945      │
+│ Metrics/EpLen                 │ 861.739990234375       │
+│ Train/Epoch                   │ 28.0                   │
+│ Train/Entropy                 │ 1.1148877143859863     │
+│ Train/KL                      │ 0.009924883022904396   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.001542329788208      │
+│ Train/PolicyRatio/Min         │ 1.001542329788208      │
+│ Train/PolicyRatio/Max         │ 1.001542329788208      │
+│ Train/PolicyRatio/Std         │ 0.018208248540759087   │
+│ Train/LR                      │ 0.00012599999899975955 │
+│ Train/PolicyStd               │ 0.7393685579299927     │
+│ TotalEnvSteps                 │ 580000.0               │
+│ Loss/Loss_pi                  │ -0.005898268893361092  │
+│ Loss/Loss_pi/Delta            │ -0.0038132823538035154 │
+│ Value/Adv                     │ -0.5690237283706665    │
+│ Loss/Loss_reward_critic       │ 57.13517379760742      │
+│ Loss/Loss_reward_critic/Delta │ 49.02067565917969      │
+│ Value/reward                  │ 97.92638397216797      │
+│ Loss/Loss_cost_critic         │ 0.12190360575914383    │
+│ Loss/Loss_cost_critic/Delta   │ 0.04932726174592972    │
+│ Value/cost                    │ 0.45200350880622864    │
+│ Time/Total                    │ 4946.724609375         │
+│ Time/Rollout                  │ 123.10482788085938     │
+│ Time/Update                   │ 46.03729248046875      │
+│ Time/Epoch                    │ 169.14218139648438     │
+│ Time/FPS                      │ 118.24372100830078     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 29... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Early stopping at iter 1 due to reaching max kl
+Updating...                                            0% -:--:--
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 856.9685668945312      │
+│ Metrics/EpCost                │ 4.190000057220459      │
+│ Metrics/EpLen                 │ 818.1500244140625      │
+│ Train/Epoch                   │ 29.0                   │
+│ Train/Entropy                 │ 1.1095516681671143     │
+│ Train/KL                      │ 0.02093348652124405    │
+│ Train/StopIter                │ 1.0                    │
+│ Train/PolicyRatio/Mean        │ 1.0001929998397827     │
+│ Train/PolicyRatio/Min         │ 1.0001928806304932     │
+│ Train/PolicyRatio/Max         │ 1.0001928806304932     │
+│ Train/PolicyRatio/Std         │ 0.017218392342329025   │
+│ Train/LR                      │ 0.00011999999696854502 │
+│ Train/PolicyStd               │ 0.7355396151542664     │
+│ TotalEnvSteps                 │ 600000.0               │
+│ Loss/Loss_pi                  │ -0.0020079659298062325 │
+│ Loss/Loss_pi/Delta            │ 0.003890302963554859   │
+│ Value/Adv                     │ -0.5295575857162476    │
+│ Loss/Loss_reward_critic       │ 39.47891616821289      │
+│ Loss/Loss_reward_critic/Delta │ -17.65625762939453     │
+│ Value/reward                  │ 98.6739730834961       │
+│ Loss/Loss_cost_critic         │ 0.09241382032632828    │
+│ Loss/Loss_cost_critic/Delta   │ -0.029489785432815552  │
+│ Value/cost                    │ 0.38370248675346375    │
+│ Time/Total                    │ 5074.9599609375        │
+│ Time/Rollout                  │ 123.46492004394531     │
+│ Time/Update                   │ 4.731688976287842      │
+│ Time/Epoch                    │ 128.19667053222656     │
+│ Time/FPS                      │ 156.01028442382812     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 30... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:43
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 871.9058837890625      │
+│ Metrics/EpCost                │ 3.9800000190734863     │
+│ Metrics/EpLen                 │ 832.6599731445312      │
+│ Train/Epoch                   │ 30.0                   │
+│ Train/Entropy                 │ 1.1008819341659546     │
+│ Train/KL                      │ 0.017294179648160934   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.0000261068344116     │
+│ Train/PolicyRatio/Min         │ 1.000025987625122      │
+│ Train/PolicyRatio/Max         │ 1.000025987625122      │
+│ Train/PolicyRatio/Std         │ 0.018557250499725342   │
+│ Train/LR                      │ 0.0001140000022132881  │
+│ Train/PolicyStd               │ 0.7294772267341614     │
+│ TotalEnvSteps                 │ 620000.0               │
+│ Loss/Loss_pi                  │ -0.00470539228990674   │
+│ Loss/Loss_pi/Delta            │ -0.0026974263601005077 │
+│ Value/Adv                     │ 0.06494688242673874    │
+│ Loss/Loss_reward_critic       │ 4.409348964691162      │
+│ Loss/Loss_reward_critic/Delta │ -35.06956720352173     │
+│ Value/reward                  │ 99.8231201171875       │
+│ Loss/Loss_cost_critic         │ 0.046589210629463196   │
+│ Loss/Loss_cost_critic/Delta   │ -0.04582460969686508   │
+│ Value/cost                    │ 0.2762071192264557     │
+│ Time/Total                    │ 5243.28564453125       │
+│ Time/Rollout                  │ 124.86053466796875     │
+│ Time/Update                   │ 43.42737579345703      │
+│ Time/Epoch                    │ 168.2879638671875      │
+│ Time/FPS                      │ 118.84391021728516     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 31... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:42
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 893.079345703125       │
+│ Metrics/EpCost                │ 4.019999980926514      │
+│ Metrics/EpLen                 │ 851.8599853515625      │
+│ Train/Epoch                   │ 31.0                   │
+│ Train/Entropy                 │ 1.0927271842956543     │
+│ Train/KL                      │ 0.007660774048417807   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9995466470718384     │
+│ Train/PolicyRatio/Min         │ 0.9995466470718384     │
+│ Train/PolicyRatio/Max         │ 0.9995466470718384     │
+│ Train/PolicyRatio/Std         │ 0.013647465035319328   │
+│ Train/LR                      │ 0.00010800000018207356 │
+│ Train/PolicyStd               │ 0.7238337397575378     │
+│ TotalEnvSteps                 │ 640000.0               │
+│ Loss/Loss_pi                  │ -0.00849065836519003   │
+│ Loss/Loss_pi/Delta            │ -0.003785266075283289  │
+│ Value/Adv                     │ 0.19510409235954285    │
+│ Loss/Loss_reward_critic       │ 0.4866638481616974     │
+│ Loss/Loss_reward_critic/Delta │ -3.9226851165294647    │
+│ Value/reward                  │ 101.31365966796875     │
+│ Loss/Loss_cost_critic         │ 0.07241512089967728    │
+│ Loss/Loss_cost_critic/Delta   │ 0.02582591027021408    │
+│ Value/cost                    │ 0.267678827047348      │
+│ Time/Total                    │ 5409.89404296875       │
+│ Time/Rollout                  │ 124.13911437988281     │
+│ Time/Update                   │ 42.43056869506836      │
+│ Time/Epoch                    │ 166.56973266601562     │
+│ Time/FPS                      │ 120.06983184814453     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 32... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:47
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 932.7098388671875      │
+│ Metrics/EpCost                │ 4.070000171661377      │
+│ Metrics/EpLen                 │ 884.8099975585938      │
+│ Train/Epoch                   │ 32.0                   │
+│ Train/Entropy                 │ 1.0901405811309814     │
+│ Train/KL                      │ 0.006201370153576136   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.999836802482605      │
+│ Train/PolicyRatio/Min         │ 0.999836802482605      │
+│ Train/PolicyRatio/Max         │ 0.999836802482605      │
+│ Train/PolicyRatio/Std         │ 0.01417270302772522    │
+│ Train/LR                      │ 0.00010199999815085903 │
+│ Train/PolicyStd               │ 0.7220045328140259     │
+│ TotalEnvSteps                 │ 660000.0               │
+│ Loss/Loss_pi                  │ -0.004367738030850887  │
+│ Loss/Loss_pi/Delta            │ 0.004122920334339142   │
+│ Value/Adv                     │ 0.00822075828909874    │
+│ Loss/Loss_reward_critic       │ 3.730255126953125      │
+│ Loss/Loss_reward_critic/Delta │ 3.2435912787914276     │
+│ Value/reward                  │ 102.89142608642578     │
+│ Loss/Loss_cost_critic         │ 0.07968459278345108    │
+│ Loss/Loss_cost_critic/Delta   │ 0.007269471883773804   │
+│ Value/cost                    │ 0.31487271189689636    │
+│ Time/Total                    │ 5580.65771484375       │
+│ Time/Rollout                  │ 123.72000885009766     │
+│ Time/Update                   │ 47.00572967529297      │
+│ Time/Epoch                    │ 170.72579956054688     │
+│ Time/FPS                      │ 117.14691162109375     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 33... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:46
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                   ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1003.943359375          │
+│ Metrics/EpCost                │ 4.46999979019165        │
+│ Metrics/EpLen                 │ 945.25                  │
+│ Train/Epoch                   │ 33.0                    │
+│ Train/Entropy                 │ 1.0892328023910522      │
+│ Train/KL                      │ 0.008953278884291649    │
+│ Train/StopIter                │ 10.0                    │
+│ Train/PolicyRatio/Mean        │ 0.9990214705467224      │
+│ Train/PolicyRatio/Min         │ 0.9990214705467224      │
+│ Train/PolicyRatio/Max         │ 0.9990214705467224      │
+│ Train/PolicyRatio/Std         │ 0.015398295596241951    │
+│ Train/LR                      │ 9.600000339560211e-05   │
+│ Train/PolicyStd               │ 0.7210744619369507      │
+│ TotalEnvSteps                 │ 680000.0                │
+│ Loss/Loss_pi                  │ -0.004479197319597006   │
+│ Loss/Loss_pi/Delta            │ -0.00011145928874611855 │
+│ Value/Adv                     │ 0.07679808139801025     │
+│ Loss/Loss_reward_critic       │ 9.673310279846191       │
+│ Loss/Loss_reward_critic/Delta │ 5.943055152893066       │
+│ Value/reward                  │ 104.29051208496094      │
+│ Loss/Loss_cost_critic         │ 0.09411400556564331     │
+│ Loss/Loss_cost_critic/Delta   │ 0.01442941278219223     │
+│ Value/cost                    │ 0.338145911693573       │
+│ Time/Total                    │ 5750.72509765625        │
+│ Time/Rollout                  │ 123.68695068359375      │
+│ Time/Update                   │ 46.341060638427734      │
+│ Time/Epoch                    │ 170.028076171875        │
+│ Time/FPS                      │ 117.62763977050781      │
+│ Loss/Loss_pi_cost             │ 0.0                     │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                     │
+└───────────────────────────────┴─────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 34... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:45
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1043.25634765625       │
+│ Metrics/EpCost                │ 5.099999904632568      │
+│ Metrics/EpLen                 │ 968.72998046875        │
+│ Train/Epoch                   │ 34.0                   │
+│ Train/Entropy                 │ 1.0810301303863525     │
+│ Train/KL                      │ 0.01019383780658245    │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.0003554821014404     │
+│ Train/PolicyRatio/Min         │ 1.0003554821014404     │
+│ Train/PolicyRatio/Max         │ 1.0003554821014404     │
+│ Train/PolicyRatio/Std         │ 0.016269857063889503   │
+│ Train/LR                      │ 9.000000136438757e-05  │
+│ Train/PolicyStd               │ 0.7150529623031616     │
+│ TotalEnvSteps                 │ 700000.0               │
+│ Loss/Loss_pi                  │ -0.0035170158371329308 │
+│ Loss/Loss_pi/Delta            │ 0.0009621814824640751  │
+│ Value/Adv                     │ 0.08178597688674927    │
+│ Loss/Loss_reward_critic       │ 5.028927803039551      │
+│ Loss/Loss_reward_critic/Delta │ -4.644382476806641     │
+│ Value/reward                  │ 105.39236450195312     │
+│ Loss/Loss_cost_critic         │ 0.09777123481035233    │
+│ Loss/Loss_cost_critic/Delta   │ 0.003657229244709015   │
+│ Value/cost                    │ 0.3961472511291504     │
+│ Time/Total                    │ 5919.29052734375       │
+│ Time/Rollout                  │ 123.09939575195312     │
+│ Time/Update                   │ 45.42780685424805      │
+│ Time/Epoch                    │ 168.5272674560547      │
+│ Time/FPS                      │ 118.67516326904297     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 35... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:02
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:45
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1070.1298828125        │
+│ Metrics/EpCost                │ 6.610000133514404      │
+│ Metrics/EpLen                 │ 974.77001953125        │
+│ Train/Epoch                   │ 35.0                   │
+│ Train/Entropy                 │ 1.0783320665359497     │
+│ Train/KL                      │ 0.011476796120405197   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9999435544013977     │
+│ Train/PolicyRatio/Min         │ 0.9999434947967529     │
+│ Train/PolicyRatio/Max         │ 0.9999434947967529     │
+│ Train/PolicyRatio/Std         │ 0.018126653507351875   │
+│ Train/LR                      │ 8.399999933317304e-05  │
+│ Train/PolicyStd               │ 0.7131463885307312     │
+│ TotalEnvSteps                 │ 720000.0               │
+│ Loss/Loss_pi                  │ -0.005219019018113613  │
+│ Loss/Loss_pi/Delta            │ -0.0017020031809806824 │
+│ Value/Adv                     │ 0.17592716217041016    │
+│ Loss/Loss_reward_critic       │ 5.051982879638672      │
+│ Loss/Loss_reward_critic/Delta │ 0.023055076599121094   │
+│ Value/reward                  │ 107.30462646484375     │
+│ Loss/Loss_cost_critic         │ 0.13876281678676605    │
+│ Loss/Loss_cost_critic/Delta   │ 0.04099158197641373    │
+│ Value/cost                    │ 0.5365256667137146     │
+│ Time/Total                    │ 6087.162109375         │
+│ Time/Rollout                  │ 122.73041534423828     │
+│ Time/Update                   │ 45.10301971435547      │
+│ Time/Epoch                    │ 167.83348083496094     │
+│ Time/FPS                      │ 119.16573333740234     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 36... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:46
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1089.7403564453125     │
+│ Metrics/EpCost                │ 11.770000457763672     │
+│ Metrics/EpLen                 │ 967.22998046875        │
+│ Train/Epoch                   │ 36.0                   │
+│ Train/Entropy                 │ 1.0770667791366577     │
+│ Train/KL                      │ 0.009972195141017437   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 1.001171588897705      │
+│ Train/PolicyRatio/Min         │ 1.001171588897705      │
+│ Train/PolicyRatio/Max         │ 1.001171588897705      │
+│ Train/PolicyRatio/Std         │ 0.0183644350618124     │
+│ Train/LR                      │ 7.79999973019585e-05   │
+│ Train/PolicyStd               │ 0.712313711643219      │
+│ TotalEnvSteps                 │ 740000.0               │
+│ Loss/Loss_pi                  │ -0.006041569635272026  │
+│ Loss/Loss_pi/Delta            │ -0.0008225506171584129 │
+│ Value/Adv                     │ 0.0542379692196846     │
+│ Loss/Loss_reward_critic       │ 5.006158351898193      │
+│ Loss/Loss_reward_critic/Delta │ -0.045824527740478516  │
+│ Value/reward                  │ 110.07624816894531     │
+│ Loss/Loss_cost_critic         │ 0.37654581665992737    │
+│ Loss/Loss_cost_critic/Delta   │ 0.23778299987316132    │
+│ Value/cost                    │ 0.9733632802963257     │
+│ Time/Total                    │ 6257.58203125          │
+│ Time/Rollout                  │ 123.85183715820312     │
+│ Time/Update                   │ 46.53021240234375      │
+│ Time/Epoch                    │ 170.38211059570312     │
+│ Time/FPS                      │ 117.38320922851562     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 37... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:44
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1120.2080078125       │
+│ Metrics/EpCost                │ 18.559999465942383    │
+│ Metrics/EpLen                 │ 971.5                 │
+│ Train/Epoch                   │ 37.0                  │
+│ Train/Entropy                 │ 1.0681486129760742    │
+│ Train/KL                      │ 0.010830645449459553  │
+│ Train/StopIter                │ 10.0                  │
+│ Train/PolicyRatio/Mean        │ 1.0018213987350464    │
+│ Train/PolicyRatio/Min         │ 1.0018213987350464    │
+│ Train/PolicyRatio/Max         │ 1.0018213987350464    │
+│ Train/PolicyRatio/Std         │ 0.017764754593372345  │
+│ Train/LR                      │ 7.200000254670158e-05 │
+│ Train/PolicyStd               │ 0.7061742544174194    │
+│ TotalEnvSteps                 │ 760000.0              │
+│ Loss/Loss_pi                  │ -0.01824173517525196  │
+│ Loss/Loss_pi/Delta            │ -0.012200165539979935 │
+│ Value/Adv                     │ -0.023441191762685776 │
+│ Loss/Loss_reward_critic       │ 0.6879425048828125    │
+│ Loss/Loss_reward_critic/Delta │ -4.318215847015381    │
+│ Value/reward                  │ 112.2033462524414     │
+│ Loss/Loss_cost_critic         │ 0.5195094347000122    │
+│ Loss/Loss_cost_critic/Delta   │ 0.14296361804008484   │
+│ Value/cost                    │ 1.488615870475769     │
+│ Time/Total                    │ 6426.24853515625      │
+│ Time/Rollout                  │ 124.36119079589844    │
+│ Time/Update                   │ 44.26774215698242     │
+│ Time/Epoch                    │ 168.62899780273438    │
+│ Time/FPS                      │ 118.60356140136719    │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 38... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Early stopping at iter 1 due to reaching max kl
+Updating...                                            0% -:--:--
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1168.83935546875      │
+│ Metrics/EpCost                │ 32.29999923706055     │
+│ Metrics/EpLen                 │ 989.1599731445312     │
+│ Train/Epoch                   │ 38.0                  │
+│ Train/Entropy                 │ 1.0629161596298218    │
+│ Train/KL                      │ 1.3550779819488525    │
+│ Train/StopIter                │ 1.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9741499423980713    │
+│ Train/PolicyRatio/Min         │ 0.9741499423980713    │
+│ Train/PolicyRatio/Max         │ 0.9741499423980713    │
+│ Train/PolicyRatio/Std         │ 0.5360072255134583    │
+│ Train/LR                      │ 6.600000051548705e-05 │
+│ Train/PolicyStd               │ 0.7026620507240295    │
+│ TotalEnvSteps                 │ 780000.0              │
+│ Loss/Loss_pi                  │ 0.4672933518886566    │
+│ Loss/Loss_pi/Delta            │ 0.4855350870639086    │
+│ Value/Adv                     │ 0.2827039361000061    │
+│ Loss/Loss_reward_critic       │ 0.7847915291786194    │
+│ Loss/Loss_reward_critic/Delta │ 0.09684902429580688   │
+│ Value/reward                  │ 114.63422393798828    │
+│ Loss/Loss_cost_critic         │ 0.9132019877433777    │
+│ Loss/Loss_cost_critic/Delta   │ 0.3936925530433655    │
+│ Value/cost                    │ 2.6094186305999756    │
+│ Time/Total                    │ 6554.83837890625      │
+│ Time/Rollout                  │ 124.35517120361328    │
+│ Time/Update                   │ 4.195350646972656     │
+│ Time/Epoch                    │ 128.5505828857422     │
+│ Time/FPS                      │ 155.58078002929688    │
+│ Loss/Loss_pi_cost             │ 142.21768188476562    │
+│ Loss/Loss_pi_cost/Delta       │ 142.21768188476562    │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 39... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:02
+Early stopping at iter 1 due to reaching max kl
+Updating...                                            0% -:--:--
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1102.6651611328125     │
+│ Metrics/EpCost                │ 30.579999923706055     │
+│ Metrics/EpLen                 │ 943.989990234375       │
+│ Train/Epoch                   │ 39.0                   │
+│ Train/Entropy                 │ 1.060349464416504      │
+│ Train/KL                      │ 0.06301213055849075    │
+│ Train/StopIter                │ 1.0                    │
+│ Train/PolicyRatio/Mean        │ 1.001257300376892      │
+│ Train/PolicyRatio/Min         │ 1.001257300376892      │
+│ Train/PolicyRatio/Max         │ 1.001257300376892      │
+│ Train/PolicyRatio/Std         │ 0.028280191123485565   │
+│ Train/LR                      │ 5.999999848427251e-05  │
+│ Train/PolicyStd               │ 0.7009435296058655     │
+│ TotalEnvSteps                 │ 800000.0               │
+│ Loss/Loss_pi                  │ -0.0006377292447723448 │
+│ Loss/Loss_pi/Delta            │ -0.46793108113342896   │
+│ Value/Adv                     │ 0.15876896679401398    │
+│ Loss/Loss_reward_critic       │ 46.78196716308594      │
+│ Loss/Loss_reward_critic/Delta │ 45.99717563390732      │
+│ Value/reward                  │ 105.04901123046875     │
+│ Loss/Loss_cost_critic         │ 0.14099563658237457    │
+│ Loss/Loss_cost_critic/Delta   │ -0.7722063511610031    │
+│ Value/cost                    │ 0.44554296135902405    │
+│ Time/Total                    │ 6682.22314453125       │
+│ Time/Rollout                  │ 122.91860961914062     │
+│ Time/Update                   │ 4.428898811340332      │
+│ Time/Epoch                    │ 127.34757232666016     │
+│ Time/FPS                      │ 157.05050659179688     │
+│ Loss/Loss_pi_cost             │ 111.5982894897461      │
+│ Loss/Loss_pi_cost/Delta       │ -30.61939239501953     │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 40... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Early stopping at iter 3 due to reaching max kl
+Updating... ━━━━━━━━                                  20% 0:00:39
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1079.475341796875     │
+│ Metrics/EpCost                │ 27.639999389648438    │
+│ Metrics/EpLen                 │ 945.219970703125      │
+│ Train/Epoch                   │ 40.0                  │
+│ Train/Entropy                 │ 1.0610183477401733    │
+│ Train/KL                      │ 0.0204631257802248    │
+│ Train/StopIter                │ 3.0                   │
+│ Train/PolicyRatio/Mean        │ 1.001090168952942     │
+│ Train/PolicyRatio/Min         │ 1.001090168952942     │
+│ Train/PolicyRatio/Max         │ 1.001090168952942     │
+│ Train/PolicyRatio/Std         │ 0.01695040613412857   │
+│ Train/LR                      │ 5.400000009103678e-05 │
+│ Train/PolicyStd               │ 0.7013539671897888    │
+│ TotalEnvSteps                 │ 820000.0              │
+│ Loss/Loss_pi                  │ 0.0021144316997379065 │
+│ Loss/Loss_pi/Delta            │ 0.0027521609445102513 │
+│ Value/Adv                     │ 0.05306065082550049   │
+│ Loss/Loss_reward_critic       │ 0.47045645117759705   │
+│ Loss/Loss_reward_critic/Delta │ -46.31151071190834    │
+│ Value/reward                  │ 105.2269515991211     │
+│ Loss/Loss_cost_critic         │ 0.06500588357448578   │
+│ Loss/Loss_cost_critic/Delta   │ -0.0759897530078888   │
+│ Value/cost                    │ 0.2016468048095703    │
+│ Time/Total                    │ 6819.91455078125      │
+│ Time/Rollout                  │ 123.3414535522461     │
+│ Time/Update                   │ 14.314176559448242    │
+│ Time/Epoch                    │ 137.65570068359375    │
+│ Time/FPS                      │ 145.29002380371094    │
+│ Loss/Loss_pi_cost             │ 52.758384704589844    │
+│ Loss/Loss_pi_cost/Delta       │ -58.83990478515625    │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 41... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:45
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1056.0631103515625     │
+│ Metrics/EpCost                │ 21.450000762939453     │
+│ Metrics/EpLen                 │ 952.760009765625       │
+│ Train/Epoch                   │ 41.0                   │
+│ Train/Entropy                 │ 1.060728907585144      │
+│ Train/KL                      │ 0.005617521703243256   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9992661476135254     │
+│ Train/PolicyRatio/Min         │ 0.9992661476135254     │
+│ Train/PolicyRatio/Max         │ 0.9992661476135254     │
+│ Train/PolicyRatio/Std         │ 0.013954978436231613   │
+│ Train/LR                      │ 4.8000001697801054e-05 │
+│ Train/PolicyStd               │ 0.7010897994041443     │
+│ TotalEnvSteps                 │ 840000.0               │
+│ Loss/Loss_pi                  │ -0.010972931981086731  │
+│ Loss/Loss_pi/Delta            │ -0.013087363680824637  │
+│ Value/Adv                     │ -0.25847628712654114   │
+│ Loss/Loss_reward_critic       │ 0.40027862787246704    │
+│ Loss/Loss_reward_critic/Delta │ -0.07017782330513      │
+│ Value/reward                  │ 105.04609680175781     │
+│ Loss/Loss_cost_critic         │ 0.04633583873510361    │
+│ Loss/Loss_cost_critic/Delta   │ -0.01867004483938217   │
+│ Value/cost                    │ 0.1103859394788742     │
+│ Time/Total                    │ 6988.91748046875       │
+│ Time/Rollout                  │ 123.465087890625       │
+│ Time/Update                   │ 45.49797058105469      │
+│ Time/Epoch                    │ 168.963134765625       │
+│ Time/FPS                      │ 118.3690185546875      │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ -52.758384704589844    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 42... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:45
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1021.0797119140625    │
+│ Metrics/EpCost                │ 12.5600004196167      │
+│ Metrics/EpLen                 │ 952.760009765625      │
+│ Train/Epoch                   │ 42.0                  │
+│ Train/Entropy                 │ 1.0619802474975586    │
+│ Train/KL                      │ 0.01118443999439478   │
+│ Train/StopIter                │ 10.0                  │
+│ Train/PolicyRatio/Mean        │ 0.9988226890563965    │
+│ Train/PolicyRatio/Min         │ 0.9988226294517517    │
+│ Train/PolicyRatio/Max         │ 0.9988226294517517    │
+│ Train/PolicyRatio/Std         │ 0.016013124957680702  │
+│ Train/LR                      │ 4.199999966658652e-05 │
+│ Train/PolicyStd               │ 0.7017633318901062    │
+│ TotalEnvSteps                 │ 860000.0              │
+│ Loss/Loss_pi                  │ -0.017565269023180008 │
+│ Loss/Loss_pi/Delta            │ -0.006592337042093277 │
+│ Value/Adv                     │ -0.23281347751617432  │
+│ Loss/Loss_reward_critic       │ 0.38716912269592285   │
+│ Loss/Loss_reward_critic/Delta │ -0.01310950517654419  │
+│ Value/reward                  │ 104.64901733398438    │
+│ Loss/Loss_cost_critic         │ 0.026899753138422966  │
+│ Loss/Loss_cost_critic/Delta   │ -0.01943608559668064  │
+│ Value/cost                    │ 0.062148064374923706  │
+│ Time/Total                    │ 7158.0810546875       │
+│ Time/Rollout                  │ 123.62726593017578    │
+│ Time/Update                   │ 45.49625778198242     │
+│ Time/Epoch                    │ 169.12359619140625    │
+│ Time/FPS                      │ 118.2567138671875     │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 43... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:04
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:44
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1006.9740600585938     │
+│ Metrics/EpCost                │ 0.5799999833106995     │
+│ Metrics/EpLen                 │ 968.8699951171875      │
+│ Train/Epoch                   │ 43.0                   │
+│ Train/Entropy                 │ 1.0626370906829834     │
+│ Train/KL                      │ 0.011356569826602936   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9984312653541565     │
+│ Train/PolicyRatio/Min         │ 0.9984312653541565     │
+│ Train/PolicyRatio/Max         │ 0.9984312653541565     │
+│ Train/PolicyRatio/Std         │ 0.017596377059817314   │
+│ Train/LR                      │ 3.600000127335079e-05  │
+│ Train/PolicyStd               │ 0.7020423412322998     │
+│ TotalEnvSteps                 │ 880000.0               │
+│ Loss/Loss_pi                  │ -0.019229426980018616  │
+│ Loss/Loss_pi/Delta            │ -0.0016641579568386078 │
+│ Value/Adv                     │ 0.018452925607562065   │
+│ Loss/Loss_reward_critic       │ 0.40520936250686646    │
+│ Loss/Loss_reward_critic/Delta │ 0.018040239810943604   │
+│ Value/reward                  │ 104.80546569824219     │
+│ Loss/Loss_cost_critic         │ 0.019327610731124878   │
+│ Loss/Loss_cost_critic/Delta   │ -0.007572142407298088  │
+│ Value/cost                    │ 0.027196835726499557   │
+│ Time/Total                    │ 7326.86328125          │
+│ Time/Rollout                  │ 124.29570770263672     │
+│ Time/Update                   │ 44.44929885864258      │
+│ Time/Epoch                    │ 168.74505615234375     │
+│ Time/FPS                      │ 118.52198791503906     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 44... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:02
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:44
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1046.303466796875      │
+│ Metrics/EpCost                │ 0.5899999737739563     │
+│ Metrics/EpLen                 │ 1000.0                 │
+│ Train/Epoch                   │ 44.0                   │
+│ Train/Entropy                 │ 1.0606786012649536     │
+│ Train/KL                      │ 0.01068354956805706    │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9990629553794861     │
+│ Train/PolicyRatio/Min         │ 0.9990629553794861     │
+│ Train/PolicyRatio/Max         │ 0.9990629553794861     │
+│ Train/PolicyRatio/Std         │ 0.017271535471081734   │
+│ Train/LR                      │ 2.9999999242136255e-05 │
+│ Train/PolicyStd               │ 0.7006201148033142     │
+│ TotalEnvSteps                 │ 900000.0               │
+│ Loss/Loss_pi                  │ -0.019125839695334435  │
+│ Loss/Loss_pi/Delta            │ 0.00010358728468418121 │
+│ Value/Adv                     │ 0.1066061407327652     │
+│ Loss/Loss_reward_critic       │ 0.4619334042072296     │
+│ Loss/Loss_reward_critic/Delta │ 0.05672404170036316    │
+│ Value/reward                  │ 105.95398712158203     │
+│ Loss/Loss_cost_critic         │ 0.018445296213030815   │
+│ Loss/Loss_cost_critic/Delta   │ -0.0008823145180940628 │
+│ Value/cost                    │ 0.03588631749153137    │
+│ Time/Total                    │ 7494.2568359375        │
+│ Time/Rollout                  │ 122.56122589111328     │
+│ Time/Update                   │ 44.794944763183594     │
+│ Time/Epoch                    │ 167.35623168945312     │
+│ Time/FPS                      │ 119.50556182861328     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 45... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:03
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:44
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1060.98681640625       │
+│ Metrics/EpCost                │ 0.800000011920929      │
+│ Metrics/EpLen                 │ 1000.0                 │
+│ Train/Epoch                   │ 45.0                   │
+│ Train/Entropy                 │ 1.055420994758606      │
+│ Train/KL                      │ 0.011594570241868496   │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9982985854148865     │
+│ Train/PolicyRatio/Min         │ 0.9982985854148865     │
+│ Train/PolicyRatio/Max         │ 0.9982985854148865     │
+│ Train/PolicyRatio/Std         │ 0.01735425740480423    │
+│ Train/LR                      │ 2.4000000848900527e-05 │
+│ Train/PolicyStd               │ 0.6969483494758606     │
+│ TotalEnvSteps                 │ 920000.0               │
+│ Loss/Loss_pi                  │ -0.019434120506048203  │
+│ Loss/Loss_pi/Delta            │ -0.000308280810713768  │
+│ Value/Adv                     │ 0.08094943314790726    │
+│ Loss/Loss_reward_critic       │ 0.49708303809165955    │
+│ Loss/Loss_reward_critic/Delta │ 0.03514963388442993    │
+│ Value/reward                  │ 107.6407470703125      │
+│ Loss/Loss_cost_critic         │ 0.03331657499074936    │
+│ Loss/Loss_cost_critic/Delta   │ 0.014871278777718544   │
+│ Value/cost                    │ 0.049022480845451355   │
+│ Time/Total                    │ 7662.306640625         │
+│ Time/Rollout                  │ 123.2344741821289      │
+│ Time/Update                   │ 44.777809143066406     │
+│ Time/Epoch                    │ 168.01234436035156     │
+│ Time/FPS                      │ 119.03887176513672     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 46... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:28
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:50
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1081.2322998046875     │
+│ Metrics/EpCost                │ 1.100000023841858      │
+│ Metrics/EpLen                 │ 1000.0                 │
+│ Train/Epoch                   │ 46.0                   │
+│ Train/Entropy                 │ 1.0483453273773193     │
+│ Train/KL                      │ 0.01053035818040371    │
+│ Train/StopIter                │ 10.0                   │
+│ Train/PolicyRatio/Mean        │ 0.9994613528251648     │
+│ Train/PolicyRatio/Min         │ 0.99946129322052       │
+│ Train/PolicyRatio/Max         │ 0.99946129322052       │
+│ Train/PolicyRatio/Std         │ 0.016999932006001472   │
+│ Train/LR                      │ 1.8000000636675395e-05 │
+│ Train/PolicyStd               │ 0.6920803189277649     │
+│ TotalEnvSteps                 │ 940000.0               │
+│ Loss/Loss_pi                  │ -0.019425245001912117  │
+│ Loss/Loss_pi/Delta            │ 8.87550413608551e-06   │
+│ Value/Adv                     │ 0.0982847511768341     │
+│ Loss/Loss_reward_critic       │ 0.5133739113807678     │
+│ Loss/Loss_reward_critic/Delta │ 0.016290873289108276   │
+│ Value/reward                  │ 109.30243682861328     │
+│ Loss/Loss_cost_critic         │ 0.03241780027747154    │
+│ Loss/Loss_cost_critic/Delta   │ -0.0008987747132778168 │
+│ Value/cost                    │ 0.08826712518930435    │
+│ Time/Total                    │ 7861.28369140625       │
+│ Time/Rollout                  │ 148.6658477783203      │
+│ Time/Update                   │ 50.267704010009766     │
+│ Time/Epoch                    │ 198.93360900878906     │
+│ Time/FPS                      │ 100.53604888916016     │
+│ Loss/Loss_pi_cost             │ 0.0                    │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                    │
+└───────────────────────────────┴────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 47... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:31
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:47
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                   ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1105.12890625           │
+│ Metrics/EpCost                │ 1.7000000476837158      │
+│ Metrics/EpLen                 │ 1000.0                  │
+│ Train/Epoch                   │ 47.0                    │
+│ Train/Entropy                 │ 1.0408786535263062      │
+│ Train/KL                      │ 0.011730166152119637    │
+│ Train/StopIter                │ 10.0                    │
+│ Train/PolicyRatio/Mean        │ 0.999403715133667       │
+│ Train/PolicyRatio/Min         │ 0.9994036555290222      │
+│ Train/PolicyRatio/Max         │ 0.9994036555290222      │
+│ Train/PolicyRatio/Std         │ 0.017767317593097687    │
+│ Train/LR                      │ 1.2000000424450263e-05  │
+│ Train/PolicyStd               │ 0.6870341897010803      │
+│ TotalEnvSteps                 │ 960000.0                │
+│ Loss/Loss_pi                  │ -0.019909529015421867   │
+│ Loss/Loss_pi/Delta            │ -0.00048428401350975037 │
+│ Value/Adv                     │ -0.37084996700286865    │
+│ Loss/Loss_reward_critic       │ 0.4935136139392853      │
+│ Loss/Loss_reward_critic/Delta │ -0.019860297441482544   │
+│ Value/reward                  │ 110.88507843017578      │
+│ Loss/Loss_cost_critic         │ 0.05019495263695717     │
+│ Loss/Loss_cost_critic/Delta   │ 0.017777152359485626    │
+│ Value/cost                    │ 0.10597316920757294     │
+│ Time/Total                    │ 8060.6806640625         │
+│ Time/Rollout                  │ 151.60182189941406      │
+│ Time/Update                   │ 47.74979782104492       │
+│ Time/Epoch                    │ 199.3516845703125       │
+│ Time/FPS                      │ 100.32521057128906      │
+│ Loss/Loss_pi_cost             │ 0.0                     │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                     │
+└───────────────────────────────┴─────────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 48... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:32
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:49
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1131.6016845703125    │
+│ Metrics/EpCost                │ 2.809999942779541     │
+│ Metrics/EpLen                 │ 1000.0                │
+│ Train/Epoch                   │ 48.0                  │
+│ Train/Entropy                 │ 1.0341675281524658    │
+│ Train/KL                      │ 0.009953940287232399  │
+│ Train/StopIter                │ 10.0                  │
+│ Train/PolicyRatio/Mean        │ 0.9998534917831421    │
+│ Train/PolicyRatio/Min         │ 0.9998534917831421    │
+│ Train/PolicyRatio/Max         │ 0.9998534917831421    │
+│ Train/PolicyRatio/Std         │ 0.017551220953464508  │
+│ Train/LR                      │ 6.000000212225132e-06 │
+│ Train/PolicyStd               │ 0.682539165019989     │
+│ TotalEnvSteps                 │ 980000.0              │
+│ Loss/Loss_pi                  │ -0.019400423392653465 │
+│ Loss/Loss_pi/Delta            │ 0.0005091056227684021 │
+│ Value/Adv                     │ 0.15735527873039246   │
+│ Loss/Loss_reward_critic       │ 0.47096145153045654   │
+│ Loss/Loss_reward_critic/Delta │ -0.022552162408828735 │
+│ Value/reward                  │ 112.6292724609375     │
+│ Loss/Loss_cost_critic         │ 0.08992047607898712   │
+│ Loss/Loss_cost_critic/Delta   │ 0.03972552344202995   │
+│ Value/cost                    │ 0.18516293168067932   │
+│ Time/Total                    │ 8262.4296875          │
+│ Time/Rollout                  │ 152.34219360351562    │
+│ Time/Update                   │ 49.35672378540039     │
+│ Time/Epoch                    │ 201.698974609375      │
+│ Time/FPS                      │ 99.15766906738281     │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
+
+Warning: trajectory cut off when rollout by epoch                            in 
+1 of 1 environments.
+Processing rollout for epoch: 49... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:02:30
+Updating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:51
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metrics                       ┃ Value                 ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Metrics/EpRet                 │ 1156.8824462890625    │
+│ Metrics/EpCost                │ 4.699999809265137     │
+│ Metrics/EpLen                 │ 1000.0                │
+│ Train/Epoch                   │ 49.0                  │
+│ Train/Entropy                 │ 1.030267357826233     │
+│ Train/KL                      │ 0.009628121741116047  │
+│ Train/StopIter                │ 10.0                  │
+│ Train/PolicyRatio/Mean        │ 0.999554455280304     │
+│ Train/PolicyRatio/Min         │ 0.999554455280304     │
+│ Train/PolicyRatio/Max         │ 0.999554455280304     │
+│ Train/PolicyRatio/Std         │ 0.01619085483253002   │
+│ Train/LR                      │ 0.0                   │
+│ Train/PolicyStd               │ 0.6799586415290833    │
+│ TotalEnvSteps                 │ 1000000.0             │
+│ Loss/Loss_pi                  │ -0.018278902396559715 │
+│ Loss/Loss_pi/Delta            │ 0.00112152099609375   │
+│ Value/Adv                     │ -0.12168946862220764  │
+│ Loss/Loss_reward_critic       │ 0.48067620396614075   │
+│ Loss/Loss_reward_critic/Delta │ 0.009714752435684204  │
+│ Value/reward                  │ 114.17682647705078    │
+│ Loss/Loss_cost_critic         │ 0.11183539032936096   │
+│ Loss/Loss_cost_critic/Delta   │ 0.02191491425037384   │
+│ Value/cost                    │ 0.28558266162872314   │
+│ Time/Total                    │ 8464.423828125        │
+│ Time/Rollout                  │ 150.39215087890625    │
+│ Time/Update                   │ 51.558929443359375    │
+│ Time/Epoch                    │ 201.95114135742188    │
+│ Time/FPS                      │ 99.03385925292969     │
+│ Loss/Loss_pi_cost             │ 0.0                   │
+│ Loss/Loss_pi_cost/Delta       │ 0.0                   │
+└───────────────────────────────┴───────────────────────┘
