@@ -17,10 +17,12 @@
 from omnisafe.algorithms.on_policy.penalty_function.ipo import IPO
 from omnisafe.algorithms.on_policy.penalty_function.p3o import P3O
 from omnisafe.algorithms.on_policy.penalty_function.appo import APPO
+# from omnisafe.algorithms.on_policy.penalty_function.almpg import ALMPG
 
 
 __all__ = [
     "P3O",
     "IPO",
     "APPO",
+    # "ALMPG"
 ]

@@ -2,7 +2,7 @@ from omnisafe.common.statistics_tools import StatisticsTools
 
 
 # just fill in the path in which experiment grid runs.
-PATH = './exp-x/omnisafe_test_benchmark'
+PATH = './exp-x/omnisafe_test_benchmark_1_env'
 if __name__ == '__main__':
     st = StatisticsTools()
     st.load_source(PATH)

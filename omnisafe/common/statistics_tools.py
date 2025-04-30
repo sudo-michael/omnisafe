@@ -147,6 +147,7 @@ class StatisticsTools:
                 + '---'
                 + hash_string(recursive_dict2json(decompressed_img_name_cfgs))
             )
+            # breakpoint()
             try:
                 self.plotter.make_plots(
                     log_dirs,

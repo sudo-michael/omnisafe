@@ -82,6 +82,7 @@ class APPO(PolicyGradient):
         assert not np.isnan(Jc), "cost for updating lagrange multiplier is nan"
         # first update Lagrange multiplier parameter
         self._lagrange.update_lagrange_multiplier(Jc)
+        self._logger.store({'Metrics/LagrangeMultiplier': self._lagrange.lagrangian_multiplier})
         # then update the policy and value function
         data = self._buf.get()
         obs, act, logp, target_value_r, target_value_c, adv_r, adv_c = (
@@ -142,6 +143,7 @@ class APPO(PolicyGradient):
                 "Train/KL": final_kl,
             },
         )
+
         for _ in track(range(self._cfgs.algo_cfgs.update_iters_value), description="Updating..."):
             for (
                 obs,
@@ -205,7 +207,7 @@ class APPO(PolicyGradient):
         loss_adv_r = torch.min(ratio * adv_r, ratio_cliped * adv_r).mean()
         loss_adv_c = torch.max(ratio * adv_c, ratio_cliped * adv_c).mean()
         loss_alm = alm_penalty * loss_adv_c
-        loss = (-loss_adv_r + loss_adv_c) / (1 + penalty)
+        loss = (-loss_adv_r + loss_alm) / (1 + penalty)
         loss -= self._cfgs.algo_cfgs.entropy_coef * distribution.entropy().mean()
         # useful extra info
         entropy = distribution.entropy().mean().item()

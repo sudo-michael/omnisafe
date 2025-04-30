@@ -13,15 +13,24 @@
 # limitations under the License.
 # ==============================================================================
 """Example of training a policy from default config yaml with OmniSafe."""
+
 import omnisafe
 
 
-if __name__ == '__main__':
-    env_id = 'SafetyPointGoal1-v0'
-
-    agent = omnisafe.Agent('PPOLag', env_id)
+if __name__ == "__main__":
+    env_id = "SafetyAntVelocity-v1"
+    custom_cfgs = {
+        "train_cfgs": {
+            "total_steps": 1_000_000,
+            "vector_env_nums": 4,
+        },
+        "algo_cfgs": {
+            "steps_per_epoch": 20_000,
+            "update_iters": 1,
+        },
+        "logger_cfgs": {
+            "use_wandb": False,
+        },
+    }
+    agent = omnisafe.Agent("APPO", env_id)
     agent.learn()
-
-    agent.plot(smooth=1)
-    agent.render(num_episodes=1, render_mode='rgb_array', width=256, height=256)
-    agent.evaluate(num_episodes=1)
