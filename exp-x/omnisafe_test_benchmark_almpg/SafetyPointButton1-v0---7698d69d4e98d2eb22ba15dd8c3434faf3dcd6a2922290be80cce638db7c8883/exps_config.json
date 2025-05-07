@@ -1,0 +1,73 @@
+
+{
+    "seed": 0,
+    "logger_cfgs": {
+        "use_tensorboard": false,
+        "use_wandb": true,
+        "log_dir": "./exp-x/omnisafe_test_benchmark_almpg/SafetyPointButton1-v0---7698d69d4e98d2eb22ba15dd8c3434faf3dcd6a2922290be80cce638db7c8883/"
+    },
+    "algo_cfgs": {
+        "eta": 0.1,
+        "batch_size": 2000,
+        "actor_update_iters": 10,
+        "critic_update_iters": 10,
+        "inner_epoch": 5,
+        "steps_per_epoch": 2000
+    },
+    "train_cfgs": {
+        "total_steps": 1000000,
+        "torch_threads": 8,
+        "vector_env_nums": 1,
+        "device": "cuda:1"
+    },
+    "algo": "ALMPG",
+    "env_id": "SafetyPointButton1-v0"
+}
+{
+    "seed": 1,
+    "logger_cfgs": {
+        "use_tensorboard": false,
+        "use_wandb": true,
+        "log_dir": "./exp-x/omnisafe_test_benchmark_almpg/SafetyPointButton1-v0---7698d69d4e98d2eb22ba15dd8c3434faf3dcd6a2922290be80cce638db7c8883/"
+    },
+    "algo_cfgs": {
+        "eta": 0.1,
+        "batch_size": 2000,
+        "actor_update_iters": 10,
+        "critic_update_iters": 10,
+        "inner_epoch": 5,
+        "steps_per_epoch": 2000
+    },
+    "train_cfgs": {
+        "total_steps": 1000000,
+        "torch_threads": 8,
+        "vector_env_nums": 1,
+        "device": "cuda:0"
+    },
+    "algo": "ALMPG",
+    "env_id": "SafetyPointButton1-v0"
+}
+{
+    "seed": 2,
+    "logger_cfgs": {
+        "use_tensorboard": false,
+        "use_wandb": true,
+        "log_dir": "./exp-x/omnisafe_test_benchmark_almpg/SafetyPointButton1-v0---7698d69d4e98d2eb22ba15dd8c3434faf3dcd6a2922290be80cce638db7c8883/"
+    },
+    "algo_cfgs": {
+        "eta": 0.1,
+        "batch_size": 2000,
+        "actor_update_iters": 10,
+        "critic_update_iters": 10,
+        "inner_epoch": 5,
+        "steps_per_epoch": 2000
+    },
+    "train_cfgs": {
+        "total_steps": 1000000,
+        "torch_threads": 8,
+        "vector_env_nums": 1,
+        "device": "cuda:1"
+    },
+    "algo": "ALMPG",
+    "env_id": "SafetyPointButton1-v0"
+}

@@ -14,4 +14,4 @@
 # You can do tail -f <output_filename> to track the job.
 # You can kill the job using scancel squ<job_id> where you can find the <job_id> from squeue
 
-uv run experiment_scripts/test.py
+uv run experiment_scripts/ppo.py

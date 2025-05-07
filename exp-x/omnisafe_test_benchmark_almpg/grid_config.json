@@ -1,0 +1,54 @@
+{
+    "env_id": [
+        "SafetyPointButton1-v0"
+    ],
+    "algo": [
+        "ALMPG"
+    ],
+    "train_cfgs:device": [
+        "cuda"
+    ],
+    "train_cfgs:vector_env_nums": [
+        1
+    ],
+    "train_cfgs:torch_threads": [
+        8
+    ],
+    "train_cfgs:total_steps": [
+        1000000
+    ],
+    "algo_cfgs:steps_per_epoch": [
+        2000
+    ],
+    "algo_cfgs:inner_epoch": [
+        5,
+        10
+    ],
+    "algo_cfgs:critic_update_iters": [
+        5,
+        10
+    ],
+    "algo_cfgs:actor_update_iters": [
+        5,
+        10
+    ],
+    "algo_cfgs:batch_size": [
+        2000
+    ],
+    "algo_cfgs:eta": [
+        0.1,
+        0.5,
+        1.0
+    ],
+    "logger_cfgs:use_wandb": [
+        true
+    ],
+    "logger_cfgs:use_tensorboard": [
+        false
+    ],
+    "seed": [
+        0,
+        1,
+        2
+    ]
+}
