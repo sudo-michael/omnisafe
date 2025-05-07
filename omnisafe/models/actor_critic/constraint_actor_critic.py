@@ -71,13 +71,36 @@ class ConstraintActorCritic(ActorCritic):
             weight_initialization_mode=model_cfgs.weight_initialization_mode,
             num_critics=1,
             use_obs_encoder=False,
-        ).build_critic('v')
-        self.add_module('cost_critic', self.cost_critic)
+        ).build_critic("v")
+        self.add_module("cost_critic", self.cost_critic)
 
         if model_cfgs.critic.lr is not None:
             self.cost_critic_optimizer: optim.Optimizer
             self.cost_critic_optimizer = optim.Adam(
                 self.cost_critic.parameters(),
+                lr=model_cfgs.critic.lr,
+            )
+
+    def reset_reward_critic(
+        self,
+        obs_space: OmnisafeSpace,
+        act_space: OmnisafeSpace,
+        model_cfgs: ModelConfig,
+    ) -> None:
+        self.reward_critic: Critic = CriticBuilder(
+            obs_space=obs_space,
+            act_space=act_space,
+            hidden_sizes=model_cfgs.critic.hidden_sizes,
+            activation=model_cfgs.critic.activation,
+            weight_initialization_mode=model_cfgs.weight_initialization_mode,
+            num_critics=1,
+            use_obs_encoder=False,
+        ).build_critic(critic_type='v')
+        self.add_module('reward_critic', self.reward_critic)
+
+        if model_cfgs.critic.lr is not None:
+            self.reward_critic_optimizer: optim.Optimizer = optim.Adam(
+                self.reward_critic.parameters(),
                 lr=model_cfgs.critic.lr,
             )
 

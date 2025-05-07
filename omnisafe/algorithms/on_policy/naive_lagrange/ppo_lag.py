@@ -47,7 +47,7 @@ class PPOLag(PPO):
         +----------------------------+--------------------------+
         """
         super()._init_log()
-        self._logger.register_key('Metrics/LagrangeMultiplier', min_and_max=True)
+        self._logger.register_key("Metrics/LagrangeMultiplier", min_and_max=True)
 
     def _update(self) -> None:
         r"""Update actor, critic, as we used in the :class:`PolicyGradient` algorithm.
@@ -70,14 +70,14 @@ class PPOLag(PPO):
             where :math:`\lambda` is the Lagrange multiplier parameter.
         """
         # note that logger already uses MPI statistics across all processes..
-        Jc = self._logger.get_stats('Metrics/EpCost')[0]
-        assert not np.isnan(Jc), 'cost for updating lagrange multiplier is nan'
+        Jc = self._logger.get_stats("Metrics/EpCost")[0]
+        assert not np.isnan(Jc), "cost for updating lagrange multiplier is nan"
         # first update Lagrange multiplier parameter
         self._lagrange.update_lagrange_multiplier(Jc)
         # then update the policy and value function
         super()._update()
 
-        self._logger.store({'Metrics/LagrangeMultiplier': self._lagrange.lagrangian_multiplier})
+        self._logger.store({"Metrics/LagrangeMultiplier": self._lagrange.lagrangian_multiplier})
 
     def _compute_adv_surrogate(self, adv_r: torch.Tensor, adv_c: torch.Tensor) -> torch.Tensor:
         r"""Compute surrogate loss.

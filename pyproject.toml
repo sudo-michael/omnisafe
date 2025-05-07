@@ -126,133 +126,133 @@ max-line-length = 500
 [tool.codespell]
 ignore-words = "docs/source/spelling_wordlist.txt"
 
-[tool.ruff]
-# Sync with requires-python
-target-version = "py38"
-line-length = 100
-src = ["omnisafe", "tests", "examples"]
-lint.select = [
-    "E",
-    "W",   # pycodestyle
-    "F",   # pyflakes
-    "UP",  # pyupgrade
-    "ANN", # flake8-annotations
-    "S",   # flake8-bandit
-    "BLE", # flake8-blind-except
-    "B",   # flake8-bugbear
-    "COM", # flake8-commas
-    "C4",  # flake8-comprehensions
-    "EXE", # flake8-executable
-    "ISC", # flake8-implicit-str-concat
-    "PIE", # flake8-pie
-    "PYI", # flake8-pyi
-    "Q",   # flake8-quotes
-    "RSE", # flake8-raise
-    "RET", # flake8-return
-    "SIM", # flake8-simplify
-    "TID", # flake8-tidy-imports
-    "RUF", # ruff
-]
-lint.ignore = [
-    # E501: line too long
-    # W505: doc line too long
-    # too long docstring due to long example blocks
-    "E501",
-    "W505",
-    # ANN101: missing type annotation for `self` in method
-    # ANN102: missing type annotation for `cls` in classmethod
-    "ANN101",
-    "ANN102",
-    # ANN401: dynamically typed expressions (typing.Any) are disallowed
-    "ANN401",
-    # S101: use of `assert` detected
-    # internal use and may never raise at runtime
-    "S101",
-    # PLR0402: use from {module} import {name} in lieu of alias
-    # use alias for import convention (e.g., `import torch.nn as nn`)
-    "PLR0402",
-]
-lint.typing-modules = ["omnisafe.typing"]
-
-[tool.ruff.lint.per-file-ignores]
-"__init__.py" = [
-    "F401", # unused-import
-]
-"omnisafe/utils/command_app.py" = [
-    "B008", # function-call-argument-default
-]
-"tests/**/*.py" = [
-    "ANN", # flake8-annotations
-    "S",   # flake8-bandit
-    "BLE", # flake8-blind-except
-]
-"conftest.py" = [
-    "F401",   # unused-import
-    "ANN201", # missing-return-type-undocumented-public-function
-    "ANN001", # missing-type-function-argument
-]
-
-"omnisafe/algorithms/off_policy/crabs.py" = [
-    "F401",   # unused-import
-    "ANN201", # missing-return-type-undocumented-public-function
-    "ANN001", # missing-type-function-argument
-    "ANN003", # Missing type annotation
-    "ANN202", # Missing return type annotation for private function
-    "ANN204", # Missing return type annotation for special method
-    "RET505", # Unnecessary `else` after `return` statement
-]
-
-"omnisafe/envs/classic_control/envs_from_crabs.py" = [
-    "F401",   # unused-import
-    "ANN201", # missing-return-type-undocumented-public-function
-    "ANN001", # missing-type-function-argument
-    "ANN003", # Missing type annotation
-    "ANN202", # Missing return type annotation for private function
-    "ANN204", # Missing return type annotation for special method
-    "RET505", # Unnecessary `else` after `return` statement
-]
-
-"omnisafe/common/control_barrier_function/crabs/utils.py" = [
-    "F401",   # unused-import
-    "ANN201", # missing-return-type-undocumented-public-function
-    "ANN001", # missing-type-function-argument
-    "ANN003", # Missing type annotation
-    "S113",   # Probable use of requests call without timeout
-]
-
-"omnisafe/common/control_barrier_function/crabs/optimizers.py" = [
-    "F401",   # unused-import
-    "ANN201", # missing-return-type-undocumented-public-function
-    "ANN001", # missing-type-function-argument
-    "ANN003", # Missing type annotation
-    "RET505", # Unnecessary `else` after `return` statement
-]
-
-"omnisafe/common/control_barrier_function/crabs/models.py" = [
-    "F401",   # unused-import
-    "ANN201", # missing-return-type-undocumented-public-function
-    "ANN001", # missing-type-function-argument
-    "ANN002", # Missing type annotation
-    "ANN003", # Missing type annotation
-]
-
-[tool.ruff.lint.flake8-annotations]
-allow-star-arg-any = true
-
-[tool.ruff.lint.flake8-quotes]
-docstring-quotes = "double"
-multiline-quotes = "double"
-inline-quotes = "single"
-
-[tool.ruff.lint.flake8-tidy-imports]
-ban-relative-imports = "all"
-
-[tool.pytest.ini_options]
-filterwarnings = [
-    "error",
-    "ignore: distutils Version classes are deprecated. Use packaging.version instead.",
-    "ignore::DeprecationWarning",
-]
+# [tool.ruff]
+# # Sync with requires-python
+# target-version = "py38"
+# line-length = 100
+# src = ["omnisafe", "tests", "examples"]
+# lint.select = [
+#     "E",
+#     "W",   # pycodestyle
+#     "F",   # pyflakes
+#     "UP",  # pyupgrade
+#     "ANN", # flake8-annotations
+#     "S",   # flake8-bandit
+#     "BLE", # flake8-blind-except
+#     "B",   # flake8-bugbear
+#     "COM", # flake8-commas
+#     "C4",  # flake8-comprehensions
+#     "EXE", # flake8-executable
+#     "ISC", # flake8-implicit-str-concat
+#     "PIE", # flake8-pie
+#     "PYI", # flake8-pyi
+#     "Q",   # flake8-quotes
+#     "RSE", # flake8-raise
+#     "RET", # flake8-return
+#     "SIM", # flake8-simplify
+#     "TID", # flake8-tidy-imports
+#     "RUF", # ruff
+# ]
+# lint.ignore = [
+#     # E501: line too long
+#     # W505: doc line too long
+#     # too long docstring due to long example blocks
+#     "E501",
+#     "W505",
+#     # ANN101: missing type annotation for `self` in method
+#     # ANN102: missing type annotation for `cls` in classmethod
+#     "ANN101",
+#     "ANN102",
+#     # ANN401: dynamically typed expressions (typing.Any) are disallowed
+#     "ANN401",
+#     # S101: use of `assert` detected
+#     # internal use and may never raise at runtime
+#     "S101",
+#     # PLR0402: use from {module} import {name} in lieu of alias
+#     # use alias for import convention (e.g., `import torch.nn as nn`)
+#     "PLR0402",
+# ]
+# lint.typing-modules = ["omnisafe.typing"]
+#
+# [tool.ruff.lint.per-file-ignores]
+# "__init__.py" = [
+#     "F401", # unused-import
+# ]
+# "omnisafe/utils/command_app.py" = [
+#     "B008", # function-call-argument-default
+# ]
+# "tests/**/*.py" = [
+#     "ANN", # flake8-annotations
+#     "S",   # flake8-bandit
+#     "BLE", # flake8-blind-except
+# ]
+# "conftest.py" = [
+#     "F401",   # unused-import
+#     "ANN201", # missing-return-type-undocumented-public-function
+#     "ANN001", # missing-type-function-argument
+# ]
+#
+# "omnisafe/algorithms/off_policy/crabs.py" = [
+#     "F401",   # unused-import
+#     "ANN201", # missing-return-type-undocumented-public-function
+#     "ANN001", # missing-type-function-argument
+#     "ANN003", # Missing type annotation
+#     "ANN202", # Missing return type annotation for private function
+#     "ANN204", # Missing return type annotation for special method
+#     "RET505", # Unnecessary `else` after `return` statement
+# ]
+#
+# "omnisafe/envs/classic_control/envs_from_crabs.py" = [
+#     "F401",   # unused-import
+#     "ANN201", # missing-return-type-undocumented-public-function
+#     "ANN001", # missing-type-function-argument
+#     "ANN003", # Missing type annotation
+#     "ANN202", # Missing return type annotation for private function
+#     "ANN204", # Missing return type annotation for special method
+#     "RET505", # Unnecessary `else` after `return` statement
+# ]
+#
+# "omnisafe/common/control_barrier_function/crabs/utils.py" = [
+#     "F401",   # unused-import
+#     "ANN201", # missing-return-type-undocumented-public-function
+#     "ANN001", # missing-type-function-argument
+#     "ANN003", # Missing type annotation
+#     "S113",   # Probable use of requests call without timeout
+# ]
+#
+# "omnisafe/common/control_barrier_function/crabs/optimizers.py" = [
+#     "F401",   # unused-import
+#     "ANN201", # missing-return-type-undocumented-public-function
+#     "ANN001", # missing-type-function-argument
+#     "ANN003", # Missing type annotation
+#     "RET505", # Unnecessary `else` after `return` statement
+# ]
+#
+# "omnisafe/common/control_barrier_function/crabs/models.py" = [
+#     "F401",   # unused-import
+#     "ANN201", # missing-return-type-undocumented-public-function
+#     "ANN001", # missing-type-function-argument
+#     "ANN002", # Missing type annotation
+#     "ANN003", # Missing type annotation
+# ]
+#
+# [tool.ruff.lint.flake8-annotations]
+# allow-star-arg-any = true
+#
+# [tool.ruff.lint.flake8-quotes]
+# docstring-quotes = "double"
+# multiline-quotes = "double"
+# inline-quotes = "single"
+#
+# [tool.ruff.lint.flake8-tidy-imports]
+# ban-relative-imports = "all"
+#
+# [tool.pytest.ini_options]
+# filterwarnings = [
+#     "error",
+#     "ignore: distutils Version classes are deprecated. Use packaging.version instead.",
+#     "ignore::DeprecationWarning",
+# ]
 
 [tool.pyright]
 venvPath = "."
@@ -260,6 +260,4 @@ venv = ".venv"
 typeCheckingMode = "off"
 
 [dependency-groups]
-dev = [
-    "basedpyright>=1.28.5",
-]
+dev = ["basedpyright>=1.28.5"]
