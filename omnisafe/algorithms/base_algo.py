@@ -36,11 +36,13 @@ class BaseAlgo(ABC):  # pylint: disable=too-few-public-methods
         self._env_id: str = env_id
         self._cfgs: Config = cfgs
 
-        assert hasattr(cfgs, 'seed'), 'Please specify the seed in the config file.'
+        assert hasattr(cfgs, "seed"), "Please specify the seed in the config file."
         self._seed: int = int(cfgs.seed) + distributed.get_rank() * 1000
         seed_all(self._seed)
 
-        assert hasattr(cfgs.train_cfgs, 'device'), 'Please specify the device in the config file.'
+        assert hasattr(cfgs.train_cfgs, "device"), (
+            "Please specify the device in the config file."
+        )
         self._device: torch.device = get_device(self._cfgs.train_cfgs.device)
 
         distributed.setup_distributed()
@@ -60,7 +62,7 @@ class BaseAlgo(ABC):  # pylint: disable=too-few-public-methods
     @property
     def cost_limit(self) -> float | None:
         """Get the cost limit."""
-        return getattr(self._cfgs.algo_cfgs, '_cost_limit', None)
+        return getattr(self._cfgs.algo_cfgs, "_cost_limit", None)
 
     @abstractmethod
     def _init(self) -> None:

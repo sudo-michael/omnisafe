@@ -84,70 +84,75 @@ class AlgoWrapper:
         Raises:
             AssertionError: If the algorithm name is not in the supported algorithms.
         """
-        assert (
-            self.algo in ALGORITHMS['all']
-        ), f"{self.algo} doesn't exist. Please choose from {ALGORITHMS['all']}."
-        self.algo_type = ALGORITHM2TYPE.get(self.algo, '')
+        assert self.algo in ALGORITHMS["all"], (
+            f"{self.algo} doesn't exist. Please choose from {ALGORITHMS['all']}."
+        )
+        self.algo_type = ALGORITHM2TYPE.get(self.algo, "")
         if self.train_terminal_cfgs is not None:
-            if self.algo_type in ['model-based', 'offline']:
-                assert (
-                    self.train_terminal_cfgs['vector_env_nums'] == 1
-                ), 'model-based and offline only support vector_env_nums==1!'
-            if self.algo_type in ['off-policy', 'model-based', 'offline']:
-                assert (
-                    self.train_terminal_cfgs['parallel'] == 1
-                ), 'off-policy, model-based and offline only support parallel==1!'
+            if self.algo_type in ["model-based", "offline"]:
+                assert self.train_terminal_cfgs["vector_env_nums"] == 1, (
+                    "model-based and offline only support vector_env_nums==1!"
+                )
+            if self.algo_type in ["off-policy", "model-based", "offline"]:
+                assert self.train_terminal_cfgs["parallel"] == 1, (
+                    "off-policy, model-based and offline only support parallel==1!"
+                )
 
         cfgs = get_default_kwargs_yaml(self.algo, self.env_id, self.algo_type)
 
         # update the cfgs from custom configurations
         if self.custom_cfgs:
             # avoid repeatedly record the env_id and algo
-            if 'env_id' in self.custom_cfgs:
-                self.custom_cfgs.pop('env_id')
-            if 'algo' in self.custom_cfgs:
-                self.custom_cfgs.pop('algo')
+            if "env_id" in self.custom_cfgs:
+                self.custom_cfgs.pop("env_id")
+            if "algo" in self.custom_cfgs:
+                self.custom_cfgs.pop("algo")
             # validate the keys of custom configuration
             recursive_check_config(self.custom_cfgs, cfgs)
             # update the cfgs from custom configurations
             cfgs.recurisve_update(self.custom_cfgs)
             # save configurations specified in current experiment
-            cfgs.update({'exp_increment_cfgs': self.custom_cfgs})
+            cfgs.update({"exp_increment_cfgs": self.custom_cfgs})
         # update the cfgs from custom terminal configurations
         if self.train_terminal_cfgs:
             # avoid repeatedly record the env_id and algo
-            if 'env_id' in self.train_terminal_cfgs:
-                self.train_terminal_cfgs.pop('env_id')
-            if 'algo' in self.train_terminal_cfgs:
-                self.train_terminal_cfgs.pop('algo')
+            if "env_id" in self.train_terminal_cfgs:
+                self.train_terminal_cfgs.pop("env_id")
+            if "algo" in self.train_terminal_cfgs:
+                self.train_terminal_cfgs.pop("algo")
             # validate the keys of train_terminal_cfgs configuration
             recursive_check_config(self.train_terminal_cfgs, cfgs.train_cfgs)
             # update the cfgs.train_cfgs from train_terminal configurations
             cfgs.train_cfgs.recurisve_update(self.train_terminal_cfgs)
             # save configurations specified in current experiment
-            cfgs.recurisve_update({'exp_increment_cfgs': {'train_cfgs': self.train_terminal_cfgs}})
+            cfgs.recurisve_update(
+                {"exp_increment_cfgs": {"train_cfgs": self.train_terminal_cfgs}}
+            )
 
         # the exp_name format is PPO-{SafetyPointGoal1-v0}
-        exp_name = f'{self.algo}-{{{self.env_id}}}'
-        cfgs.recurisve_update({'exp_name': exp_name, 'env_id': self.env_id, 'algo': self.algo})
-        if hasattr(cfgs.train_cfgs, 'total_steps') and hasattr(cfgs.algo_cfgs, 'steps_per_epoch'):
+        exp_name = f"{self.algo}-{{{self.env_id}}}"
+        cfgs.recurisve_update(
+            {"exp_name": exp_name, "env_id": self.env_id, "algo": self.algo}
+        )
+        if hasattr(cfgs.train_cfgs, "total_steps") and hasattr(
+            cfgs.algo_cfgs, "steps_per_epoch"
+        ):
             epochs = cfgs.train_cfgs.total_steps // cfgs.algo_cfgs.steps_per_epoch
-            # for ALMPG
-            if hasattr(cfgs.algo_cfgs, 'inner_steps'):
-                epochs = cfgs.train_cfgs.total_steps // (cfgs.algo_cfgs.steps_per_epoch * cfgs.algo_cfgs.inner_epochs)
             cfgs.train_cfgs.recurisve_update(
-                {'epochs': epochs},
+                {"epochs": epochs},
             )
         return cfgs
 
     def _init_checks(self) -> None:
         """Initial checks."""
-        assert isinstance(self.algo, str), 'algo must be a string!'
-        assert isinstance(self.cfgs.train_cfgs.parallel, int), 'parallel must be an integer!'
-        assert self.cfgs.train_cfgs.parallel > 0, 'parallel must be greater than 0!'
-        assert (
-            self.env_id in support_envs()
-        ), f"{self.env_id} doesn't exist. Please choose from {support_envs()}."
+        assert isinstance(self.algo, str), "algo must be a string!"
+        assert isinstance(self.cfgs.train_cfgs.parallel, int), (
+            "parallel must be an integer!"
+        )
+        assert self.cfgs.train_cfgs.parallel > 0, "parallel must be greater than 0!"
+        assert self.env_id in support_envs(), (
+            f"{self.env_id} doesn't exist. Please choose from {support_envs()}."
+        )
 
     def _init_algo(self) -> None:
         """Initialize the algorithm."""
@@ -158,15 +163,18 @@ class AlgoWrapper:
         ):
             # re-launches the current script with workers linked by MPI
             sys.exit()
-        if self.cfgs.train_cfgs.device == 'cpu':
+        if self.cfgs.train_cfgs.device == "cpu":
             torch.set_num_threads(self.cfgs.train_cfgs.torch_threads)
         else:
-            if self.cfgs.train_cfgs.parallel > 1 and os.getenv('MASTER_ADDR') is not None:
-                ddp_local_rank = int(os.environ['LOCAL_RANK'])
-                self.cfgs.train_cfgs.device = f'cuda:{ddp_local_rank}'
+            if (
+                self.cfgs.train_cfgs.parallel > 1
+                and os.getenv("MASTER_ADDR") is not None
+            ):
+                ddp_local_rank = int(os.environ["LOCAL_RANK"])
+                self.cfgs.train_cfgs.device = f"cuda:{ddp_local_rank}"
             torch.set_num_threads(1)
             torch.cuda.set_device(self.cfgs.train_cfgs.device)
-        os.environ['OMNISAFE_DEVICE'] = self.cfgs.train_cfgs.device
+        os.environ["OMNISAFE_DEVICE"] = self.cfgs.train_cfgs.device
         self.agent: BaseAlgo = registry.get(self.algo)(
             env_id=self.env_id,
             cfgs=self.cfgs,
@@ -200,18 +208,18 @@ class AlgoWrapper:
         Raises:
             AssertionError: If the :meth:`learn` method has not been called.
         """
-        assert self._plotter is not None, 'Please run learn() first!'
+        assert self._plotter is not None, "Please run learn() first!"
         self._plotter.make_plots(
             [self.agent.logger.log_dir],
             None,
-            'Steps',
-            'Rewards',
+            "Steps",
+            "Rewards",
             False,
             self.agent.cost_limit,
             smooth,
             None,
             None,
-            'mean',
+            "mean",
             self.agent.logger.log_dir,
         )
 
@@ -225,20 +233,24 @@ class AlgoWrapper:
         Raises:
             AssertionError: If the :meth:`learn` method has not been called.
         """
-        assert self._evaluator is not None, 'Please run learn() first!'
-        scan_dir = os.scandir(os.path.join(self.agent.logger.log_dir, 'torch_save'))
+        assert self._evaluator is not None, "Please run learn() first!"
+        scan_dir = os.scandir(os.path.join(self.agent.logger.log_dir, "torch_save"))
         for item in scan_dir:
-            if item.is_file() and item.name.split('.')[-1] == 'pt':
-                self._evaluator.load_saved(save_dir=self.agent.logger.log_dir, model_name=item.name)
-                self._evaluator.evaluate(num_episodes=num_episodes, cost_criteria=cost_criteria)
+            if item.is_file() and item.name.split(".")[-1] == "pt":
+                self._evaluator.load_saved(
+                    save_dir=self.agent.logger.log_dir, model_name=item.name
+                )
+                self._evaluator.evaluate(
+                    num_episodes=num_episodes, cost_criteria=cost_criteria
+                )
         scan_dir.close()
 
     # pylint: disable-next=too-many-arguments
     def render(
         self,
         num_episodes: int = 10,
-        render_mode: str = 'rgb_array',
-        camera_name: str = 'track',
+        render_mode: str = "rgb_array",
+        camera_name: str = "track",
         width: int = 256,
         height: int = 256,
     ) -> None:
@@ -256,10 +268,10 @@ class AlgoWrapper:
         Raises:
             AssertionError: If the :meth:`learn` method has not been called.
         """
-        assert self._evaluator is not None, 'Please run learn() first!'
-        scan_dir = os.scandir(os.path.join(self.agent.logger.log_dir, 'torch_save'))
+        assert self._evaluator is not None, "Please run learn() first!"
+        scan_dir = os.scandir(os.path.join(self.agent.logger.log_dir, "torch_save"))
         for item in scan_dir:
-            if item.is_file() and item.name.split('.')[-1] == 'pt':
+            if item.is_file() and item.name.split(".")[-1] == "pt":
                 self._evaluator.load_saved(
                     save_dir=self.agent.logger.log_dir,
                     model_name=item.name,

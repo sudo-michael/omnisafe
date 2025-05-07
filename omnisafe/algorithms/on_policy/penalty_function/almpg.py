@@ -16,20 +16,12 @@ from omnisafe.common.buffer import VectorOnPolicyBuffer
 from omnisafe.common.logger import Logger
 from omnisafe.models.actor_critic.constraint_actor_critic import ConstraintActorCritic
 from omnisafe.utils import distributed
-# from omnisafe.utils.math import discount_cumsum
 
 
 @registry.register
 # pylint: disable-next=too-many-instance-attributes,too-few-public-methods,line-too-long
 class ALMPG(BaseAlgo):
     """Augmetend Lagrangian Policy Gradient"""
-
-    def _init(self) -> None:
-        super()._init()
-        self._tau = self._cfgs.augmented_lagrange_cfgs.tau_init
-        self._lagrangian_multiplier = (
-            self._cfgs.augmented_lagrange_cfgs.lagrangian_multiplier_init
-        )
 
     def _init_env(self) -> None:
         """Initialize the environment.
@@ -93,16 +85,7 @@ class ALMPG(BaseAlgo):
             )
 
     def _init(self) -> None:
-        """The initialization of the algorithm.
-
-        User can define the initialization of the algorithm by inheriting this method.
-
-        Examples:
-            >>> def _init(self) -> None:
-            ...     super()._init()
-            ...     self._buffer = CustomBuffer()
-            ...     self._model = CustomModel()
-        """
+        """The initialization of the algorithm."""
         self._buf: VectorOnPolicyBuffer = VectorOnPolicyBuffer(
             obs_space=self._env.observation_space,
             act_space=self._env.action_space,
@@ -118,11 +101,17 @@ class ALMPG(BaseAlgo):
             device=self._device,
         )
 
+        self._tau = self._cfgs.augmented_lagrange_cfgs.tau_init
+        self._lagrangian_multiplier = (
+            self._cfgs.augmented_lagrange_cfgs.lagrangian_multiplier_init
+        )
+        self._cost_limit = self._cfgs.augmented_lagrange_cfgs.cost_limit
+
     def _init_log(self) -> None:
         """Log info about epoch.
-        +=======================+======================================================================+
         +-----------------------+----------------------------------------------------------------------+
         | Things to log         | Description                                                          |
+        +=======================+======================================================================+
         | Train/Epoch           | Current epoch.                                                       |
         +-----------------------+----------------------------------------------------------------------+
         | Metrics/EpCost        | Average cost of the epoch.                                           |
@@ -252,7 +241,6 @@ class ALMPG(BaseAlgo):
                 )
                 self._logger.store({"Time/Rollout": time.time() - rollout_time})
 
-                # compuate general utility rewards
                 update_time = time.time()
                 self._update()
                 self._logger.store({"Time/Update": time.time() - update_time})
@@ -260,21 +248,23 @@ class ALMPG(BaseAlgo):
             # increase dual variable
             # Jc = discount_cumsum(self._buf.data["cost"], self._cfgs.algo_cfgs.gamma)
             Jc = self._logger.get_stats("Metrics/EpCost")[0]
-            assert not np.isnan(Jc), "cost for updating lagrange multiplier is nan"
+            assert not np.isnan(Jc), "Jc is nan"
             self._lagrangian_multiplier = max(
-                self._lagrangian_multiplier + self._tau * (Jc - self.cost_limit), 0
+                self._lagrangian_multiplier + self._tau * (Jc - self._cost_limit), 0
             )
 
             # increase augmented Lagrangian regualrizer
             self._tau = np.clip(
-                self._cfgs.augmented_lagrange_cfgs.beta * -min(0, Jc - self.cost_limit),
+                self._cfgs.augmented_lagrange_cfgs.beta * max(0, Jc - self._cost_limit),
                 self._cfgs.augmented_lagrange_cfgs.tau_init,
                 self._cfgs.augmented_lagrange_cfgs.tau_max,
             )
 
             self._logger.store(
                 {
-                    "TotalEnvSteps": (epoch + 1) * self._cfgs.algo_cfgs.steps_per_epoch,
+                    "TotalEnvSteps": (epoch + 1)
+                    * self._cfgs.algo_cfgs.steps_per_epoch
+                    * self._cfgs.algo_cfgs.inner_epoch,
                     "Time/FPS": self._cfgs.algo_cfgs.steps_per_epoch
                     / (time.time() - epoch_time),
                     "Time/Total": (time.time() - start_time),
@@ -347,10 +337,11 @@ class ALMPG(BaseAlgo):
 
         # Jc = discount_cumsum(self._buf.data["cost"], self._cfgs.algo_cfgs.gamma)
         Jc = self._logger.get_stats("Metrics/EpCost")[0]
+        assert not np.isnan(Jc), "Jc is nan"
         adv_gur = (
             adv_r
             + self._lagrangian_multiplier * adv_c
-            + self._tau * (Jc - self.cost_limit) * adv_c
+            + self._tau * (Jc - self._cost_limit) * adv_c
         )
 
         original_obs = obs
@@ -363,7 +354,6 @@ class ALMPG(BaseAlgo):
             batch_size=self._cfgs.algo_cfgs.batch_size,
             shuffle=True,
         )
-        assert self._cfgs.algo_cfgs.batch_size == len(obs)
 
         for i in track(
             range(self._cfgs.algo_cfgs.critic_update_iters),
@@ -392,9 +382,9 @@ class ALMPG(BaseAlgo):
                 _,
                 _,
                 adv_r,
-                adv_c,
+                adv_gur,
             ) in dataloader:
-                self._update_actor(obs, act, log_pi_t, adv_r, adv_c, adv_gur)
+                self._update_actor(obs, act, log_pi_t, adv_r, adv_gur)
 
         new_distribution = self._actor_critic.actor(original_obs)
 
@@ -512,7 +502,7 @@ class ALMPG(BaseAlgo):
 
         self._logger.store(
             {
-                "Metrics/UseGeneralUtilityRewards": use_general_utility,
+                "Metrics/UseGeneralUtilityRewards": int(use_general_utility),
             }
         )
 
@@ -542,7 +532,7 @@ class ALMPG(BaseAlgo):
         ratio = torch.exp(log_pitheta - log_pi_t)  # \pi_{\theta} / \pi_t
 
         linear_loss = ratio * adv
-        eta = self._cfg.algo_cfgs.eta
+        eta = self._cfgs.algo_cfgs.eta
         # KL approx http://joschu.net/blog/kl-approx.html
         # KL(pi_t || pi_theta) ~= (r - 1) - log r, where r = pi_theta / pi_t
         bregman_divergence_loss = 1 / eta * (ratio - 1 - (log_pitheta - log_pi_t))
@@ -562,4 +552,6 @@ class ALMPG(BaseAlgo):
     def _use_general_utility_rewards(self):
         # Jc = discount_cumsum(self._buf.data["cost"], self._cfgs.algo_cfgs.gamma)
         Jc = self._logger.get_stats("Metrics/EpCost")[0]
-        return Jc - self._lagrangian_multiplier / self._tau
+        assert not np.isnan(Jc), "Jc is nan"
+        cond = (Jc - self._cost_limit) - self._lagrangian_multiplier / self._tau > 0
+        return cond
