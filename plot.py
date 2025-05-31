@@ -2,7 +2,7 @@ from omnisafe.common.statistics_tools import StatisticsTools
 
 
 # just fill in the path in which experiment grid runs.
-PATH = './exp-x/omnisafe_test_benchmark_1_env'
+PATH = './exp-x/omnisafe_test_benchmark_ppo'
 if __name__ == '__main__':
     st = StatisticsTools()
     st.load_source(PATH)
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     # and the function will automatically generate all possible combinations of the graph.
     # but the two mode can not be used at the same time.
     # `['SafetyAntVelocity-v1', 'SafetyHopperVelocity-v1', 'SafetyHalfCheetahVelocity-v1']
-    st.draw_graph(parameter='algo', values=None, compare_num=3, cost_limit=25, show_image=False)
+    st.draw_graph(parameter='algo', values=None, compare_num=1, cost_limit=25, show_image=False)
     # st.draw_graph(parameter='env_id', values=['P3O'], compare_num=None, cost_limit=25, show_image=False)
 # import argparse
 
