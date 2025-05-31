@@ -26,6 +26,9 @@ defaults:
     use_armijo_critic: True
     armijo_c:  0.5
     armijo_beta: 0.9
+    armijo_alpha_max: 100
+    # eta
+    eta: 0.1
 
     # batch size for each iteration
     batch_size: 20000
@@ -53,9 +56,7 @@ defaults:
     # standardize cost advantage
     standardized_cost_adv: True
     # use cost
-    use_cost: True
-    # eta
-    eta: 1.0
+    use_cost: False
     # HACK: Unused config, but necessary for config checker to pass
     update_iters: 1
     kl_early_stop: False

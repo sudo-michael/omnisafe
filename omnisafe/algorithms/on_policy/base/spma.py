@@ -389,7 +389,8 @@ class SPMA(BaseAlgo):
         )
 
         original_obs = obs
-        old_distribution = self._actor_critic.actor(obs)
+        with torch.no_grad():
+            old_distribution = self._actor_critic.actor(obs)
 
         dataloader = DataLoader(
             dataset=TensorDataset(obs, act, logp, target_value_r, adv_r),
@@ -400,6 +401,7 @@ class SPMA(BaseAlgo):
         for i in track(
             range(self._cfgs.algo_cfgs.critic_update_iters),
             description="Updating critics...",
+            disable=True
         ):
             for (
                 obs,
@@ -413,6 +415,7 @@ class SPMA(BaseAlgo):
         for i in track(
             range(self._cfgs.algo_cfgs.actor_update_iters),
             description="Updating actor...",
+            disable=True
         ):
             for (
                 obs,
@@ -569,13 +572,22 @@ class SPMA(BaseAlgo):
             self._actor_critic.actor_optimizer.step()
             return
 
+        eta = self._cfgs.algo_cfgs.eta
         def f(model):
+            distribution = model(obs)
             log_pitheta = model.log_prob(act)
             ratio = torch.exp(log_pitheta - log_pi_t)  # \pi_{\theta} / \pi_t
+
+            linear_loss = ratio * adv
             bregman_divergence_loss = 1 / eta * (ratio - 1 - (log_pitheta - log_pi_t))
             loss = -(linear_loss + bregman_divergence_loss).mean()
             return loss
 
+        # print current weights and output
+        for p in self._actor_critic.actor.parameters():
+            print(p)
+        with torch.no_grad():
+            print(self._actor_critic.actor(obs))
         loss = armijo_line_search(
             f,
             self._actor_critic.actor,
