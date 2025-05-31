@@ -121,6 +121,7 @@ class SafetyGymnasiumEnv(CMDP):
         'SafetyHumanoidVelocity-v1',
         'SafetyPointRun0-v0',
         'SafetyCarRun0-v0',
+        'SafetyCartPole-v0',
     ]
 
     def __init__(
